@@ -30,11 +30,11 @@ CONFIG_ERROR = 'CONFIG_ERROR'
 
 def pytest_generate_tests(metafunc):
  if "config_env" in metafunc.fixturenames:
-    #country_code = "*" #metafunc.config.getoption("country_code")
-   # file_name = metafunc.config.getoption("file_name")
+  country_code = metafunc.config.getoption("country_code")
+  # file_name = metafunc.config.getoption("file_name")
    # print(country_code, file_name)
   test_dir = path.dirname(path.dirname(path.abspath(__file__)))
-  test_files = glob(str(Path(test_dir, "DE", "*.png")), recursive=True)
+  test_files = glob(str(Path(test_dir, country_code, "*.png")), recursive=True)
   metafunc.parametrize("config_env", test_files, indirect=True)
 
 @fixture
