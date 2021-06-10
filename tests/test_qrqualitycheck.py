@@ -161,8 +161,8 @@ def test_issuer_quality(config_env: Dict):
 
     alg=_CBOR.phdr[Algorithm]
 
-    if not alg in ["Es256","Ps256"] : 
-        fail("Wrong Algorithm used")
+    if not alg in ["ES256","PS256"] : 
+        fail("Wrong Algorithm used: {alg} Expected: ES256 or PS256")
 
     alg=_CBOR.uhdr[Algorithm]  
     
