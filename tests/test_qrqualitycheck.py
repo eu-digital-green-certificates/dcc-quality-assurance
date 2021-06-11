@@ -33,7 +33,10 @@ from json import load
 from cryptography.hazmat.primitives.hashes import SHA256
 from cryptography.hazmat.primitives.asymmetric import ec, rsa
 from cryptography.utils import int_to_bytes
+from cryptography import x509
+from cryptography.x509 import ExtensionNotFound
 
+COSE = 'COSE'
 TIMESTAMP_ISO8601_EXTENDED = "%Y-%m-%dT%H:%M:%S.%fZ"
 CONFIG_ERROR = 'CONFIG_ERROR'
 X_RESUME_TOKEN = 'x-resume-token'
@@ -66,10 +69,10 @@ def getKidList():
 def getCertificates(kidlist):
     r = requests.get(ACC_CERT_LIST)
     while X_RESUME_TOKEN in r.headers and r.status_code == 200:
-        print(r.headers[X_RESUME_TOKEN])
+        # print(r.headers[X_RESUME_TOKEN])
         bytes = Sha256.compute_hash(base64.b64decode(r.text))
-        kid = base64.b64encode(bytes[0:8]).decode("ascii")
-        kidlist[r.headers[X_KID]] = bytes
+        #kid = base64.b64encode(bytes[0:8]).decode("ascii")
+        kidlist[r.headers[X_KID]] = r.text  # bytes
         r = requests.get(ACC_CERT_LIST, headers={
                          X_RESUME_TOKEN: r.headers[X_RESUME_TOKEN]})
     return kidlist
@@ -160,7 +163,63 @@ def test_issuer_quality(config_env: Dict):
     if Algorithm in _CBOR.uhdr:
         fail("Algorithm must be in Protected header")
 
-    kid = base64.b64encode(_CBOR.uhdr[KID]).decode("ascii")
+    if KID in _CBOR.phdr:
+        kid = _CBOR.phdr[KID]
+    else:
+        kid = _CBOR.uhdr[KID]
+
+    kid = base64.b64encode(kid).decode("ascii")
+    print(kid)
 
     if not kid in kidlist:
         fail("KID exist not on acceptance environment")
+
+    x = y = e = n = None
+    cert = x509.load_pem_x509_certificate(
+        f'-----BEGIN CERTIFICATE-----\n{kidlist[kid]}\n-----END CERTIFICATE-----'.encode())
+    fingerprint = cert.fingerprint(SHA256())
+    keyid = fingerprint[0:8]
+
+    if isinstance(cert.public_key(), rsa.RSAPublicKey):
+        e = int_to_bytes(cert.public_key().public_numbers().e)
+        n = int_to_bytes(cert.public_key().public_numbers().n)
+    elif isinstance(cert.public_key(), ec.EllipticCurvePublicKey):
+        x = int_to_bytes(cert.public_key().public_numbers().x)
+        y = int_to_bytes(cert.public_key().public_numbers().y)
+    else:
+        raise Exception(
+            f'Unsupported Certificate Algorithm: {cert.signature_algorithm_oid} for verification.'
+        )
+    try:
+        dsc_supported_operations = {eku.dotted_string for eku in
+                                    cert.extensions.get_extension_for_class(x509.ExtendedKeyUsage).value}
+    except ExtensionNotFound:
+        dsc_supported_operations = set()
+
+    key = None
+    if x and y:
+        key = CoseKey.from_dict(
+            {
+                KpKeyOps: [VerifyOp],
+                KpKty: KtyEC2,
+                EC2KpCurve: P256,  # Ought o be pk.curve - but the two libs clash
+                KpAlg: Es256,  # ECDSA using P-256 and SHA-256
+                EC2KpX: x,
+                EC2KpY: y,
+            }
+        )
+    elif e and n:
+        key = CoseKey.from_dict(
+            {
+                KpKeyOps: [VerifyOp],
+                KpKty: KtyRSA,
+                KpAlg: Ps256,  # RSASSA-PSS using SHA-256 and MGF1 with SHA-256
+                RSAKpE: e,
+                RSAKpN: n,
+            }
+        )
+    _CBOR.key = key
+
+    if not _CBOR.verify_signature():
+        fail("Signature could not be verified with signing certificate {}".format(
+            kidlist[kid]))
