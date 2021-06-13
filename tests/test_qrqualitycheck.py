@@ -35,74 +35,78 @@ from cryptography.hazmat.primitives.asymmetric import ec, rsa
 from cryptography.utils import int_to_bytes
 from cryptography import x509
 from cryptography.x509 import ExtensionNotFound
+import re
 
 COSE = 'COSE'
 TIMESTAMP_ISO8601_EXTENDED = "%Y-%m-%dT%H:%M:%S.%fZ"
 CONFIG_ERROR = 'CONFIG_ERROR'
 X_RESUME_TOKEN = 'x-resume-token'
 X_KID = 'X-KID'
+FILE_CONTENT = 'FILE_CONTENT'
+FILE_PATH = 'FILE_PATH'
+VER = 'ver'
 ACC_KID_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.com/signercertificateStatus'
 ACC_CERT_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.com/signercertificateUpdate'
+PAYLOAD_ISSUER, PAYLOAD_ISSUE_DATE, PAYLOAD_EXPIRY_DATE, PAYLOAD_HCERT = 1, 6, 4, -260
+DCC_TYPES = {'v': "VAC", 't': "TEST", 'r': "REC"}
 
 
 def pytest_generate_tests(metafunc):
     if "config_env" in metafunc.fixturenames:
         country_code = metafunc.config.getoption("country_code")
         file_name = metafunc.config.getoption("file_name")
-        print(country_code, file_name)
         test_dir = path.dirname(path.dirname(path.abspath(__file__)))
         test_files = glob(
             str(Path(test_dir, country_code, "*", "*.png")), recursive=True)
         metafunc.parametrize("config_env", test_files, indirect=True)
 
 
-def getKidList():
-    response = requests.get(ACC_KID_LIST)
-    if not response.ok:
-        fail("KID List not reachable")
-    kidlist = dict()
-    for x in json.loads(response.text):
-        kidlist[x] = ''
-    return kidlist
+def _object_hook(decoder, value):
+    return {k: v.astimezone(timezone.utc).strftime(TIMESTAMP_ISO8601_EXTENDED) if isinstance(v, (date, datetime)) else v
+            for k, v in value.items()}
 
 
-def getCertificates(kidlist):
+def _createKidDict():
+    r = requests.get(ACC_KID_LIST)
+    if not r.ok:
+        fail("KID list not reachable")
+    kidDict = {key: None for key in json.loads(r.text)}
+    return kidDict
+
+
+def _getCertificates(kid_dict):
     r = requests.get(ACC_CERT_LIST)
-    while X_RESUME_TOKEN in r.headers and r.status_code == 200:
-        # print(r.headers[X_RESUME_TOKEN])
-        bytes = Sha256.compute_hash(base64.b64decode(r.text))
-        #kid = base64.b64encode(bytes[0:8]).decode("ascii")
-        kidlist[r.headers[X_KID]] = r.text  # bytes
+    while X_RESUME_TOKEN in r.headers and r.ok:
+        kid_dict[r.headers[X_KID]] = r.text
         r = requests.get(ACC_CERT_LIST, headers={
                          X_RESUME_TOKEN: r.headers[X_RESUME_TOKEN]})
-    return kidlist
+    return kid_dict
 
 
 @filecache(HOUR)
 def downloadCertificates():
-    kidlist = getKidList()
-    kidlist = getCertificates(kidlist)
-    return kidlist
+    return _getCertificates(_createKidDict())
 
 
 @fixture
 def config_env(request):
+    print(request.param)
     # noinspection PyBroadException
     try:
-        config_env = _readobject(request.param)
-        return config_env
+        return _readobject(request.param)
     except Exception:
         return {CONFIG_ERROR: format_exc()}
 
 
-def _readobject(png):
-    file = open(png, mode='rb')
+def _readobject(filepath):
+    file = open(filepath, mode='rb')
     # read all lines at once
     all_of_it = file.read()
     # close the file
     file.close()
-    decoded = _get_code_content(all_of_it, png)
-    return decoded
+    decoded = _get_code_content(all_of_it, filepath)
+
+    return {FILE_CONTENT: _get_code_content(all_of_it, filepath), FILE_PATH: filepath}
 
 
 def _get_code_content(b, filepath):
@@ -115,8 +119,9 @@ def _get_code_content(b, filepath):
         fail(f'QR Code can not be decoded: {filepath}')
 
 
-def _checkPrefix(decoded):
-    return decoded[0:4] == "HC1:"
+def _check_prefix(decoded):
+    if(not decoded[0:4] == "HC1:"):
+        fail("Prefix not correctly set")
 
 
 def _object_hook(decoder, value):
@@ -124,7 +129,7 @@ def _object_hook(decoder, value):
             for k, v in value.items()}
 
 
-def _checkTags(cose):
+def _check_tags(cose):
     firstbyte = cose[0]
     type = "Sign1"
     if(firstbyte == 132):
@@ -138,48 +143,26 @@ def _checkTags(cose):
             f'QR Code not tagged as Sign1 Message. Tagged with {firstbyte} ({type})')
 
 
-def test_issuer_quality(config_env: Dict):
-    kidlist = downloadCertificates()
-
-    _PREFIX = config_env
-
-    if(not _checkPrefix(_PREFIX)):
-        fail("Prefix not correctly set")
-
-    _BASE45 = _PREFIX[4:]
-
-    _COMPRESSION = b45decode(_BASE45)
-
-    _COSE = decompress(_COMPRESSION)
-
-    _checkTags(_COSE)
-
-    _CBOR = Sign1Message.decode(_COSE)
-
-    alg = _CBOR.phdr[Algorithm]
-    if not alg.__name__ in ["Ps256", "Es256"]:
+def _check_algorithm(cbor):
+    alg = cbor.phdr[Algorithm]
+    if not alg.__name__ in ['Ps256', 'Es256']:
         fail(f"Wrong Algorithm used: {alg.__name__} Expected: Ps256 or Es256")
 
-    if Algorithm in _CBOR.uhdr:
+    if Algorithm in cbor.uhdr:
         fail("Algorithm must be in Protected header")
 
-    if KID in _CBOR.phdr:
-        kid = _CBOR.phdr[KID]
+
+def _get_kid(cose):
+    if KID in cose.phdr:
+        kid = cose.phdr[KID]
     else:
-        kid = _CBOR.uhdr[KID]
+        kid = cose.uhdr[KID]
 
-    kid = base64.b64encode(kid).decode("ascii")
-    print(kid)
+    return base64.b64encode(kid).decode("ascii")
 
-    if not kid in kidlist:
-        fail("KID exist not on acceptance environment")
 
+def _get_key(cert):
     x = y = e = n = None
-    cert = x509.load_pem_x509_certificate(
-        f'-----BEGIN CERTIFICATE-----\n{kidlist[kid]}\n-----END CERTIFICATE-----'.encode())
-    fingerprint = cert.fingerprint(SHA256())
-    keyid = fingerprint[0:8]
-
     if isinstance(cert.public_key(), rsa.RSAPublicKey):
         e = int_to_bytes(cert.public_key().public_numbers().e)
         n = int_to_bytes(cert.public_key().public_numbers().n)
@@ -188,13 +171,8 @@ def test_issuer_quality(config_env: Dict):
         y = int_to_bytes(cert.public_key().public_numbers().y)
     else:
         raise Exception(
-            f'Unsupported Certificate Algorithm: {cert.signature_algorithm_oid} for verification.'
+            f'Unsupported certificate agorithm: {cert.signature_algorithm_oid} for verification.'
         )
-    try:
-        dsc_supported_operations = {eku.dotted_string for eku in
-                                    cert.extensions.get_extension_for_class(x509.ExtendedKeyUsage).value}
-    except ExtensionNotFound:
-        dsc_supported_operations = set()
 
     key = None
     if x and y:
@@ -202,7 +180,7 @@ def test_issuer_quality(config_env: Dict):
             {
                 KpKeyOps: [VerifyOp],
                 KpKty: KtyEC2,
-                EC2KpCurve: P256,  # Ought o be pk.curve - but the two libs clash
+                EC2KpCurve: P256,  # Ought to be pk.curve - but the two libs clash
                 KpAlg: Es256,  # ECDSA using P-256 and SHA-256
                 EC2KpX: x,
                 EC2KpY: y,
@@ -218,8 +196,69 @@ def test_issuer_quality(config_env: Dict):
                 RSAKpN: n,
             }
         )
-    _CBOR.key = key
+    return key
 
-    if not _CBOR.verify_signature():
+
+def _check_signature(cose, kidlist):
+    kid = _get_kid(cose)
+
+    if not kid in kidlist:
+        fail("KID exist not on acceptance environment")
+
+    cert = _create_cert(kid, kidlist[kid])
+    cose.key = _get_key(cert)
+    if not cose.verify_signature():
         fail("Signature could not be verified with signing certificate {}".format(
             kidlist[kid]))
+
+
+def _create_cert(kid, key):
+    cert = x509.load_pem_x509_certificate(
+        f'-----BEGIN CERTIFICATE-----\n{key}\n-----END CERTIFICATE-----'.encode())
+    fingerprint = cert.fingerprint(SHA256())
+    assert(kid == base64.b64encode(fingerprint[0:8]).decode("ascii"))
+    return cert
+
+
+def test_issuer_quality(config_env: Dict):
+    _kidlist = downloadCertificates()
+
+    # Prefix must be 'HC1:'
+    _check_prefix(config_env[FILE_CONTENT])
+
+    base45 = config_env[FILE_CONTENT][4:]
+    decompressed_bytes = decompress(b45decode(base45))
+
+    # First byte of COSE must be 210
+    _check_tags(decompressed_bytes)
+
+    cose = Sign1Message.decode(decompressed_bytes)
+
+    # Signing algorithm must be 'Ps256' or 'Es256'
+    _check_algorithm(cose)
+
+    # DCC must be signed with key on ACC
+    _check_signature(cose, _kidlist)
+
+    cose_payload = loads(cose.payload, object_hook=_object_hook)
+
+    # If file path indicates JSON schema version, verify it against actual JSON schema version
+    # E.g. "<countrycode>/1.0.0/VAC.png" will trigger schema version verification, whereas "<countrycode>/1.0.0/exceptions/VAC.png" will not
+    if re.search("\\d\\.\\d\\.\\d", config_env[FILE_PATH].split("/")[-2]):
+        path_schema_version = config_env[FILE_PATH].split("/")[-2]
+        dcc_schema_version = cose_payload[PAYLOAD_HCERT][PAYLOAD_ISSUER][VER]
+        if path_schema_version != dcc_schema_version:
+            fail("File path indicates {} but DCC contains {} JSON schema version".format(
+                path_schema_version, dcc_schema_version))
+
+        hcert = cose_payload[PAYLOAD_HCERT][1]
+        assert len([key for key in hcert.keys() if key in ['v', 'r', 't']]) == 1, \
+            'DCC contains multiple certificates'
+
+        # Check if DCC is of type as indicated by filename
+        file_name = config_env[FILE_PATH].split("/")[-1]
+        for dcc_type in DCC_TYPES.keys():
+            if dcc_type in hcert.keys():
+                if file_name != DCC_TYPES[dcc_type] + '.png':
+                    fail('File name "{}" indicates other DCC type. (DCC contains {})'.format(
+                        file_name, DCC_TYPES[dcc_type]))
