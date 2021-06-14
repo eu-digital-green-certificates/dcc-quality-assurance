@@ -1,9 +1,9 @@
-# PL - Poland
+# PT - Portugal
 
 * **JSON schema version**: 1.0.0
 
 Used for productive DCCs issuance
-* From: 01.06.2021
+* From: 09.06.2021
 * Until:
 
 ## Test files
