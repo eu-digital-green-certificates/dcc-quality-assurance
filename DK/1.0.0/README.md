@@ -1,9 +1,9 @@
-# CZ - Czechia
+# DK - Denmark
 
-* **JSON schema version**: 1.0.1
+* **JSON schema version**: 1.0.0
 
 Used for productive DCCs issuance
-* From: 01.06.2021
+* From: 28.05.2021
 * Until:
 
 ## Test files
