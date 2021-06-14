@@ -21,4 +21,4 @@ Used for productive DCCs issuance
 ![REC](REC.png)
 
 ### Special cases and deviations
-None
+(-> Describe DCCs that were productively issued with timestamp in the date field)
