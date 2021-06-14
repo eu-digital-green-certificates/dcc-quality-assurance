@@ -1,4 +1,4 @@
-# ES - Spain
+# HR - Croatia
 
 * **JSON schema version**: 1.0.0
 
