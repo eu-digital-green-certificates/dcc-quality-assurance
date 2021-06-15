@@ -16,10 +16,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ---license-end
+#
+# Dependencies:
+# Python 3.9
+# pip install -r tests/requirements.txt
+#
+# Usage:
+# To run all tests: pytest
+# To run tests for a given country: pytest -C=<Country Code> . e.g. pytest -C=AT
 
 import json
 from base64 import b64decode
 import base64
+import os
 from os import path
 from pathlib import Path
 from io import BytesIO
@@ -73,7 +82,6 @@ DCC_TYPES = {'v': "VAC", 't': "TEST", 'r': "REC"}
 def pytest_generate_tests(metafunc):
     if "config_env" in metafunc.fixturenames:
         country_code = metafunc.config.getoption("country_code")
-        file_name = metafunc.config.getoption("file_name")
         test_dir = path.dirname(path.dirname(path.abspath(__file__)))
         test_files = glob(
             str(Path(test_dir, country_code, "*", "*.png")), recursive=True)
@@ -263,8 +271,8 @@ def test_issuer_quality(config_env: Dict):
 
     # If file path indicates JSON schema version, verify it against actual JSON schema version
     # E.g. "<countrycode>/1.0.0/VAC.png" will trigger schema version verification, whereas "<countrycode>/1.0.0/exceptions/VAC.png" will not
-    if re.search("\\d\\.\\d\\.\\d", config_env[FILE_PATH].split("/")[-2]):
-        path_schema_version = config_env[FILE_PATH].split("/")[-2]
+    if re.search("\\d\\.\\d\\.\\d", config_env[FILE_PATH].split(os.sep)[-2]):
+        path_schema_version = config_env[FILE_PATH].split(os.sep)[-2]
         dcc_schema_version = cose_payload[PAYLOAD_HCERT][PAYLOAD_ISSUER][VER]
         if path_schema_version != dcc_schema_version:
             fail("File path indicates {} but DCC contains {} JSON schema version".format(
