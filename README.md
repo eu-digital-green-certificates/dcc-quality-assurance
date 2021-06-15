@@ -14,7 +14,7 @@ This repository contains a curated selection of verified testdata signed with ke
 * All DCC variations found in this repository are either in production or soon to be in production. 
 * **All DCC verifier apps should be able to decode and verify** the DCCs in this repository. (Some DCCs might be expired with valid signature.)
 
-For testdata that have not been curated, contain a high variance and are thus open for ongoing contribution, please visit: https://github.com/eu-digital-green-certificates/dgc-testdata.
+For testdata that have not been curated, contain a high test data variance and are thus open for ongoing contribution, please visit: https://github.com/eu-digital-green-certificates/dgc-testdata.
 
 ## How to contribute
 
