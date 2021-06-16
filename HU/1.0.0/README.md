@@ -1,9 +1,9 @@
-# DE - Germany
+# HU - Hungary
 
 * **JSON schema version**: 1.0.0
 
-Used for productive DCCs issuance
-* From: 01.06.2021
+Used for Acceptance DCCs issuance
+* From: 16.06.2021
 * Until:
 
 ## Test files
