@@ -1,6 +1,6 @@
 # FR - France
 
-* **JSON schema version**: 1.3.0
+* **JSON schema version**: 1.0.0
 
 Used for productive DCCs issuance
 * From: 23.06.2021
