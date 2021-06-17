@@ -22,8 +22,8 @@ Used for productive DCCs issuance
 
 ### Special cases and deviations
 
-Validity for QR-codes have been extended for testing purposes.
+Validity for QR-codes.
  - expiration:
     - vaccination: 365
-    - recovery: 365
-    - test: 60
+    - recovery: 180
+    - test: 3
