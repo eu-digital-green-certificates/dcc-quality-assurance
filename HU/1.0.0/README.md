@@ -2,7 +2,7 @@
 
 * **JSON schema version**: 1.0.0
 
-Used for Acceptance DCCs issuance
+Used for productive DCCs issuance
 * From: 16.06.2021
 * Until:
 
