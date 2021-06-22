@@ -20,7 +20,7 @@
 import json
 from base64 import b64decode
 import base64
-from os import path
+import os
 from pathlib import Path
 from io import BytesIO
 from json import load
@@ -54,7 +54,11 @@ from cryptography.hazmat.primitives.asymmetric import ec, rsa
 from cryptography.utils import int_to_bytes
 from cryptography import x509
 from cryptography.x509 import ExtensionNotFound
+import jsonschema 
+import jsonref
+from filecache import filecache, DAY
 import re
+import json
 
 COSE = 'COSE'
 TIMESTAMP_ISO8601_EXTENDED = "%Y-%m-%dT%H:%M:%S.%fZ"
@@ -66,6 +70,7 @@ FILE_PATH = 'FILE_PATH'
 VER = 'ver'
 ACC_KID_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.com/signercertificateStatus'
 ACC_CERT_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.com/signercertificateUpdate'
+SCHEMA_BASE_URI = 'https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/release/'
 PAYLOAD_ISSUER, PAYLOAD_ISSUE_DATE, PAYLOAD_EXPIRY_DATE, PAYLOAD_HCERT = 1, 6, 4, -260
 DCC_TYPES = {'v': "VAC", 't': "TEST", 'r': "REC"}
 
@@ -74,7 +79,7 @@ def pytest_generate_tests(metafunc):
     if "config_env" in metafunc.fixturenames:
         country_code = metafunc.config.getoption("country_code")
         file_name = metafunc.config.getoption("file_name")
-        test_dir = path.dirname(path.dirname(path.abspath(__file__)))
+        test_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         test_files = glob(
             str(Path(test_dir, country_code, "*", "*.png")), recursive=True)
         metafunc.parametrize("config_env", test_files, indirect=True)
@@ -109,7 +114,7 @@ def downloadCertificates():
 
 @fixture
 def config_env(request):
-    print(request.param)
+    print(f"Checking {request.param}")
     # noinspection PyBroadException
     try:
         return _readobject(request.param)
@@ -239,6 +244,49 @@ def _create_cert(kid, key):
     return cert
 
 
+@filecache(DAY)
+def _get_json_schema(version):
+    ''' Get the json schema depending on the version of the DCC data. 
+        Schema code is obtained from https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/
+    '''
+    class RewritingLoader:
+        '''Json schema in ehn-dcc-development has absolute references which don't match with the 
+            base uri of their repo. The RewritingLoader is supposed to search and replace these uris with
+            working links'''
+        def __init__(self, rewrite, into):
+            self.rewrite = rewrite
+            self.into = into
+    
+        def __call__(self, uri, **kwargs):
+            response = requests.get(uri, **kwargs)
+            return json.loads(response.text.replace(self.rewrite, self.into))
+    
+    # Check if version is three numbers separated by dots 
+    if re.match("^\\d\\.\\d\\.\\d$", version) is None: 
+        raise ValueError(f'{version} is not a valid version string')
+
+    # Before v1.2.1, the datatype was called DGC, now DCC
+    main_file = 'DCC.schema.json' if version >= '1.2.1' else 'DGC.schema.json'
+    versioned_path = f'{SCHEMA_BASE_URI}{version}/'
+    # Rewrite the references to id.uvci.eu to the repository above
+    rewritingLoader = RewritingLoader('https://id.uvci.eu/', versioned_path )
+    
+    print(f'Loading HCERT schema {version} ...')
+    try: 
+        schema = jsonref.load_uri(f'{versioned_path}{main_file}', loader=rewritingLoader )
+    except: 
+        raise LookupError(f'Could not load schema definition for {version}')
+    return schema
+
+def _verify_json_schema(hcert):
+    schema = _get_json_schema(hcert['ver'])
+    try:
+        jsonschema.validate( hcert, schema )
+        print('Schema validation passed')
+    except:
+        print('Schema validation failed')
+        raise    
+
 def test_issuer_quality(config_env: Dict):
     _kidlist = downloadCertificates()
 
@@ -263,21 +311,23 @@ def test_issuer_quality(config_env: Dict):
 
     # If file path indicates JSON schema version, verify it against actual JSON schema version
     # E.g. "<countrycode>/1.0.0/VAC.png" will trigger schema version verification, whereas "<countrycode>/1.0.0/exceptions/VAC.png" will not
-    if re.search("\\d\\.\\d\\.\\d", config_env[FILE_PATH].split("/")[-2]):
-        path_schema_version = config_env[FILE_PATH].split("/")[-2]
+    if re.match("^\\d\\.\\d\\.\\d$", config_env[FILE_PATH].split(os.sep)[-2]):
+        path_schema_version = config_env[FILE_PATH].split(os.sep)[-2]
         dcc_schema_version = cose_payload[PAYLOAD_HCERT][PAYLOAD_ISSUER][VER]
         if path_schema_version != dcc_schema_version:
-            fail("File path indicates {} but DCC contains {} JSON schema version".format(
-                path_schema_version, dcc_schema_version))
+            fail(f"File path indicates {path_schema_version} but DCC contains {dcc_schema_version} JSON schema version")
 
-        hcert = cose_payload[PAYLOAD_HCERT][1]
+        hcert = cose_payload[PAYLOAD_HCERT][PAYLOAD_ISSUER]
         assert len([key for key in hcert.keys() if key in ['v', 'r', 't']]) == 1, \
             'DCC contains multiple certificates'
 
         # Check if DCC is of type as indicated by filename
-        file_name = config_env[FILE_PATH].split("/")[-1]
+        file_name = config_env[FILE_PATH].split(os.sep)[-1]
         for dcc_type in DCC_TYPES.keys():
             if dcc_type in hcert.keys():
-                if file_name != DCC_TYPES[dcc_type] + '.png':
-                    fail('File name "{}" indicates other DCC type. (DCC contains {})'.format(
-                        file_name, DCC_TYPES[dcc_type]))
+                if not file_name.lower().startswith( DCC_TYPES[dcc_type].lower()):
+                    fail(f'File name "{file_name}" indicates other DCC type. (DCC contains {DCC_TYPES[dcc_type]})')
+    
+        _verify_json_schema(hcert)
+
+
