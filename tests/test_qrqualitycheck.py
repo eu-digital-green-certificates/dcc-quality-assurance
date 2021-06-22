@@ -76,13 +76,13 @@ DCC_TYPES = {'v': "VAC", 't': "TEST", 'r': "REC"}
 
 
 def pytest_generate_tests(metafunc):
-    if "config_env" in metafunc.fixturenames:
+    if "qr_code_list" in metafunc.fixturenames:
         country_code = metafunc.config.getoption("country_code")
         file_name = metafunc.config.getoption("file_name")
         test_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         test_files = glob(
             str(Path(test_dir, country_code, "*", "*.png")), recursive=True)
-        metafunc.parametrize("config_env", test_files, indirect=True)
+        metafunc.parametrize("qr_code_list", test_files, indirect=True)
 
 
 def _object_hook(decoder, value):
@@ -113,7 +113,7 @@ def downloadCertificates():
 
 
 @fixture
-def config_env(request):
+def qr_code_list(request):
     print(f"Checking {request.param}")
     # noinspection PyBroadException
     try:
@@ -287,13 +287,13 @@ def _verify_json_schema(hcert):
         print('Schema validation failed')
         raise    
 
-def test_issuer_quality(config_env: Dict):
+def test_issuer_quality(qr_code_list: Dict, pytestconfig):
     _kidlist = downloadCertificates()
 
     # Prefix must be 'HC1:'
-    _check_prefix(config_env[FILE_CONTENT])
+    _check_prefix(qr_code_list[FILE_CONTENT])
 
-    base45 = config_env[FILE_CONTENT][4:]
+    base45 = qr_code_list[FILE_CONTENT][4:]
     decompressed_bytes = decompress(b45decode(base45))
 
     # First byte of COSE must be 210
@@ -305,14 +305,15 @@ def test_issuer_quality(config_env: Dict):
     _check_algorithm(cose)
 
     # DCC must be signed with key on ACC
-    _check_signature(cose, _kidlist)
+    if not pytestconfig.getoption('no_signature_check'):
+        _check_signature(cose, _kidlist)
 
     cose_payload = loads(cose.payload, object_hook=_object_hook)
 
     # If file path indicates JSON schema version, verify it against actual JSON schema version
     # E.g. "<countrycode>/1.0.0/VAC.png" will trigger schema version verification, whereas "<countrycode>/1.0.0/exceptions/VAC.png" will not
-    if re.match("^\\d\\.\\d\\.\\d$", config_env[FILE_PATH].split(os.sep)[-2]):
-        path_schema_version = config_env[FILE_PATH].split(os.sep)[-2]
+    if re.match("^\\d\\.\\d\\.\\d$", qr_code_list[FILE_PATH].split(os.sep)[-2]):
+        path_schema_version = qr_code_list[FILE_PATH].split(os.sep)[-2]
         dcc_schema_version = cose_payload[PAYLOAD_HCERT][PAYLOAD_ISSUER][VER]
         if path_schema_version != dcc_schema_version:
             fail(f"File path indicates {path_schema_version} but DCC contains {dcc_schema_version} JSON schema version")
@@ -322,7 +323,7 @@ def test_issuer_quality(config_env: Dict):
             'DCC contains multiple certificates'
 
         # Check if DCC is of type as indicated by filename
-        file_name = config_env[FILE_PATH].split(os.sep)[-1]
+        file_name = qr_code_list[FILE_PATH].split(os.sep)[-1]
         for dcc_type in DCC_TYPES.keys():
             if dcc_type in hcert.keys():
                 if not file_name.lower().startswith( DCC_TYPES[dcc_type].lower()):
