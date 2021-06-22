@@ -14,8 +14,7 @@ Used for productive DCCs issuance
 
 ### Test
 
-![TEST_RAT](TEST_RAT.png)
-![TEST_NAA](TEST_NAA.png)
+![TEST](TEST.png)
 
 ### Recovery
 
