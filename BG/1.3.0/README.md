@@ -23,4 +23,4 @@ Used for productive DCCs issuance
 ![REC](REC.png)
 
 ### Special cases and deviations
-(-> DCCs that were issued with null/undefined values and incorrect date formats to be described here)
+None
