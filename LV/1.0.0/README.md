@@ -40,20 +40,6 @@ Used for productive DCCs issuance
 ![VAC](specialcases/VAC_incorrect_number_of_doses.png)
 
 
-### A number of vaccination DCCs have been issued with incorrect number in a series of doses (dn=115)
-
-### Vaccination
-
-![VAC](specialcases/VAC_incorrect_number_of_doses115.png)
-
-
-### A number of vaccination DCCs have been issued with incorrect (negative) number in a series of doses (dn=-2)
-
-### Vaccination
-
-![VAC](specialcases/VAC_incorrect_negative_number_of_doses.png)
-
-
 ### A number of DCCs have been issued with name with not allowed characters in, fnt, gnt (fnt="EGLIS-EGLITIS" not "EGLIS<EGLITIS")
 
 ### Vaccination
