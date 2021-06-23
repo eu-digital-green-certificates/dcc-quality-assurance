@@ -47,7 +47,7 @@ jobs:
     - name: Validate DGC Test Data Workflow Dispatch
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: |
-        pytest -C=${{ github.event.inputs.country_code }} {{additional_params}} --tb=short -rfEx --md-report --md-report-verbose=1 --md-report-zeros=number --html=dgc_testdata_report.html --self-contained-html --junit-xml=pytest.xml
+        pytest -C=${{ github.event.inputs.country_code }} {{github.event.inputs.additional_params}} --tb=short -rfEx --md-report --md-report-verbose=1 --md-report-zeros=number --html=dgc_testdata_report.html --self-contained-html --junit-xml=pytest.xml
     - name: Upload DGC Test Data Validation Results
       uses: actions/upload-artifact@v2
       with:
