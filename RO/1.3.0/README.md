@@ -22,11 +22,11 @@ Used for productive DCCs issuance
 
 ### Vaccination - dob, partial date
 
-![dob/VAC](dob/VAC-11.png)
+![specialcases/VAC](specialcases/VAC-11.png)
 
 ### Vaccination - dob, empty date
 
-![dob/VAC](dob/VAC-12.png)
+![specialcases/VAC](specialcases/VAC-12.png)
 
 ### Special cases and deviations
 
