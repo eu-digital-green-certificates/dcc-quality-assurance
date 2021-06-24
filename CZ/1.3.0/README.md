@@ -1,6 +1,6 @@
 # ES - Spain
 
-***JSON schema version**: 1.0.0
+* **JSON schema version**: 1.0.0
 
 Used for productive DCCs issuance
 * From: 07.06.2021
