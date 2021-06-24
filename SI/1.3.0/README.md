@@ -15,15 +15,19 @@ Used for productive DCCs issuance
 
 ### Test
 
-Antigen
-
-![TEST-AG](TEST-AG.png)
-
-PCR
-
-![TEST-PCR](TEST-AG.png)
-
+- -
 
 ### Recovery
 
 ![REC](REC.png)
+
+## Special Cases
+### Test
+
+Antigen
+
+![TEST-AG](specialcases/TEST-AG.png)
+
+PCR
+
+![TEST-PCR](specialcases/TEST-AG.png)
