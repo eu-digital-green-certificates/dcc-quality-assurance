@@ -12,9 +12,6 @@ Used for Acceptance DCCs issuance
 
 ![VAC](VAC.png)
 
-### Test - RAT
-
-![TEST_RAT](TEST_RAT.png)
 
 ### Test - NAAT
 
@@ -26,4 +23,9 @@ Used for Acceptance DCCs issuance
 ![REC](REC.png)
 
 ### Special cases and deviations
-None	
+
+### Test - RAT
+
+(problematic with iOS version of verification app)
+
+![specialcases/TEST_RAT](specialcases/TEST_RAT.png)
