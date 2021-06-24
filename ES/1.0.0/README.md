@@ -28,15 +28,15 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC_2](VAC_2.png)
+![VAC_2](specialcases/VAC_2.png)
 
 ### Test
 
-![TEST_2"](TEST_2.png)
+![TEST_2"](specialcases/TEST_2.png)
 
 ### Recovery
 
-![REC_2](REC_2.png)
+![REC_2](specialcases/REC_2.png)
 
 Used for productive DCCs issuance
 * From: 26.06.2021
@@ -44,4 +44,4 @@ Used for productive DCCs issuance
 
 ### Test
 
-![TEST_3"](TEST_3.png)
+![TEST_3"](specialcases/TEST_3.png)
