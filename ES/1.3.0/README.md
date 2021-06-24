@@ -1,9 +1,9 @@
 # ES - Spain
 
-***JSON schema version**: 1.0.0
+* **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 07.06.2021
+* From: 24.06.2021
 * Until:
 
 ## Test files
@@ -23,25 +23,9 @@ Used for productive DCCs issuance
 ### Special cases and deviations
 
 Used for productive DCCs issuance
-* From: 24.06.2021
-* Until:
-
-### Vaccination
-
-![VAC_2](VAC_2.png)
-
-### Test
-
-![TEST_2"](TEST_2.png)
-
-### Recovery
-
-![REC_2](REC_2.png)
-
-Used for productive DCCs issuance
 * From: 26.06.2021
 * Until:
 
 ### Test
 
-![TEST_3"](TEST_3.png)
+![TEST_1"](TEST_1.png)
