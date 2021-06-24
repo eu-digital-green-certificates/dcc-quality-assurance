@@ -117,8 +117,6 @@ def downloadCertificates():
 
 @fixture
 def qr_code_list(request):
-    print(f"Checking {request.param}")
-    # noinspection PyBroadException
     try:
         return _readobject(request.param)
     except Exception:
@@ -321,6 +319,8 @@ def test_issuer_quality(qr_code_list: Dict, pytestconfig):
         _check_signature(cose, _kidlist)
 
     cose_payload = loads(cose.payload, object_hook=_object_hook)
+    if  pytestconfig.getoption('verbose'):
+        print(cose_payload)
 
     # If file path indicates JSON schema version, verify it against actual JSON schema version
     # E.g. "<countrycode>/1.0.0/VAC.png" will trigger schema version verification, whereas "<countrycode>/1.0.0/specialcases/VAC.png" will not
