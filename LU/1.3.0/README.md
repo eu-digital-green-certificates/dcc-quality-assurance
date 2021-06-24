@@ -16,7 +16,7 @@ Vaccination certificate with full date of birth
 
 Vaccination certificate with date of birth without the day
 
-![specialcases/V_no_day](specialcases/_no_day.png)
+![specialcases/V_no_day](specialcases/V_no_day.png)
 
 Vaccination certificate with date of birth without the day and the month
 
