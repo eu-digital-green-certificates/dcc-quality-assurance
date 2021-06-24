@@ -12,35 +12,35 @@ Used for productive DCCs issuance
 
 Vaccination certificate with full date of birth
 
-![V_full](V_full.png)
+![VAC](VAC.png)
 
 Vaccination certificate with date of birth without the day
 
-![V_no_day](V_no_day.png)
+![specialcases/V_no_day](specialcases/_no_day.png)
 
 Vaccination certificate with date of birth without the day and the month
 
-![V_no_day_no_month](V_no_day_no_month.png)
+![specialcases/V_no_day_no_month](specialcases/V_no_day_no_month.png)
 
 Vaccination certificate with empty date of birth
 
-![V_no_day_no_month_no_year](V_no_day_no_month_no_year.png)
+![specialcases/V_no_day_no_month_no_year](specialcases/V_no_day_no_month_no_year.png)
 
 ### Test
 
 NAAT certificate with full date of birth
 
-![NAAT](NAAT.png)
+![TEST](TEST.png)
 
 RAT certificate with empty date of birth
 
-![RAT](RAT.png)
+![specialcases/RAT](specialcases/RAT.png)
 
 ### Recovery
 
 Recovery certificate with date of birth without the day and the month
 
-![Recovery](Recovery.png)
+![REC](REC.png)
 
 ### Special cases and deviations
 None
