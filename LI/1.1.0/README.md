@@ -1,9 +1,9 @@
-# FI - Finland
+# LI - Liechtenstein
 
-* **JSON schema version**: 1.0.0
+* **JSON schema version**: 1.1.0
 
 Used for productive DCCs issuance
-* From: 22.06.2021
+* From: 23.06.2021
 * Until:
 
 ## Test files
@@ -12,12 +12,13 @@ Used for productive DCCs issuance
 
 ![VAC](VAC.png)
 
-
 ### Test
 
 ![TEST](TEST.png)
 
-
 ### Recovery
 
 ![REC](REC.png)
+
+### Special cases and deviations
+None
