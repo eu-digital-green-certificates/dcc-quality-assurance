@@ -23,18 +23,18 @@
 ![Test](TEST.png)
 
 
-### Special cases and deviations
+## Special cases and deviations
 
-### Some Recovery and Vaccination DCCs are centrally generated, physically printed and sent to non-digital citizens by mail.
+Some Recovery and Vaccination DCCs are centrally generated, physically printed and sent to non-digital citizens by mail.
 
 ### Recovery
 * From: 24.06.2021 (GMT+02:00)
 * Until: 22.09.2021 (GMT+02:00)
 
-![REC_NONDIGITALCITIZENS](specialcases/REC_NONDIGITALCITIZENS.png)
+![REC](specialcases/REC_NONDIGITALCITIZEN.png)
 
 ### Vaccination
 * From: 24.06.2021 (GMT+02:00)
 * Until: 22.09.2021 (GMT+02:00)
 
-![REC_NONDIGITALCITIZENS](specialcases/REC_NONDIGITALCITIZENS.png)
+![VAC](specialcases/VAC_NONDIGITALCITIZEN.png)
