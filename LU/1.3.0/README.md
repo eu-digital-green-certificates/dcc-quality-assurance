@@ -16,15 +16,15 @@ Vaccination certificate with full date of birth
 
 Vaccination certificate with date of birth without the day
 
-![specialcases/V_no_day](specialcases/V_no_day.png)
+![specialcases/VAC_no_day](specialcases/VAC_no_day.png)
 
 Vaccination certificate with date of birth without the day and the month
 
-![specialcases/V_no_day_no_month](specialcases/V_no_day_no_month.png)
+![specialcases/VAC_no_day_no_month](specialcases/VAC_no_day_no_month.png)
 
 Vaccination certificate with empty date of birth
 
-![specialcases/V_no_day_no_month_no_year](specialcases/V_no_day_no_month_no_year.png)
+![specialcases/VAC_no_day_no_month_no_year](specialcases/VAC_no_day_no_month_no_year.png)
 
 ### Test
 
@@ -34,7 +34,7 @@ NAAT certificate with full date of birth
 
 RAT certificate with empty date of birth
 
-![specialcases/RAT](specialcases/RAT.png)
+![specialcases/TEST_RAT](specialcases/TEST_RAT.png)
 
 ### Recovery
 
