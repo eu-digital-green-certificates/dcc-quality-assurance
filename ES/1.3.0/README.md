@@ -28,4 +28,4 @@ Used for productive DCCs issuance
 
 ### Test
 
-![TEST_1"](TEST_1.png)
+![TEST_1"](specialcases/TEST_1.png)
