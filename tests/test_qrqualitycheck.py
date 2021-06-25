@@ -76,7 +76,7 @@ DCC_TYPES = {'v': "VAC", 't': "TEST", 'r': "REC"}
 
 
 def pytest_generate_tests(metafunc):
-    if "qr_code_list" in metafunc.fixturenames:
+    if "qr_code_file" in metafunc.fixturenames:
         country_code = metafunc.config.getoption("country_code")
         file_name = metafunc.config.getoption("file_name")
         test_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -85,7 +85,7 @@ def pytest_generate_tests(metafunc):
         if metafunc.config.getoption("include_special"):
             test_files.extend( glob(
                 str(Path(test_dir, country_code, "*", "specialcases", "*.png")), recursive=False) )
-        metafunc.parametrize("qr_code_list", test_files, indirect=True)
+        metafunc.parametrize("qr_code_file", test_files, indirect=True)
 
 
 def _object_hook(decoder, value):
@@ -116,7 +116,7 @@ def downloadCertificates():
 
 
 @fixture
-def qr_code_list(request):
+def qr_code_file(request):
     try:
         return _readobject(request.param)
     except Exception:
@@ -288,7 +288,7 @@ def _verify_json_schema(hcert):
         print('Schema validation failed')
         raise    
 
-def test_issuer_quality(qr_code_list: Dict, pytestconfig):
+def test_issuer_quality(qr_code_file: Dict, pytestconfig):
     def get_path_schema_version(path, include_special=False): 
         split_path = path.split(os.sep)
         if re.match("^\\d\\.\\d\\.\\d$", split_path[-2]):
@@ -301,9 +301,9 @@ def test_issuer_quality(qr_code_list: Dict, pytestconfig):
     _kidlist = downloadCertificates()
 
     # Prefix must be 'HC1:'
-    _check_prefix(qr_code_list[FILE_CONTENT])
+    _check_prefix(qr_code_file[FILE_CONTENT])
 
-    base45 = qr_code_list[FILE_CONTENT][4:]
+    base45 = qr_code_file[FILE_CONTENT][4:]
     decompressed_bytes = decompress(b45decode(base45))
 
     # First byte of COSE must be 210
@@ -324,7 +324,7 @@ def test_issuer_quality(qr_code_list: Dict, pytestconfig):
 
     # If file path indicates JSON schema version, verify it against actual JSON schema version
     # E.g. "<countrycode>/1.0.0/VAC.png" will trigger schema version verification, whereas "<countrycode>/1.0.0/specialcases/VAC.png" will not
-    path_schema_version = get_path_schema_version(qr_code_list[FILE_PATH], pytestconfig.getoption('include_special') )
+    path_schema_version = get_path_schema_version(qr_code_file[FILE_PATH], pytestconfig.getoption('include_special') )
     if path_schema_version is not None:         
         dcc_schema_version = cose_payload[PAYLOAD_HCERT][PAYLOAD_ISSUER][VER]
         if path_schema_version != dcc_schema_version:
@@ -336,7 +336,7 @@ def test_issuer_quality(qr_code_list: Dict, pytestconfig):
                 'DCC contains multiple certificates'
 
             # Check if DCC is of type as indicated by filename
-            file_name = qr_code_list[FILE_PATH].split(os.sep)[-1]
+            file_name = qr_code_file[FILE_PATH].split(os.sep)[-1]
             for dcc_type in DCC_TYPES.keys():
                 if dcc_type in hcert.keys():
                     if not file_name.lower().startswith( DCC_TYPES[dcc_type].lower()):
