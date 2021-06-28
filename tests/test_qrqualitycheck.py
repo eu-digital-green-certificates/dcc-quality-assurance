@@ -300,7 +300,10 @@ def test_verify_signature( dccQrCode, pytestconfig ):
     extensions = { extension.oid._name:extension for extension in cert.extensions}
 
     if pytestconfig.getoption('verbose'):
-        allowed_usages = [oid.dotted_string for oid in extensions['extendedKeyUsage'].value._usages] 
+        if 'extendedKeyUsage' in extensions.keys():
+            allowed_usages = [oid.dotted_string for oid in extensions['extendedKeyUsage'].value._usages] 
+        else
+            allowed_usages = 'ANY'
         print(f'\nCert: {cert_base64}\nAllowed Cert Usages: {allowed_usages}\nKeyID: {dccQrCode.get_key_id_base64()}')
 
 
