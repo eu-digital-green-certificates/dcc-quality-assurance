@@ -76,7 +76,6 @@ EXTENDED_KEY_USAGE_OIDs = {'t':'1.3.6.1.4.1.0.1847.2021.1.1','v':'1.3.6.1.4.1.0.
 def pytest_generate_tests(metafunc):
     if "dccQrCode" in metafunc.fixturenames:
         country_code = metafunc.config.getoption("country_code")
-        file_name = metafunc.config.getoption("file_name")
         test_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         test_files = glob(
             str(Path(test_dir, country_code, "*", "*.png")), recursive=False)
