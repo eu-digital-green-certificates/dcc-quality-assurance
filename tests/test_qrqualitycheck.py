@@ -86,8 +86,11 @@ def pytest_generate_tests(metafunc):
 
 @pytest.fixture
 def dccQrCode(request):
-    return DccQrCode(request.param)
-
+    "Create a DccQrCode object from the QR Code PNG file (and cache it)"
+    if not request.param in dccQrCode.cache.keys():
+        dccQrCode.cache[request.param] = DccQrCode(request.param)
+    return dccQrCode.cache[request.param]
+dccQrCode.cache = {}
 
 class DccQrCode():
     "Represents a DCC QR code based on a file"
