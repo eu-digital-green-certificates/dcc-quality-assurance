@@ -92,6 +92,11 @@ class DccQrCode():
     "Represents a DCC QR code based on a file"
 
     def __init__(self, path):
+        def datetime_to_string(decoder, value):
+            'replace datetime objects with a string representation when loading the CBOR'
+            return {k: v.astimezone(timezone.utc).strftime(TIMESTAMP_ISO8601_EXTENDED) \
+                    if isinstance(v, (date, datetime)) else v for k, v in value.items()}
+
         self.file_path = path
         image = image_open( path )
         self.qr_code_data = qrcode_decode(image)[0].data.decode()
@@ -99,7 +104,8 @@ class DccQrCode():
             raise ValueError('Encoded data does not begin with magic number "HC1:"')
         self.decompressed = decompress(b45decode(self.qr_code_data[4:]))
         self.sign1Message = Sign1Message.decode(self.decompressed)
-        self.payload = cbor2.loads(self.sign1Message.payload)
+        self.payload = cbor2.loads(self.sign1Message.payload, object_hook=datetime_to_string)
+        self._path_country = None
     
     def get_key_id_base64(self):     
         "returns the key ID of the COSE message"   
@@ -115,8 +121,16 @@ class DccQrCode():
            or None if no match is found."""
         for subdir_name in self.file_path.split(os.sep):
             if re.match("^\\d\\.\\d\\.\\d$", subdir_name):
+                self._path_country = _previous
                 return subdir_name
+            _previous = subdir_name
         return None # --> No path schema version
+
+    def get_path_country(self): 
+        """Returns the country code that is encoded in the path right before the schema version"""
+        if self._path_country is None: 
+            self.get_path_schema_version()
+        return self._path_country
 
     def get_file_name(self):
         return self.file_path.split(os.sep)[-1]
@@ -179,7 +193,7 @@ def test_algorithm( dccQrCode ):
 def test_dcc_type_in_payload( dccQrCode, pytestconfig ): 
     """Checks whether the payload has exactly one of v, r or t content
        (vaccination, recovery, test certificate)"""
-    dcc_types_in_payload = [ key for key in dccQrCode.payload[PAYLOAD_HCERT][PAYLOAD_ISSUER].keys() if key in ['v', 'r', 't'] ]
+    dcc_types_in_payload = [ key for key in dccQrCode.payload[PAYLOAD_HCERT][1].keys() if key in ['v', 'r', 't'] ]
 
     if not pytestconfig.getoption('allow_multi_dcc') and len(dcc_types_in_payload) > 1:
         pytest.fail('DCC contains multiple certificates')
@@ -194,7 +208,7 @@ def test_dcc_type_in_payload( dccQrCode, pytestconfig ):
 
 def test_payload_version_matches_path_version( dccQrCode ):
     "Tests whether the payload has the same version as the file's path indicates"
-    assert dccQrCode.payload[PAYLOAD_HCERT][PAYLOAD_ISSUER][VER] == dccQrCode.get_path_schema_version()
+    assert dccQrCode.payload[PAYLOAD_HCERT][1][VER] == dccQrCode.get_path_schema_version()
 
 
 @filecache(DAY)
@@ -234,8 +248,8 @@ def get_json_schema(version):
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_json_schema( dccQrCode ):
     "Performs a schema validation against the ehn-dcc-development/ehn-dcc-schema definition"
-    schema = get_json_schema( dccQrCode.payload[PAYLOAD_HCERT][PAYLOAD_ISSUER][VER] )
-    jsonschema.validate( dccQrCode.payload[PAYLOAD_HCERT][PAYLOAD_ISSUER], schema )
+    schema = get_json_schema( dccQrCode.payload[PAYLOAD_HCERT][1][VER] )
+    jsonschema.validate( dccQrCode.payload[PAYLOAD_HCERT][1], schema )
 
 
 def test_verify_signature( dccQrCode, pytestconfig ):
@@ -283,3 +297,25 @@ def test_verify_signature( dccQrCode, pytestconfig ):
     if not dccQrCode.sign1Message.verify_signature():
         pytest.fail(f"Signature could not be verified with signing certificate {cert_base64}")
 
+def test_country_in_path_matches_issuer( dccQrCode ):
+    'Checks whether the country code in the path matches the issuer country'
+    assert dccQrCode.get_path_country() == dccQrCode.payload[PAYLOAD_ISSUER]
+
+def test_country_code_formats( dccQrCode ):
+    'Checks that country codes are 2 upper case alphabetical characters'
+
+    try:
+        country_code = dccQrCode.payload[PAYLOAD_ISSUER] 
+        assert len(country_code) == 2
+        assert country_code.isalpha()
+        assert country_code == country_code.upper()
+
+        for cert_type in DCC_TYPES.keys():
+            if cert_type in dccQrCode.payload[PAYLOAD_HCERT][1].keys():
+                for inner_cert in dccQrCode.payload[PAYLOAD_HCERT][1][cert_type]:
+                    country_code = inner_cert['co']
+                    assert len(country_code) == 2
+                    assert country_code.isalpha()
+                    assert country_code == country_code.upper()
+    except AssertionError:
+        raise ValueError(f'Invalid country code: {country_code}')
