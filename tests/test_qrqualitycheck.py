@@ -69,6 +69,7 @@ ACC_CERT_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.
 SCHEMA_BASE_URI = 'https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/release/'
 PAYLOAD_ISSUER, PAYLOAD_ISSUE_DATE, PAYLOAD_EXPIRY_DATE, PAYLOAD_HCERT = 1, 6, 4, -260
 DCC_TYPES = {'v': "VAC", 't': "TEST", 'r': "REC"}
+EXTENDED_KEY_USAGE_OIDs = {'t':'1.3.6.1.4.1.0.1847.2021.1.1','v':'1.3.6.1.4.1.0.1847.2021.1.2','r':'1.3.6.1.4.1.0.1847.2021.1.3'}
 
 
 def pytest_generate_tests(metafunc):
@@ -289,6 +290,8 @@ def test_verify_signature( dccQrCode, pytestconfig ):
     cert_base64 = certs[dccQrCode.get_key_id_base64()]
     cert = x509.load_pem_x509_certificate(
         f'-----BEGIN CERTIFICATE-----\n{cert_base64}\n-----END CERTIFICATE-----'.encode())
+    extensions = { extension.oid._name:extension for extension in cert.extensions}
+
     key = key_from_cert( cert )
     fingerprint = cert.fingerprint(SHA256())        
     assert dccQrCode.get_key_id_base64() == base64.b64encode(fingerprint[0:8]).decode("ascii")
@@ -296,6 +299,17 @@ def test_verify_signature( dccQrCode, pytestconfig ):
     dccQrCode.sign1Message.key = key_from_cert(cert)
     if not dccQrCode.sign1Message.verify_signature():
         pytest.fail(f"Signature could not be verified with signing certificate {cert_base64}")
+
+    if 'extendedKeyUsage' in extensions.keys(): 
+        allowed_usages = [oid.dotted_string for oid in extensions['extendedKeyUsage'].value._usages] 
+        for cert_type in DCC_TYPES.keys():
+            if cert_type in dccQrCode.payload[PAYLOAD_HCERT][1].keys():
+                if EXTENDED_KEY_USAGE_OIDs[cert_type] not in allowed_usages: 
+                    pytest.fail(f"DCC is of type {DCC_TYPES[cert_type]}, DSC allows {allowed_usages} but not {EXTENDED_KEY_USAGE_OIDs[cert_type]}")
+
+  
+
+
 
 def test_country_in_path_matches_issuer( dccQrCode ):
     'Checks whether the country code in the path matches the issuer country'
