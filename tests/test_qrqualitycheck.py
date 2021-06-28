@@ -197,6 +197,9 @@ def test_dcc_type_in_payload( dccQrCode, pytestconfig ):
        (vaccination, recovery, test certificate)"""
     dcc_types_in_payload = [ key for key in dccQrCode.payload[PAYLOAD_HCERT][1].keys() if key in ['v', 'r', 't'] ]
 
+    if pytestconfig.getoption('verbose'):
+        print(dccQrCode.payload)
+
     if not pytestconfig.getoption('allow_multi_dcc') and len(dcc_types_in_payload) > 1:
         pytest.fail('DCC contains multiple certificates')
     
@@ -292,6 +295,11 @@ def test_verify_signature( dccQrCode, pytestconfig ):
     cert = x509.load_pem_x509_certificate(
         f'-----BEGIN CERTIFICATE-----\n{cert_base64}\n-----END CERTIFICATE-----'.encode())
     extensions = { extension.oid._name:extension for extension in cert.extensions}
+
+    if pytestconfig.getoption('verbose'):
+        allowed_usages = [oid.dotted_string for oid in extensions['extendedKeyUsage'].value._usages] 
+        print(f'\nCert: {cert_base64}\nAllowed Cert Usages: {allowed_usages}\nKeyID: {dccQrCode.get_key_id_base64()}')
+
 
     key = key_from_cert( cert )
     fingerprint = cert.fingerprint(SHA256())        
