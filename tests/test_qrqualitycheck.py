@@ -69,7 +69,8 @@ ACC_CERT_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.
 SCHEMA_BASE_URI = 'https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/release/'
 PAYLOAD_ISSUER, PAYLOAD_ISSUE_DATE, PAYLOAD_EXPIRY_DATE, PAYLOAD_HCERT = 1, 6, 4, -260
 DCC_TYPES = {'v': "VAC", 't': "TEST", 'r': "REC"}
-EXTENDED_KEY_USAGE_OIDs = {'t':'1.3.6.1.4.1.0.1847.2021.1.1','v':'1.3.6.1.4.1.0.1847.2021.1.2','r':'1.3.6.1.4.1.0.1847.2021.1.3'}
+EXTENDED_KEY_USAGE_OIDs = {'t':'1.3.6.1.4.1.0.1847.2021.1.1','v':'1.3.6.1.4.1.0.1847.2021.1.2','r':'1.3.6.1.4.1.0.1847.2021.1.3',
+                           'T':'1.3.6.1.4.1.1847.2021.1.1',  'V':'1.3.6.1.4.1.1847.2021.1.2',  'R':'1.3.6.1.4.1.1847.2021.1.3'}
 
 
 def pytest_generate_tests(metafunc):
@@ -300,12 +301,17 @@ def test_verify_signature( dccQrCode, pytestconfig ):
     if not dccQrCode.sign1Message.verify_signature():
         pytest.fail(f"Signature could not be verified with signing certificate {cert_base64}")
 
-    if 'extendedKeyUsage' in extensions.keys(): 
+    if 'extendedKeyUsage' in extensions.keys():
         allowed_usages = [oid.dotted_string for oid in extensions['extendedKeyUsage'].value._usages] 
-        for cert_type in DCC_TYPES.keys():
-            if cert_type in dccQrCode.payload[PAYLOAD_HCERT][1].keys():
-                if EXTENDED_KEY_USAGE_OIDs[cert_type] not in allowed_usages: 
-                    pytest.fail(f"DCC is of type {DCC_TYPES[cert_type]}, DSC allows {allowed_usages} but not {EXTENDED_KEY_USAGE_OIDs[cert_type]}")
+        if len( set(EXTENDED_KEY_USAGE_OIDs.values()) & set(allowed_usages) ) > 0: # Only check if at least one known OID is used in DSC
+            for cert_type in DCC_TYPES.keys():
+                if cert_type in dccQrCode.payload[PAYLOAD_HCERT][1].keys():
+                    # There are 2 versions of extended key usage OIDs in circulation. We simply logged them as upper and lower case 
+                    # types, but they actually mean the same. So we treat t == T, v == V and r == R
+                    if EXTENDED_KEY_USAGE_OIDs[cert_type] not in allowed_usages \
+                    and EXTENDED_KEY_USAGE_OIDs[cert_type.upper()] not in allowed_usages: 
+                        pytest.fail(f"DCC is of type {DCC_TYPES[cert_type]}, DSC allows {allowed_usages} "+\
+                                    f"but not {EXTENDED_KEY_USAGE_OIDs[cert_type]} or {EXTENDED_KEY_USAGE_OIDs[cert_type.upper()]}")
 
   
 
@@ -313,7 +319,10 @@ def test_verify_signature( dccQrCode, pytestconfig ):
 
 def test_country_in_path_matches_issuer( dccQrCode ):
     'Checks whether the country code in the path matches the issuer country'
-    assert dccQrCode.get_path_country() == dccQrCode.payload[PAYLOAD_ISSUER]
+    if dccQrCode.get_path_country() in ['EL', 'GR'] and dccQrCode.payload[PAYLOAD_ISSUER] in ['EL','GR']:
+        pass # EL and GR are interchangeable
+    else:
+        assert dccQrCode.get_path_country() == dccQrCode.payload[PAYLOAD_ISSUER]
 
 def test_country_code_formats( dccQrCode ):
     'Checks that country codes are 2 upper case alphabetical characters'
