@@ -123,6 +123,7 @@ class DccQrCode():
     def get_path_schema_version(self): 
         """Returns the schema version that is encoded in the path (exactly 3 digits separated by dots)
            or None if no match is found."""
+        previous = None
         for subdir_name in self.file_path.split(os.sep):
             if re.match("^\\d\\.\\d\\.\\d$", subdir_name):
                 self._path_country = _previous
