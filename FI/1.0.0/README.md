@@ -4,20 +4,10 @@
 
 Used for productive DCCs issuance
 * From: 22.06.2021
-* Until:
+* Until:14.07.2021
 
 ## Test files
 
 ### Vaccination
 
 ![VAC](VAC.png)
-
-
-### Test
-
-![TEST](TEST.png)
-
-
-### Recovery
-
-![REC](REC.png)
