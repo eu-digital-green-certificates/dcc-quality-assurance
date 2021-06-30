@@ -22,7 +22,9 @@ Used for productive DCCs issuance
 
 ### Test
 
+* Test NAAT
 ![TEST_NAAT](TEST_NAAT.png) 
+* Test RAT
 ![TEST_RAT](TEST_RAT.png) 
 
 ### Special cases and deviations
@@ -33,5 +35,7 @@ Used for productive DCCs issuance
 
 ### Test
 
+* Test NAAT
 ![TEST_NAAT_2](specialcases/TEST_NAAT_2.png) 
+* Test RAT
 ![TEST_RAT_2](specialcases/TEST_RAT_2.png) 
