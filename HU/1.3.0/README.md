@@ -26,6 +26,6 @@ Used for Acceptance DCCs issuance
 
 ### Test - RAT
 
-(problematic with iOS version of verification app)
+(problematic with iOS version of verification app because of quotation mark in tc field)
 
 ![specialcases/TEST_RAT](specialcases/TEST_RAT.png)
