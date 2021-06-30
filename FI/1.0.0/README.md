@@ -4,7 +4,7 @@
 
 Used for productive DCCs issuance
 * From: 22.06.2021
-* Until:14.07.2021
+* Until:08.07.2021
 
 ## Test files
 
