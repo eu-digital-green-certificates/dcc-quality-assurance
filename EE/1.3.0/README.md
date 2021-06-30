@@ -1,10 +1,10 @@
-# SI - Slovenia
+# EE - Estonia
 
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 30.06.2021
-* Until:
+* From: ?
+* Until: ?
 
 ## Test files
 
@@ -14,9 +14,11 @@ Used for productive DCCs issuance
 
 ### Test
 
-![TEST-AG](TEST-AG.png)
-![TEST-PCR](TEST-PCR.png)
+![TEST](TEST.png)
 
 ### Recovery
 
 ![REC](REC.png)
+
+### Special cases and deviations
+None

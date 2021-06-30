@@ -14,14 +14,25 @@ config = {
 
 def main(args):
     workbook = _get_or_create_xlsx(args.filename, config['sheet'])
-
     workbook[config['sheet']].delete_rows(2, amount=1000)
+
+    if args.country_template is not None: 
+        try: 
+            country_template = openpyxl.load_workbook(args.country_template)
+        except: 
+            print('Country file template was given but could not be loaded')
+            return -1
+    else:
+        country_template = None
+
 
     for directory in _get_country_directories():
         for match in _matching_files(directory):
             values = [ match.get(value_id) for value_id in config['column_value_ids']]
             values = [ value if value is not None else '' for value in values ]
             workbook[config['sheet']].append(values)
+
+            
 
     workbook.save(args.filename)
 
@@ -77,5 +88,6 @@ if __name__ == '__main__':
 
     parser = ArgumentParser(description='Excel export ')
     parser.add_argument('filename', default='report.xlsx', help='Output file')
+    parser.add_argument('--country-template', default=None, help='Generate country files from template')
     args = parser.parse_args()
     main(args)
