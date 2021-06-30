@@ -5,11 +5,11 @@ This repository contains some QR codes which special cases which needs special h
 
 | Description| Occurence| Verifier Action | Issuer Action| QR Code|
 |---------|----|----- |----|---|
-| Whitespaces in decoded JSON fields|
-| Date of Birth with invalid pattern|
-| Dates with invalid Pattern|
-| t,v,r Entries have null values|
-| Negative doses|
-| "null/nil/undefined" values ommited|
-| Standardized Name fields (fnt/gnt) with special signs|
-| Escaped characters in CBOR content|
+| Whitespaces in decoded JSON fields| GR/EL QR Vaccination Codes in Field "mp" | During the CBOR Deserialization, all fields MUST be trimmed for whitespaces. | Issuers MUST trim for whitespace before issuing.
+| Date of Birth with invalid pattern| BG QR Codes | If the schema is validated during the verifiying, the DOB regex should be ignored. Date/datetime formats should be ignored as well. | The generated QR Code should be deserialized after generation and checked against the schema. 
+| Dates with invalid Pattern| BG QR Codes in dob field, PL codes in other date fields| Date/datetime formats should be ignored. |  The generated QR Code should be deserialized after generation and checked against the schema. 
+| t,v,r Entries have null values| BG QR Codes for v/t/r | Schema validation should check for ["null","array"]. "One of" should be ignored. | The generated QR Code should be deserialized after generation and checked against the schema. 
+| Negative doses| LV QR Code in Vaccination Certificate (not productive, Problem fixed) | Number of doses has in schema a min/max value. Verifiers should remove this limit to accept any kind of doses.| The generated QR Code should be deserialized after generation and checked against the schema.  
+| "null/nil/undefined" values ommited| Several QR Codes. Problem occurs when the JSON schema is just used to generate Objects which are filled and serialized later without additional schema validation (JSON creation not performed). | All verifiers must should add to schema ["null",{DataType}] or remove null/undefined during the cbor deserialization.| All serializers which are used, must be configured/tested to avoid omitting null values to CBOR. A addtional schema validation can avoid this problem.      
+| Standardized Name fields (fnt/gnt) with special signs| Several QR Codes | Verifiers should remove pattern checks. Accept any string.| Issuer must strictly check for pattern after the serialization to CBOR. 
+| Escaped characters in CBOR content| HU QR Codes | Verifiers should escape " correctly with \" otherwise the JSON parsing fails. | Issuers should avoid the usage of JSON special signs, because not all CBOR implementations deserialize directly. 
