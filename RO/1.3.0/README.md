@@ -20,6 +20,14 @@ Used for productive DCCs issuance
 
 ![REC](REC.png)
 
+### Vaccination - dob, partial date
+
+![specialcases/VAC](specialcases/VAC-11.png)
+
+### Vaccination - dob, empty date
+
+![specialcases/VAC](specialcases/VAC-12.png)
+
 ### Special cases and deviations
 
 Validity for QR-codes.
