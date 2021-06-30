@@ -16,23 +16,27 @@ def main(args):
     workbook = _get_or_create_xlsx(args.filename, config['sheet'])
     workbook[config['sheet']].delete_rows(2, amount=1000)
 
-    if args.country_template is not None: 
-        try: 
-            country_template = openpyxl.load_workbook(args.country_template)
-        except: 
-            print('Country file template was given but could not be loaded')
-            return -1
-    else:
-        country_template = None
+    file_entry_handlers = [] # List of objects that handle matching files 
+    file_entry_handlers.append(lambda entry : workbook[config['sheet']].append(entry))
+
+    countryFileGenerator = None
+    try: 
+        countryFileGenerator = CountryFileGenerator(args.country_template)
+        file_entry_handlers.append( lambda entry: countryFileGenerator.addEntry(entry) )
+    except: 
+        print('Country file template was given but could not be loaded')
+        return -1
 
 
+    # Main loop: Find all matches and pass them to all handlers
     for directory in _get_country_directories():
         for match in _matching_files(directory):
             values = [ match.get(value_id) for value_id in config['column_value_ids']]
             values = [ value if value is not None else '' for value in values ]
-            workbook[config['sheet']].append(values)
+            for handle in file_entry_handlers:
+                handle(values)
 
-            
+
 
     workbook.save(args.filename)
 
@@ -75,6 +79,13 @@ def _matching_files(directory):
 def _get_country_directories():
     # A country directory is any directory that has a name of exactly 2 letters
     return [ dirname for dirname in glob('??') if dirname.isalpha() ]
+
+class CountryFileGenerator: 
+    '''Generates country files from a template. In order to do so, must first collect 
+       reference data from source'''
+
+    def __init__(self, template_file_name):
+
 
 
 if __name__ == '__main__':
