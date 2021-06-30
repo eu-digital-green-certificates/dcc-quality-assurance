@@ -356,3 +356,18 @@ def test_country_code_formats( dccQrCode ):
                     assert country_code == country_code.upper()
     except AssertionError:
         raise ValueError(f'Invalid country code: {country_code}')
+
+
+def test_claim_dates( dccQrCode, pytestconfig ):
+    'Performs some plausibility checks against date related claims'
+
+    assert dccQrCode.payload[PAYLOAD_ISSUE_DATE] < dccQrCode.payload[PAYLOAD_EXPIRY_DATE]
+    assert datetime.fromtimestamp(dccQrCode.payload[PAYLOAD_ISSUE_DATE]).year >= 2021
+    
+    if 'r' in  dccQrCode.payload[PAYLOAD_HCERT][1].keys() and pytestconfig.getoption('warn_timedelta') : 
+        expiry_from_claim = datetime.fromtimestamp(dccQrCode.payload[PAYLOAD_EXPIRY_DATE])
+        expiry_from_payload = datetime.fromisoformat(dccQrCode.payload[PAYLOAD_HCERT][1]['r'][0]['du'])
+        if abs(expiry_from_claim - expiry_from_payload).days > 14:
+            warnings.warn('Expiry dates in payload and envelope differ more than 14 days:\n'+
+                        f'Claim key 4: {expiry_from_claim.isoformat()}\n'+
+                        f'Payload: {expiry_from_payload.isoformat()}')
