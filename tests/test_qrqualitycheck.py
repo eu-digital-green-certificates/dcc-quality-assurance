@@ -228,13 +228,15 @@ def get_json_schema(version):
         '''Json schema in ehn-dcc-development has absolute references which don't match with the 
             base uri of their repo. The RewritingLoader is supposed to search and replace these uris with
             working links'''
-        def __init__(self, rewrite, into):
-            self.rewrite = rewrite
-            self.into = into
+        def __init__(self, rewrites ):
+            self.rewrites = rewrites
     
         def __call__(self, uri, **kwargs):
             response = requests.get(uri, **kwargs)
-            return json.loads(response.text.replace(self.rewrite, self.into))
+            raw = response.text
+            for rw_from, rw_to in self.rewrites.items():
+                raw = raw.replace( rw_from, rw_to )
+            return json.loads(raw)
     
     # Check if version is three numbers separated by dots 
     if re.match("^\\d\\.\\d\\.\\d$", version) is None: 
@@ -244,7 +246,9 @@ def get_json_schema(version):
     main_file = 'DCC.schema.json' if version >= '1.2.1' else 'DGC.schema.json'
     versioned_path = f'{SCHEMA_BASE_URI}{version}/'
     # Rewrite the references to id.uvci.eu to the repository above
-    rewritingLoader = RewritingLoader('https://id.uvci.eu/', versioned_path )
+    # Rewrite to not allow additional properties
+    rewritingLoader = RewritingLoader({'https://id.uvci.eu/' : versioned_path,
+                                       "\"properties\"":  "\"additionalProperties\": false, \"properties\""} )
     
     print(f'Loading HCERT schema {version} ...')
     try: 

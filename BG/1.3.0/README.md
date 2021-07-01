@@ -15,7 +15,6 @@ Used for productive DCCs issuance
 
 ### Test
 
-![VAC](TEST.png)
 
 
 ### Recovery
@@ -23,4 +22,7 @@ Used for productive DCCs issuance
 ![REC](REC.png)
 
 ### Special cases and deviations
-None
+
+Additional "dr" field
+
+![TEST](specialcases/TEST.png)
