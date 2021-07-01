@@ -14,8 +14,8 @@ Used for productive DCCs issuance
 
 ### Test
 
-![TEST-AG](TEST-AG.png)
-![TEST-PCR](TEST-PCR.png)
+![test-AG](test-AG.png)
+![test-PCR](test-PCR.png)
 
 ### Recovery
 
