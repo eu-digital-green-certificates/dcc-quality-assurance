@@ -14,6 +14,7 @@ config = {
     "sheet" : "Codes",
 
     "__countryfile-doc__" : "Following section can be omitted when not using country files feature",
+    "countryfile-participants" : ["AT", "BE", "BG", "CH", "CY", "CZ", "DE", "DK", "EE", "EL", "ES", "FI", "FR", "HR", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MT", "NL", "NO", "PL", "PT", "RO", "SE", "SI", "SK", "SM", "VA"],
     "countryfile-sheet" : "Validation Results", "countryfile-startrow" : 4,
     "countryfile-ccc" : "G2",
     "countryfile-constants" : {
@@ -45,7 +46,7 @@ def main(args):
                 handle(match)
 
 
-
+    logging.info(f"Saving {args.filename}")
     workbook.save(args.filename)
     if args.country_template is not None:
         countryFileGenerator.finalize()
@@ -101,19 +102,36 @@ class CountryFileGenerator:
        reference data from source'''
 
     def __init__(self, template_file_name):        
-        self.countries = set()
+        self.countries = set(config["countryfile-participants"])
         self.template_file_name = template_file_name
         self.wb = openpyxl.load_workbook(template_file_name)
         self.current_row = config["countryfile-startrow"]
         #self.wb[config['countryfile-sheet']].delete_rows(config['countryfile-startrow'], amount=1000)
 
     def addEntry(self, entry):
-        self.countries |= set([entry['country']])
-        self.wb = 
-        pass
+        #self.countries |= set([entry['country']])
+        sheet = self.wb[config["countryfile-sheet"]] 
+
+        sheet[f"D{self.current_row}"] = entry["url"]
+        sheet[f"E{self.current_row}"] = entry["file"]
+        sheet[f"F{self.current_row}"] = "y" if entry["type"].endswith("SpecialCase") else "n"
+        sheet[f"G{self.current_row}"] = entry["country"]
+        sheet[f"H{self.current_row}"] = entry["version"]
+        sheet[f"I{self.current_row}"] = entry["type"]
+        
+        self.current_row += 1
+
 
     def finalize(self):
-        self.wb.save(self.template_file_name)
+        base_file_name = self.template_file_name.replace('.xlsx','').replace('_Template','')
+
+        for country in self.countries:
+            logging.info(f"Saving country file for {country}")
+            sheet = self.wb[config["countryfile-sheet"]]
+            sheet[config["countryfile-ccc"]] = country
+            for cell,value in config["countryfile-constants"].items(): 
+                sheet[cell] = value
+            self.wb.save(f"{base_file_name}_{country}.xlsx")
 
 if __name__ == '__main__':
     try: 
