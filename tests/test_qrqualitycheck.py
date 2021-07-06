@@ -66,6 +66,7 @@ FILE_PATH = 'FILE_PATH'
 VER = 'ver'
 ACC_KID_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.com/signercertificateStatus'
 ACC_CERT_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.com/signercertificateUpdate'
+VALUESET_LIST = 'https://dgca-businessrule-service-eu-acc.cfapps.eu10.hana.ondemand.com/valuesets'
 SCHEMA_BASE_URI = 'https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/release/'
 PAYLOAD_ISSUER, PAYLOAD_ISSUE_DATE, PAYLOAD_EXPIRY_DATE, PAYLOAD_HCERT = 1, 6, 4, -260
 DCC_TYPES = {'v': "VAC", 't': "TEST", 'r': "REC"}
@@ -74,15 +75,20 @@ EXTENDED_KEY_USAGE_OIDs = {'t':'1.3.6.1.4.1.0.1847.2021.1.1','v':'1.3.6.1.4.1.0.
 
 
 def pytest_generate_tests(metafunc):
-    if "dccQrCode" in metafunc.fixturenames:
-        country_code = metafunc.config.getoption("country_code")
+    def glob_files(country_code='*', include_special=False):
+        "Find matching files"
         test_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         test_files = glob(
             str(Path(test_dir, country_code, "*", "*.png")), recursive=False)
-        if metafunc.config.getoption("include_special"):
+        if include_special:
             test_files.extend( glob(
                 str(Path(test_dir, country_code, "*", "specialcases", "*.png")), recursive=False) )
-        metafunc.parametrize("dccQrCode", test_files, indirect=True)
+        return test_files
+        
+    qr_code_files = glob_files( metafunc.config.getoption("country_code"), metafunc.config.getoption("include_special") )
+    
+    if "dccQrCode" in metafunc.fixturenames:
+        metafunc.parametrize("dccQrCode", qr_code_files, indirect=True)
 
 @pytest.fixture
 def dccQrCode(request):
@@ -141,6 +147,15 @@ class DccQrCode():
         return self.file_path.split(os.sep)[-1]
 
 
+@filecache(HOUR)
+def valuesets_from_environment():
+    "Downloads and caches valuesets from acceptance environment"
+    valuesets = {}
+    hashes = requests.get(VALUESET_LIST).json()
+    for vs in hashes: 
+        valuesets[vs['id']] = requests.get(f'{VALUESET_LIST}/{vs["hash"]}').json()['valueSetValues']
+        
+    return valuesets
 
 @filecache(HOUR)
 def certificates_from_environment():
@@ -375,3 +390,30 @@ def test_claim_dates( dccQrCode, pytestconfig ):
             warnings.warn('Expiry dates in payload and envelope differ more than 14 days:\n'+
                         f'Claim key 4: {expiry_from_claim.isoformat()}\n'+
                         f'Payload: {expiry_from_payload.isoformat()}')
+
+def test_valuesets( dccQrCode ):
+    "Test if the only entries from valuesets are used for corresponding fields
+    "
+    def test_field( data, field_name, valueset_name ):
+        valuesets = valuesets_from_environment()
+        if not data[field_name] in valuesets[valueset_name].keys():
+            pytest.fail(f'"{data[field_name]}" is not a valid value for {field_name} ({valueset_name})')
+
+    hCert = dccQrCode.payload[PAYLOAD_HCERT][1]
+    
+    if 'v' in hCert.keys():
+        test_field( hCert['v'][0], 'vp','sct-vaccines-covid-19' )
+        test_field( hCert['v'][0], 'ma','vaccines-covid-19-auth-holders' )
+        test_field( hCert['v'][0], 'mp','vaccines-covid-19-names' )
+        test_field( hCert['v'][0], 'tg','disease-agent-targeted' )
+
+    elif 't' in dccQrCode.payload[PAYLOAD_HCERT][1].keys():
+        test_field( hCert['t'][0], 'tr','covid-19-lab-result' )
+        if 'ma' in hCert['t'][0].keys():  # Only rapid tests have these
+            test_field( hCert['t'][0], 'ma','covid-19-lab-test-manufacturer-and-name' )
+        test_field( hCert['t'][0], 'tt','covid-19-lab-test-type' )
+        test_field( hCert['t'][0], 'tg','disease-agent-targeted' )
+
+    elif 'r' in dccQrCode.payload[PAYLOAD_HCERT][1].keys():
+        test_field( hCert['r'][0], 'tg','disease-agent-targeted' )
+
