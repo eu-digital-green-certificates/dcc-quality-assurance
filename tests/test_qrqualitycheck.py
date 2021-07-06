@@ -392,8 +392,8 @@ def test_claim_dates( dccQrCode, pytestconfig ):
                         f'Payload: {expiry_from_payload.isoformat()}')
 
 def test_valuesets( dccQrCode ):
-    "Test if the only entries from valuesets are used for corresponding fields
-    "
+    "Test if the only entries from valuesets are used for corresponding fields"
+    
     def test_field( data, field_name, valueset_name ):
         valuesets = valuesets_from_environment()
         if not data[field_name] in valuesets[valueset_name].keys():
