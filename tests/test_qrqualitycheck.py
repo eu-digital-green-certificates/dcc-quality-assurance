@@ -54,6 +54,7 @@ from cose.algorithms import Es256, Ps256, Sha256
 from cryptography.hazmat.primitives.hashes import SHA256
 from cryptography.hazmat.primitives.asymmetric import ec, rsa
 from cose.keys.keyparam import KpAlg, EC2KpX, EC2KpY, EC2KpCurve, RSAKpE, RSAKpN, KpKty, KpKeyOps
+from cryptography.hazmat.backends.openssl.backend import backend as OpenSSLBackend
 
 # ----- Constants -----
 COSE = 'COSE'
@@ -315,7 +316,7 @@ def test_verify_signature( dccQrCode, pytestconfig ):
     
     cert_base64 = certs[dccQrCode.get_key_id_base64()]
     cert = x509.load_pem_x509_certificate(
-        f'-----BEGIN CERTIFICATE-----\n{cert_base64}\n-----END CERTIFICATE-----'.encode())
+        f'-----BEGIN CERTIFICATE-----\n{cert_base64}\n-----END CERTIFICATE-----'.encode(), OpenSSLBackend)
     extensions = { extension.oid._name:extension for extension in cert.extensions}
 
     if pytestconfig.getoption('verbose'):
