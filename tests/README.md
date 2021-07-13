@@ -116,13 +116,12 @@ so we can detect unnecessary fields. This will cause the
 schema check to fail on certificates which are technically
 correct but contain extra fields.
 
-We suggest that issuers avoid such extra fields because they
-may confuse validation apps in the field. 
-
 ### Signature validation
 
-Key IDs (KID) and public keys are taken from the German 
-instance of the Acceptance Environment.
+Key IDs (KID) and public keys are taken from the T-Systems/SAP 
+DCC reference backend connected to the the DCC Acceptance 
+Environment. Please note that the availability of this backend
+is based on best effort.
 
 If a key is not present in that environment, the signature
 validation will fail. It can be skipped with the 
