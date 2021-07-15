@@ -20,7 +20,7 @@ Used for productive DCCs issuance
 ### NAAT, administered 14.7.2021
 ![NAAT](NAAT.png)
 
-### [RAT, administered 14.7.2021
+### RAT, administered 14.7.2021
 ![RAT](RAT.png)
 
 ### Recovery, positive test taken 20.5.2021
