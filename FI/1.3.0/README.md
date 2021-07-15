@@ -8,17 +8,20 @@ Used for productive DCCs issuance
 
 ## Test files
 
-### Vaccination
+### Vaccination 1/2, administered 5.6.2021 
+![VAC1](VAC1.png)
 
-![VAC1: Vaccination 1/2, administered 5.6.2021](VAC1.png)
-![VAC2: Vaccination 2/2, administered 5.6.2021](VAC2.png)
-![VAC3: Vaccination 3/3, administered 14.7.2021](VAC3.png)
+### Vaccination 2/2, administered 5.6.2021 
+![VAC2](VAC2.png)
 
-### Test
+### Vaccination 3/3, administered 14.7.2021 
+![VAC3](VAC3.png)
 
-![NAAT, administered 14.7.2021](NAAT.png)
-![RAT, administered 14.7.2021](RAT.png)
+### NAAT, administered 14.7.2021
+![NAAT](NAAT.png)
 
-### Recovery
+### [RAT, administered 14.7.2021
+![RAT](RAT.png)
 
-![REC, positive test taken 20.5.2021](REC.png)
+### Recovery, positive test taken 20.5.2021
+![REC](REC.png)
