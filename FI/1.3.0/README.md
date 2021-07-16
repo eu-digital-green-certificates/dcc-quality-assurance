@@ -17,11 +17,11 @@ Used for productive DCCs issuance
 ### Vaccination 3/3, administered 14.7.2021 
 ![VAC3](VAC3.png)
 
-### NAAT, administered 14.7.2021
-![NAAT](NAAT.png)
+### TEST1, NAAT administered 15.7.2021
+![TEST1](TEST1.png)
 
-### RAT, administered 14.7.2021
-![RAT](RAT.png)
+### TEST2, RAT administered 15.7.2021
+![TEST2](TEST2.png)
 
 ### Recovery, positive test taken 20.5.2021
 ![REC](REC.png)
