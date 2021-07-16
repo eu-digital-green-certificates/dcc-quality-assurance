@@ -6,7 +6,7 @@ Used for productive DCCs issuance
 * From: 
 * Until:
 
-Normal QRs for 1.0.0 are not submitted in this validation round. (check special cases)
+Normal QRs for 1.0.0 are not submitted in this validation round.
 
 ## Test files
 
