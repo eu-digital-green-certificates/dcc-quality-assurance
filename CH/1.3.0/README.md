@@ -13,11 +13,19 @@ Used for productive DCCs issuance
 ![VAC](VAC.png)
 
 
-### Test
 
-![TEST](TEST.png)
 
 
 ### Recovery
 
 ![REC](REC.png)
+
+## Special Cases
+
+### Test
+
+Field "ma" (manufacturer) exists but is empty.
+The field is optional, so it should be accepted by verifier apps.
+However, empty string is not part of the allowed value sets
+
+![TEST](specialcases/TEST_empty_ma_field.png)
