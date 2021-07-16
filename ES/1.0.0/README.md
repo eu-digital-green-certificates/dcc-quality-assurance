@@ -1,4 +1,4 @@
-# ES - Spain
+# ES -  Spain
 
 * **JSON schema version**: 1.0.0
 
