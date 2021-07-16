@@ -137,3 +137,7 @@ dmypy.json
 # Certificates
 *.pem
 *.p12
+
+# Excel files
+*.xlsx
+*.xlsm
