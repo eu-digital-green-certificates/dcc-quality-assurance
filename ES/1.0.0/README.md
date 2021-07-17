@@ -6,7 +6,7 @@ Used for productive DCCs issuance
 * From: 
 * Until:
 
-Normal QRs for 1.0.0 are not submitted in this validation round.
+Normal QRs for 1.0.0 are not submitted in this validation round. Please check the Special Cases submitted.
 
 ## Test files
 
@@ -23,12 +23,12 @@ Normal QRs for 1.0.0 are not submitted in this validation round.
 ### Special cases and deviations
 
 Used for productive DCCs issuance
-* From: 
+* From: 16.07.2021
 * Until: 
 
-### Test
+### Vaccination
 
-* Test NAAT
+![TEST_NAAT_2](specialcases/VAC_2.png) 
+### Recovery
 
-
-* Test RAT
+![TEST_NAAT_2](specialcases/REC_2.png) 
