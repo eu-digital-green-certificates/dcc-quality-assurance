@@ -43,3 +43,41 @@ Used for productive DCCs issuance
 * Test RAT
 
 ![TEST_RAT_2](specialcases/TEST_RAT_2.png) 
+
+Used for productive DCCs issuance
+* From: 19.07.2021
+* Until: 21.07.2021
+
+### Test
+
+* Test NAAT
+
+![TEST_NAAT_3](specialcases/TEST_NAAT_3.png) 
+* Test RAT
+
+![TEST_RAT_3](specialcases/TEST_RAT_3.png) 
+
+Used for productive DCCs issuance
+* From: 21.07.2021
+* Until: 23.07.2021
+
+### Test
+
+* Test NAAT
+
+![TEST_NAAT_3](specialcases/TEST_NAAT_4.png) 
+* Test RAT
+
+![TEST_RAT_3](specialcases/TEST_RAT_4.png) 
+
+Used for productive DCCs issuance
+* From: 21.07.2021
+* Until: 
+
+### Vaccination
+
+![VAC](VAC_3.png)
+
+### Recovery
+
+![REC](REC_3.png)
