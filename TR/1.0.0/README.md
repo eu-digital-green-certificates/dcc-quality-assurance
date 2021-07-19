@@ -1,9 +1,9 @@
-# EL - Greece
+# TR - Turkey
 
 * **JSON schema version**: 1.0.0
 
 Used for productive DCCs issuance
-* From: 01.06.2021
+* From: 19.07.2021
 * Until:
 
 ## Test files
