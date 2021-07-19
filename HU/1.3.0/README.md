@@ -3,7 +3,7 @@
 * **JSON schema version**: 1.3.0
 
 Used for Acceptance DCCs issuance
-* From: 24.06.2021
+* From: 15.07.2021
 * Until:
 
 ## Test files
@@ -26,6 +26,6 @@ Used for Acceptance DCCs issuance
 
 ### Test - RAT
 
-(problematic with iOS version of verification app)
+(problematic with iOS version of verification app because of quotation mark in tc field)
 
 ![specialcases/TEST_RAT](specialcases/TEST_RAT.png)
