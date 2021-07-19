@@ -65,10 +65,10 @@ Used for productive DCCs issuance
 
 * Test NAAT
 
-![TEST_NAAT_3](specialcases/TEST_NAAT_4.png) 
+![TEST_NAAT_4](specialcases/TEST_NAAT_4.png) 
 * Test RAT
 
-![TEST_RAT_3](specialcases/TEST_RAT_4.png) 
+![TEST_RAT_4](specialcases/TEST_RAT_4.png) 
 
 Used for productive DCCs issuance
 * From: 21.07.2021
@@ -76,8 +76,8 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC](specialcases/VAC_3.png)
+![VAC_3](specialcases/VAC_3.png)
 
 ### Recovery
 
-![REC](specialcases/REC_3.png)
+![REC_3](specialcases/REC_3.png)
