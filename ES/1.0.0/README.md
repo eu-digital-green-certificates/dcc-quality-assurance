@@ -26,6 +26,11 @@ Used for productive DCCs issuance
 * From: 16.07.2021
 * Until: 
 
+* Reason for special case:
+    * Missing Tag in COSE message 
+    * Multiple keys for certificate type (v,r,t)
+
+
 ### Vaccination
 
 ![TEST_NAAT_2](specialcases/VAC_2.png) 
