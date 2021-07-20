@@ -10,4 +10,12 @@
 
 ### Test
 
-![TEST](TEST.png)
+### Recovery
+
+![REC](REC.png)
+
+### Special cases
+
+additional "dr" field
+
+![TEST](specialcases/TEST.png)

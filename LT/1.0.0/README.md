@@ -4,7 +4,7 @@
 
 Used for productive DCCs issuance
 * From: 07.06.2021
-* Until:
+* Until: 02.07.2021
 
 ## Test files
 
@@ -21,4 +21,5 @@ Used for productive DCCs issuance
 ![REC](REC.png)
 
 ### Special cases and deviations
-None
+
+* Certificate with one test entry has 'sc' date-time string that ***IS*** tagged with CBOR TAG 0.
