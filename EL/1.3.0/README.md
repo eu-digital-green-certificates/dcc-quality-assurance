@@ -10,20 +10,20 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC Pfizer](VAC.png)
+[VAC Pfizer](VAC.png)
 
-![VAC Moderna](qr_dcc_vaccine_moderna_acceptance_v1.3_2021-07-20.png)
+[VAC Moderna](qr_dcc_vaccine_moderna_acceptance_v1.3_2021-07-20.png)
 
-![VAC Janssen](qr_dcc_vaccine_janssen_acceptance_v1.3_2021-07-20.png)
+[VAC Janssen](qr_dcc_vaccine_janssen_acceptance_v1.3_2021-07-20.png)
 
 ### Test
 
-![TEST PCR](qr_dcc_test_PCR_acceptance_v1.3_2021-07-20.png)
+[TEST PCR](qr_dcc_test_PCR_acceptance_v1.3_2021-07-20.png)
 
-![TEST RAT](qr_dcc_test_rapid_acceptance_v1.3_2021-07-20.png)
+[TEST RAT](qr_dcc_test_rapid_acceptance_v1.3_2021-07-20.png)
 
 ### Recovery
 
-![REC](qr_dcc_vaccine_recovery_acceptance_v1.3_2021-07-20.png)
+[REC](qr_dcc_vaccine_recovery_acceptance_v1.3_2021-07-20.png)
 
 ### Special cases and deviations
