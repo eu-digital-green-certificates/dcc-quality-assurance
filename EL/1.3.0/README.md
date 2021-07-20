@@ -10,20 +10,27 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-Vac Pfizer
 ![VAC Pfizer](VAC.png)
 
-VAC Moderna
+Vac Pfizer
+
 ![VAC Moderna](qr_dcc_vaccine_moderna_acceptance_v1.3_2021-07-20.png)
 
-VAC Jannsen
+VAC Moderna
+
 ![VAC Janssen](qr_dcc_vaccine_janssen_acceptance_v1.3_2021-07-20.png)
+
+VAC Jannsen
 
 ### Test
 
 ![TEST PCR](qr_dcc_test_PCR_acceptance_v1.3_2021-07-20.png)
 
+PCR
+
 ![TEST RAT](qr_dcc_test_rapid_acceptance_v1.3_2021-07-20.png)
+
+RAT
 
 ### Recovery
 
