@@ -18,6 +18,22 @@ def test_dcc_not_valid_after_dsc( dccQrCode ):
 
     assert dcc_valid_until < cert.not_valid_after
 
+def test_dsc_info():
+    """Print info about existing DSCs in the environment.
+       This is not an actual test case and may be deleted in later versions"""
+
+    certs = certificates_from_environment()
+    
+    for key_id in certs.keys():
+        cert_base64 = certs[key_id] 
+        cert = x509.load_pem_x509_certificate(
+            f'-----BEGIN CERTIFICATE-----\n{cert_base64}\n-----END CERTIFICATE-----'.encode(), OpenSSLBackend)
+        x509_for_key_id.cache[key_id] = cert # if we load the DSC anyway, we can fill the cache
+        issuer_str = str(cert.issuer)
+        issuer_country = issuer_str[issuer_str.find('C=')+2: issuer_str.find('C=')+4]
+        print(  "\t".join([issuer_country, key_id , cert.not_valid_before.isoformat(), cert.not_valid_after.isoformat()]) )
+
+
 
 def x509_for_key_id( key_id ):
     "Returns an x509 certificate object by KID. Result is cached in memory"
@@ -32,3 +48,4 @@ def x509_for_key_id( key_id ):
     x509_for_key_id.cache[key_id] = cert 
     return cert
 x509_for_key_id.cache = {}
+
