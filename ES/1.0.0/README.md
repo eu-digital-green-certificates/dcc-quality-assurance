@@ -11,14 +11,12 @@ Normal QRs for 1.0.0 are not submitted in this validation round. Please check th
 ## Test files
 
 ### Vaccination
+![VAC](VAC.png)
 
 ### Recovery
+![REC](REC.png)
 
 ### Test
-
-* Test NAAT
-
-* Test RAT
 
 ### Special cases and deviations
 
