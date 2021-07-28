@@ -11,14 +11,12 @@ Normal QRs for 1.0.0 are not submitted in this validation round. Please check th
 ## Test files
 
 ### Vaccination
+![VAC](VAC.png)
 
 ### Recovery
+![REC](REC.png)
 
 ### Test
-
-* Test NAAT
-
-* Test RAT
 
 ### Special cases and deviations
 
@@ -29,11 +27,18 @@ Used for productive DCCs issuance
 * Reason for special case:
     * Missing Tag in COSE message 
     * Multiple keys for certificate type (v,r,t)
+    * Multiple vaccination entries (VAC_5)
+    * Countries have reported issues readings DCCs issued by these entities
+    
 
+### Vaccination (2 DCCs)
 
-### Vaccination
+![VAC_2](specialcases/VAC_2.png) 
 
-![TEST_NAAT_2](specialcases/VAC_2.png) 
+![VAC_4](specialcases/VAC_4.png) 
+
+![VAC_5](specialcases/VAC_5.png) 
+
 ### Recovery
 
-![TEST_NAAT_2](specialcases/REC_2.png) 
+![REC_2](specialcases/REC_2.png) 
