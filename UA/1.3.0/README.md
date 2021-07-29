@@ -6,12 +6,12 @@
 
 ### Vaccination
 
-![VAC](vac.jpg)
+![VAC](VAC.png)
 
 ### Test
 
-![TEST](test.jpg)
+![TEST](TEST.png)
 
 ### Recovery
 
-![REC](rec.jpg)
+![REC](REC.png)
