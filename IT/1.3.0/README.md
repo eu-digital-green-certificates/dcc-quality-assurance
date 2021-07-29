@@ -23,6 +23,6 @@ Used for productive DCCs issuance
 ### Special cases and deviations
 
 ![VACCINATION_DOSE_1](specialcases/VAC_DOSE_1.png)
-![NAAT_TEST](specialcases/NAAT_TEST.png)
+![TEST_NAAT](specialcases/TEST_NAAT.png)
 
 
