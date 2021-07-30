@@ -141,3 +141,6 @@ dmypy.json
 # Excel files
 *.xlsx
 *.xlsm
+
+# Filecache
+tests/*.cache
