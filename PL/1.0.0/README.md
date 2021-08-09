@@ -23,6 +23,6 @@ Used for productive DCCs issuance
 ### Special cases and deviations
 Due to a mismatch in the configuration attributes' date formats while deploying services in production, a number of 1.0.0 DCCs were issued in date-time format instead in date format. 
 
-![VAC-11](VAC-11.png)
-![VAC-12](VAC-12.png)
-![VAC-13](VAC-13.png)
+![VAC-11](specialcases/VAC-11.png)
+![VAC-12](specialcases/VAC-12.png)
+![VAC-13](specialcases/VAC-13.png)
