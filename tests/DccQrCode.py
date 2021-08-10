@@ -48,7 +48,11 @@ class DccQrCode():
         if not self.qr_code_data.startswith('HC1:'):
             raise ValueError('Encoded data does not begin with magic number "HC1:"')
         self.decompressed = decompress(b45decode(self.qr_code_data[4:]))
-        self.sign1Message = Sign1Message.decode(self.decompressed)
+        try:
+            self.sign1Message = Sign1Message.decode(self.decompressed)
+        except AttributeError: 
+            self.sign1Message = Sign1Message.decode(b'\xD2'+self.decompressed)
+            print('Warning: Untagged COSE message.')
         self.payload = cbor2.loads(self.sign1Message.payload, object_hook=datetime_to_string)
         self._path_country = None
     

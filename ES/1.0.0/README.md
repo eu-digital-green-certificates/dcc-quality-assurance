@@ -3,43 +3,42 @@
 * **JSON schema version**: 1.0.0
 
 Used for productive DCCs issuance
-* From: 01.07.2021
+* From: 
 * Until:
+
+Normal QRs for 1.0.0 are not submitted in this validation round. Please check the Special Cases submitted.
 
 ## Test files
 
 ### Vaccination
-
 ![VAC](VAC.png)
 
 ### Recovery
-
 ![REC](REC.png)
 
-Used for productive DCCs issuance
-* From: 01.07.2021 00:00:01 +02:00
-* Until: 04.07.2021 00:00:00 +02:00 
-
 ### Test
-
-* Test NAAT
-
-![TEST_NAAT](TEST_NAAT.png) 
-* Test RAT
-
-![TEST_RAT](TEST_RAT.png) 
 
 ### Special cases and deviations
 
 Used for productive DCCs issuance
-* From: 04.07.2021 00:00:01 +02:00 
-* Until: 07.07.2021 00:00:00 +02:00 
+* From: 16.07.2021
+* Until: 
 
-### Test
+* Reason for special case:
+    * Missing Tag in COSE message 
+    * Multiple keys for certificate type (v,r,t)
+    * Multiple vaccination entries (VAC_5)
+    * Countries have reported issues readings DCCs issued by these entities
+    
 
-* Test NAAT
+### Vaccination (2 DCCs)
 
-![TEST_NAAT_2](specialcases/TEST_NAAT_2.png) 
-* Test RAT
+![VAC_2](specialcases/VAC_2.png) 
 
-![TEST_RAT_2](specialcases/TEST_RAT_2.png) 
+![VAC_4](specialcases/VAC_4.png) 
+
+![VAC_5](specialcases/VAC_5.png) 
+
+### Recovery
+
+![REC_2](specialcases/REC_2.png) 
