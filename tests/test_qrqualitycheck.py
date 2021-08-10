@@ -58,7 +58,11 @@ def valuesets_from_environment():
     valuesets = {}
     hashes = requests.get(constants.VALUESET_LIST).json()
     for vs in hashes: 
-        valuesets[vs['id']] = requests.get(f'{constants.VALUESET_LIST}/{vs["hash"]}').json()['valueSetValues']
+        try:
+            valuesets[vs['id']] = requests.get(f'{constants.VALUESET_LIST}/{vs["hash"]}').json()['valueSetValues']
+        except KeyError: 
+            warnings.warn('Could not download value-sets. Skipping tests.')
+            pytest.skip('Could not download value-sets.')
         
     return valuesets
 
