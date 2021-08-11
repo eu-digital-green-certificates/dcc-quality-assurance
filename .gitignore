@@ -144,3 +144,6 @@ dmypy.json
 
 # Filecache
 tests/*.cache
+
+#MacOS
+.DS_Store
