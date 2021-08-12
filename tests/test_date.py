@@ -1,22 +1,24 @@
 import constants
-from datetime import datetime
+from datetime import datetime, timezone
 from cryptography import x509
 from test_qrqualitycheck import certificates_from_environment
 from cryptography.hazmat.backends.openssl.backend import backend as OpenSSLBackend
+
+LOCAL_TIMEZONE_DELTA = datetime.now(timezone.utc).astimezone().tzinfo.utcoffset(None)
 
 def test_dcc_not_valid_before_dsc( dccQrCode ):
     "A DCC should not be valid before the signing DSC is valid"
     cert = x509_for_key_id(dccQrCode.get_key_id_base64())
     dcc_valid_from = datetime.fromtimestamp(dccQrCode.payload[constants.PAYLOAD_ISSUE_DATE])
 
-    assert dcc_valid_from > cert.not_valid_before
+    assert dcc_valid_from >= cert.not_valid_before + LOCAL_TIMEZONE_DELTA
 
 def test_dcc_not_valid_after_dsc( dccQrCode ):
     "A DCC should not be valid after the signing DSC has expired"
     cert = x509_for_key_id(dccQrCode.get_key_id_base64())
     dcc_valid_until = datetime.fromtimestamp(dccQrCode.payload[constants.PAYLOAD_EXPIRY_DATE])
 
-    assert dcc_valid_until < cert.not_valid_after
+    assert dcc_valid_until <= cert.not_valid_after + LOCAL_TIMEZONE_DELTA
 
 def test_dsc_info():
     """Print info about existing DSCs in the environment.
