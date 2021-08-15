@@ -8,17 +8,15 @@ Used for productive DCCs issuance
 
 ## Test files
 
-### Vaccination
-
-![VAC](VAC.png)
-
 ### Test
 
-![TEST](TEST.png)
+![TEST](TEST.png)  
 
-### Recovery
-
-![REC](REC.png)
 
 ### Special cases and deviations
-None****
+
+### Vaccination
+
+Has CNAM instead of FR for issueing country
+
+![specialcases/VAC](specialcases/VAC.png)  
