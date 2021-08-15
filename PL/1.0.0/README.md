@@ -21,4 +21,8 @@ Used for productive DCCs issuance
 ![REC](REC.png)
 
 ### Special cases and deviations
-(-> Describe DCCs that were productively issued with timestamp in the date field)
+Due to a mismatch in the configuration attributes' date formats while deploying services in production, a number of 1.0.0 DCCs were issued in date-time format instead in date format. 
+
+![VAC-11](specialcases/VAC-11.png)
+![VAC-12](specialcases/VAC-12.png)
+![VAC-13](specialcases/VAC-13.png)
