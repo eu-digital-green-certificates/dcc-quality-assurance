@@ -3,7 +3,7 @@
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 06.08.2021
+* From: 16.08.2021
 * Until:
 
 ## Test files
@@ -17,50 +17,47 @@ Used for productive DCCs issuance
 ![REC](REC.png)
 
 Used for productive DCCs issuance
-* From: 09.08.2021
-* Until: 11.08.2021
+* From:  16.08.2021
+* Until: 
 
 ### Test
 
 * Test NAAT
 
-![TEST_NAAT](TEST_NAAT.png) 
+![NAAT](NAAT.png)
+
 * Test RAT
 
-![TEST_RAT](TEST_RAT.png) 
+![RAT](RAT.png)
 
 Used for productive DCCs issuance
-* From: 11.08.2021
-* Until: 13.08.2021
+* From: 
+* Until: 
 
 ### Test
 
 * Test NAAT
 
-![TEST_NAAT_1](TEST_NAAT_1.png) 
 * Test RAT
-
-![TEST_RAT_1](TEST_RAT_1.png) 
-
 
 ### Special cases and deviations
 
 Used for productive DCCs issuance
-* From: 06.08.2021
+* From: 
 * Until:
 
 ### Test
 
 * Test NAAT
 
-![TEST_NAAT_2](specialcases/TEST_NAAT_2.png) 
+![NAAT_2](specialcases/NAAT_2.png)
+
 * Test RAT
 
-![TEST_RAT_2](specialcases/TEST_RAT_2.png) 
-
+![RAT_2](specialcases/RAT_2.png)
 
 Used for productive DCCs issuance
-* From: 06.08.2021
+* From: 
 * Until: 
 
 ### Vaccination
@@ -69,8 +66,14 @@ Used for productive DCCs issuance
 
 ![VAC_2](specialcases/VAC_2.png)
 
+![VAC_2](specialcases/VAC_2.png)
+
 ### Recovery
 
 ![REC_1](specialcases/REC_1.png)
 
 ![REC_2](specialcases/REC_2.png)
+
+![REC_3](specialcases/REC_3.png)
+
+![REC_4](specialcases/REC_4.png)
