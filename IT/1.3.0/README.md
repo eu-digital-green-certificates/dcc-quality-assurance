@@ -1,9 +1,9 @@
-# LI - Liechtenstein
+# ITALY
 
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 06.08.2021
+* From: 
 * Until:
 
 ## Test files
@@ -12,8 +12,8 @@ Used for productive DCCs issuance
 
 ![VAC](VAC.png)
 
-### Test
-
+### Test (RAT)
+ 
 ![TEST](TEST.png)
 
 ### Recovery
@@ -21,4 +21,8 @@ Used for productive DCCs issuance
 ![REC](REC.png)
 
 ### Special cases and deviations
-None
+
+![VACCINATION_DOSE_1](specialcases/VAC_DOSE_1.png)
+![TEST_NAAT](specialcases/TEST_NAAT.png)
+
+
