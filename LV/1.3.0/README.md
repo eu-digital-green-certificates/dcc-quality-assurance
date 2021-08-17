@@ -26,4 +26,17 @@ Used for productive DCCs issuance
 
 ### Special cases and deviations
 
-none
+### Vaccination cert issued by LV where vaccination country is not LV
+
+![VAC](specialcases/VAC_in_other_country.png)
+
+
+### Test cert issued by LV where test country is not LV
+
+![TEST](specialcases/TEST_in_other_country.png)
+
+
+
+### Recovery cert issued by LV where recovery country is not LV
+
+![REC](specialcases/REC_in_other_country.png)
