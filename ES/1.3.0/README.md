@@ -24,11 +24,11 @@ Used for productive DCCs issuance
 
 * Test NAAT
 
-![NAAT](NAAT.png)
+![TEST_NAAT](TEST_NAAT.png)
 
 * Test RAT
 
-![RAT](RAT.png)
+![TEST_RAT](TEST_RAT.png)
 
 ### Special cases and deviations
 
@@ -44,13 +44,17 @@ Used for productive DCCs issuance
 
 * Balearic Islands (issuer: Illes Balears: Servei de Salut / Servicio de Salud / Health Service) - NAAT
 
-![NAAT_2](specialcases/NAAT_2.png)
+![TEST_NAAT_2](specialcases/TEST_NAAT_2.png)
+
+* Castilla y Leon (issuer: Gerencia Regional de Salud de Castilla y León) - NAAT
+
+![TEST_NAAT_3](specialcases/TEST_NAAT_3.png)
 
 ### Test RAT
 
 * Balearic Islands (issuer: Illes Balears: Servei de Salut / Servicio de Salud / Health Service) - RAT
 
-![RAT_2](specialcases/RAT_2.png)
+![TEST_RAT_2](specialcases/TEST_RAT_2.png)
 
 Used for productive DCCs issuance
 * From: 16.08.2021
@@ -70,6 +74,10 @@ Used for productive DCCs issuance
 
 ![VAC_3](specialcases/VAC_3.png)
 
+* Castilla y Leon (issuer: Gerencia Regional de Salud de Castilla y León) - VAC
+
+![VAC_4](specialcases/VAC_4.png)
+
 ### Recovery
 
 * Extremadura (issuer: Servicio Extremeño de Salud) - REC 
@@ -87,3 +95,7 @@ Used for productive DCCs issuance
 * Balearic Islands (issuer: Illes Balears: Servei de Salut / Servicio de Salud / Health Service) - REC
 
 ![REC_4](specialcases/REC_4.png)
+
+* Castilla y Leon (issuer: Gerencia Regional de Salud de Castilla y León) - REC
+
+![REC_5](specialcases/REC_5.png)
