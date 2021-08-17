@@ -1,8 +1,8 @@
 # IT - Italy
 
-* **JSON schema version**: 1.0.0
+**JSON schema version**: 1.0.0
 
-Used for productive DCCs issuance
+Used for production DCCs issuance
 * From: 10.06.2021
 * Until:
 
@@ -21,4 +21,4 @@ Used for productive DCCs issuance
 ![REC](REC.png)
 
 ### Special cases and deviations
-None
+![VAC_DOSE_1.png](specialcases/VAC_DOSE_1.png)
