@@ -22,7 +22,8 @@ Used for productive DCCs issuance
 
 ![REC](REC.png)
 
-### Special cases and deviations
+## Special cases and deviations
+### Datetime & null values for non-existing properties
 A number of DCCs have been issued not adhering to the schema:
 - datetime instead of date
 - null values for non-existing properties
@@ -67,3 +68,8 @@ Snippet from decoded specialcases/VAC-NULL-DATETIME.png
 ```
 
 ![VAC-NULL-DATETIME](specialcases/VAC-NULL-DATETIME.png)
+
+
+### DCC valid before DSC
+A number of DCCs are valid before their corresponding DSC. (Corresponding DSC validFrom lies in the past as of the time of writing.)
+![REC-VALID-BEFORE-DSC](specialcases/REC-VALID-BEFORE-DSC.png)
