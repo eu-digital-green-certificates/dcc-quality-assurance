@@ -26,26 +26,22 @@ import pytest
 import jsonref
 import requests
 import warnings
+import constants
 import jsonschema 
 
 from glob import glob
 from io import BytesIO
 from pathlib import Path
-from zlib import decompress
-from base45 import b45decode
+from DccQrCode import DccQrCode
 from traceback import format_exc
 from datetime import date, datetime, timezone
-from PIL.Image import NONE, open as image_open
 from filecache import HOUR, MINUTE, DAY, filecache
-from pyzbar.pyzbar import decode as qrcode_decode
 
 # COSE / CBOR related
-import cbor2
 from cose.keys import CoseKey
 from cryptography import x509
 from cose.keys.curves import P256
 from cose.keys.keyops import VerifyOp
-from cose.messages import Sign1Message
 from cose.headers import Algorithm, KID
 from cryptography.utils import int_to_bytes
 from cose.keys.keytype import KtyEC2, KtyRSA
@@ -54,110 +50,38 @@ from cose.algorithms import Es256, Ps256, Sha256
 from cryptography.hazmat.primitives.hashes import SHA256
 from cryptography.hazmat.primitives.asymmetric import ec, rsa
 from cose.keys.keyparam import KpAlg, EC2KpX, EC2KpY, EC2KpCurve, RSAKpE, RSAKpN, KpKty, KpKeyOps
+from cryptography.hazmat.backends.openssl.backend import backend as OpenSSLBackend
 
-# ----- Constants -----
-COSE = 'COSE'
-TIMESTAMP_ISO8601_EXTENDED = "%Y-%m-%dT%H:%M:%S.%fZ"
-CONFIG_ERROR = 'CONFIG_ERROR'
-X_RESUME_TOKEN = 'x-resume-token'
-X_KID = 'X-KID'
-FILE_CONTENT = 'FILE_CONTENT'
-FILE_PATH = 'FILE_PATH'
-VER = 'ver'
-ACC_KID_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.com/signercertificateStatus'
-ACC_CERT_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.com/signercertificateUpdate'
-SCHEMA_BASE_URI = 'https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/release/'
-PAYLOAD_ISSUER, PAYLOAD_ISSUE_DATE, PAYLOAD_EXPIRY_DATE, PAYLOAD_HCERT = 1, 6, 4, -260
-DCC_TYPES = {'v': "VAC", 't': "TEST", 'r': "REC"}
-EXTENDED_KEY_USAGE_OIDs = {'t':'1.3.6.1.4.1.0.1847.2021.1.1','v':'1.3.6.1.4.1.0.1847.2021.1.2','r':'1.3.6.1.4.1.0.1847.2021.1.3',
-                           'T':'1.3.6.1.4.1.1847.2021.1.1',  'V':'1.3.6.1.4.1.1847.2021.1.2',  'R':'1.3.6.1.4.1.1847.2021.1.3'}
-
-
-def pytest_generate_tests(metafunc):
-    if "dccQrCode" in metafunc.fixturenames:
-        country_code = metafunc.config.getoption("country_code")
-        test_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        test_files = glob(
-            str(Path(test_dir, country_code, "*", "*.png")), recursive=False)
-        if metafunc.config.getoption("include_special"):
-            test_files.extend( glob(
-                str(Path(test_dir, country_code, "*", "specialcases", "*.png")), recursive=False) )
-        metafunc.parametrize("dccQrCode", test_files, indirect=True)
-
-@pytest.fixture
-def dccQrCode(request):
-    "Create a DccQrCode object from the QR Code PNG file (and cache it)"
-    if not request.param in dccQrCode.cache.keys():
-        dccQrCode.cache[request.param] = DccQrCode(request.param)
-    return dccQrCode.cache[request.param]
-dccQrCode.cache = {}
-
-class DccQrCode():
-    "Represents a DCC QR code based on a file"
-
-    def __init__(self, path):
-        def datetime_to_string(decoder, value):
-            'replace datetime objects with a string representation when loading the CBOR'
-            return {k: v.astimezone(timezone.utc).strftime(TIMESTAMP_ISO8601_EXTENDED) \
-                    if isinstance(v, (date, datetime)) else v for k, v in value.items()}
-
-        self.file_path = path
-        image = image_open( path )
-        self.qr_code_data = qrcode_decode(image)[0].data.decode()
-        if not self.qr_code_data.startswith('HC1:'):
-            raise ValueError('Encoded data does not begin with magic number "HC1:"')
-        self.decompressed = decompress(b45decode(self.qr_code_data[4:]))
-        self.sign1Message = Sign1Message.decode(self.decompressed)
-        self.payload = cbor2.loads(self.sign1Message.payload, object_hook=datetime_to_string)
-        self._path_country = None
-    
-    def get_key_id_base64(self):     
-        "returns the key ID of the COSE message"   
-        if KID in self.sign1Message.phdr:
-            kid = self.sign1Message.phdr[KID]
-        else:
-            kid = self.sign1Message.uhdr[KID]
-
-        return base64.b64encode(kid).decode("ascii")        
-
-    def get_path_schema_version(self): 
-        """Returns the schema version that is encoded in the path (exactly 3 digits separated by dots)
-           or None if no match is found."""
-        _previous = None
-        for subdir_name in self.file_path.split(os.sep):
-            if re.match("^\\d\\.\\d\\.\\d$", subdir_name):
-                self._path_country = _previous
-                return subdir_name
-            _previous = subdir_name
-        return None # --> No path schema version
-
-    def get_path_country(self): 
-        """Returns the country code that is encoded in the path right before the schema version"""
-        if self._path_country is None: 
-            self.get_path_schema_version()
-        return self._path_country
-
-    def get_file_name(self):
-        return self.file_path.split(os.sep)[-1]
-
-
+@filecache(HOUR)
+def valuesets_from_environment():
+    "Downloads and caches valuesets from acceptance environment"
+    valuesets = {}
+    hashes = requests.get(constants.VALUESET_LIST).json()
+    for vs in hashes: 
+        try:
+            valuesets[vs['id']] = requests.get(f'{constants.VALUESET_LIST}/{vs["hash"]}').json()['valueSetValues']
+        except KeyError: 
+            warnings.warn('Could not download value-sets. Skipping tests.')
+            pytest.skip('Could not download value-sets.')
+        
+    return valuesets
 
 @filecache(HOUR)
 def certificates_from_environment():
     "Downloads and caches the certificates from the acceptance environment"
     def get_key_id_dict():
-        response = requests.get(ACC_KID_LIST)
+        response = requests.get(constants.ACC_KID_LIST)
         if not response.ok:
             pytest.fail("KID list not reachable")
         kidDict = {key: None for key in json.loads(response.text)}
         return kidDict
 
     def download_certificates(kid_dict):
-        response = requests.get(ACC_CERT_LIST)
-        while X_RESUME_TOKEN in response.headers and response.ok:
-            kid_dict[response.headers[X_KID]] = response.text
-            response = requests.get(ACC_CERT_LIST, headers={
-                            X_RESUME_TOKEN: response.headers[X_RESUME_TOKEN]})
+        response = requests.get(constants.ACC_CERT_LIST)
+        while constants.X_RESUME_TOKEN in response.headers and response.ok:
+            kid_dict[response.headers[constants.X_KID]] = response.text
+            response = requests.get(constants.ACC_CERT_LIST, headers={
+                            constants.X_RESUME_TOKEN: response.headers[constants.X_RESUME_TOKEN]})
         return kid_dict
     
     return download_certificates(get_key_id_dict())
@@ -198,7 +122,7 @@ def test_algorithm( dccQrCode ):
 def test_dcc_type_in_payload( dccQrCode, pytestconfig ): 
     """Checks whether the payload has exactly one of v, r or t content
        (vaccination, recovery, test certificate)"""
-    dcc_types_in_payload = [ key for key in dccQrCode.payload[PAYLOAD_HCERT][1].keys() if key in ['v', 'r', 't'] ]
+    dcc_types_in_payload = [ key for key in dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys() if key in ['v', 'r', 't'] ]
 
     if pytestconfig.getoption('verbose'):
         print(dccQrCode.payload)
@@ -210,13 +134,13 @@ def test_dcc_type_in_payload( dccQrCode, pytestconfig ):
         pytest.fail('No DCC content (v, r, t) found')
     
     for dcc_type in dcc_types_in_payload:
-        if not dccQrCode.get_file_name().lower().startswith( DCC_TYPES[dcc_type].lower()):
-            pytest.fail(f'File name "{dccQrCode.get_file_name()}" indicates other DCC type. (DCC contains {DCC_TYPES[dcc_type]})')
+        if not dccQrCode.get_file_name().lower().startswith( constants.DCC_TYPES[dcc_type].lower()):
+            pytest.fail(f'File name "{dccQrCode.get_file_name()}" indicates other DCC type. (DCC contains {constants.DCC_TYPES[dcc_type]})')
 
 
 def test_payload_version_matches_path_version( dccQrCode ):
     "Tests whether the payload has the same version as the file's path indicates"
-    assert dccQrCode.payload[PAYLOAD_HCERT][1][VER] == dccQrCode.get_path_schema_version()
+    assert dccQrCode.payload[constants.PAYLOAD_HCERT][1]['ver'] == dccQrCode.get_path_schema_version()
 
 
 @filecache(DAY)
@@ -244,7 +168,7 @@ def get_json_schema(version):
 
     # Before v1.2.1, the datatype was called DGC, now DCC
     main_file = 'DCC.schema.json' if version >= '1.2.1' else 'DGC.schema.json'
-    versioned_path = f'{SCHEMA_BASE_URI}{version}/'
+    versioned_path = f'{constants.SCHEMA_BASE_URI}{version}/'
     # Rewrite the references to id.uvci.eu to the repository above
     # Rewrite to not allow additional properties
     rewritingLoader = RewritingLoader({'https://id.uvci.eu/' : versioned_path,
@@ -260,8 +184,8 @@ def get_json_schema(version):
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_json_schema( dccQrCode ):
     "Performs a schema validation against the ehn-dcc-development/ehn-dcc-schema definition"
-    schema = get_json_schema( dccQrCode.payload[PAYLOAD_HCERT][1][VER] )
-    jsonschema.validate( dccQrCode.payload[PAYLOAD_HCERT][1], schema )
+    schema = get_json_schema( dccQrCode.payload[constants.PAYLOAD_HCERT][1]['ver'] )
+    jsonschema.validate( dccQrCode.payload[constants.PAYLOAD_HCERT][1], schema )
 
 
 def test_verify_signature( dccQrCode, pytestconfig ):
@@ -300,7 +224,7 @@ def test_verify_signature( dccQrCode, pytestconfig ):
     
     cert_base64 = certs[dccQrCode.get_key_id_base64()]
     cert = x509.load_pem_x509_certificate(
-        f'-----BEGIN CERTIFICATE-----\n{cert_base64}\n-----END CERTIFICATE-----'.encode())
+        f'-----BEGIN CERTIFICATE-----\n{cert_base64}\n-----END CERTIFICATE-----'.encode(), OpenSSLBackend)
     extensions = { extension.oid._name:extension for extension in cert.extensions}
 
     if pytestconfig.getoption('verbose'):
@@ -321,15 +245,15 @@ def test_verify_signature( dccQrCode, pytestconfig ):
 
     if 'extendedKeyUsage' in extensions.keys():
         allowed_usages = [oid.dotted_string for oid in extensions['extendedKeyUsage'].value._usages] 
-        if len( set(EXTENDED_KEY_USAGE_OIDs.values()) & set(allowed_usages) ) > 0: # Only check if at least one known OID is used in DSC
-            for cert_type in DCC_TYPES.keys():
-                if cert_type in dccQrCode.payload[PAYLOAD_HCERT][1].keys():
+        if len( set(constants.EXTENDED_KEY_USAGE_OIDs.values()) & set(allowed_usages) ) > 0: # Only check if at least one known OID is used in DSC
+            for cert_type in constants.DCC_TYPES.keys():
+                if cert_type in dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys():
                     # There are 2 versions of extended key usage OIDs in circulation. We simply logged them as upper and lower case 
                     # types, but they actually mean the same. So we treat t == T, v == V and r == R
-                    if EXTENDED_KEY_USAGE_OIDs[cert_type] not in allowed_usages \
-                    and EXTENDED_KEY_USAGE_OIDs[cert_type.upper()] not in allowed_usages: 
-                        pytest.fail(f"DCC is of type {DCC_TYPES[cert_type]}, DSC allows {allowed_usages} "+\
-                                    f"but not {EXTENDED_KEY_USAGE_OIDs[cert_type]} or {EXTENDED_KEY_USAGE_OIDs[cert_type.upper()]}")
+                    if constants.EXTENDED_KEY_USAGE_OIDs[cert_type] not in allowed_usages \
+                    and constants.EXTENDED_KEY_USAGE_OIDs[cert_type.upper()] not in allowed_usages: 
+                        pytest.fail(f"DCC is of type {constants.DCC_TYPES[cert_type]}, DSC allows {allowed_usages} "+\
+                                    f"but not {constants.EXTENDED_KEY_USAGE_OIDs[cert_type]} or {constants.EXTENDED_KEY_USAGE_OIDs[cert_type.upper()]}")
 
   
 
@@ -337,23 +261,23 @@ def test_verify_signature( dccQrCode, pytestconfig ):
 
 def test_country_in_path_matches_issuer( dccQrCode ):
     'Checks whether the country code in the path matches the issuer country'
-    if dccQrCode.get_path_country() in ['EL', 'GR'] and dccQrCode.payload[PAYLOAD_ISSUER] in ['EL','GR']:
+    if dccQrCode.get_path_country() in ['EL', 'GR'] and dccQrCode.payload[constants.PAYLOAD_ISSUER] in ['EL','GR']:
         pass # EL and GR are interchangeable
     else:
-        assert dccQrCode.get_path_country() == dccQrCode.payload[PAYLOAD_ISSUER]
+        assert dccQrCode.get_path_country() == dccQrCode.payload[constants.PAYLOAD_ISSUER]
 
 def test_country_code_formats( dccQrCode ):
     'Checks that country codes are 2 upper case alphabetical characters'
 
     try:
-        country_code = dccQrCode.payload[PAYLOAD_ISSUER] 
+        country_code = dccQrCode.payload[constants.PAYLOAD_ISSUER] 
         assert len(country_code) == 2
         assert country_code.isalpha()
         assert country_code == country_code.upper()
 
-        for cert_type in DCC_TYPES.keys():
-            if cert_type in dccQrCode.payload[PAYLOAD_HCERT][1].keys():
-                for inner_cert in dccQrCode.payload[PAYLOAD_HCERT][1][cert_type]:
+        for cert_type in constants.DCC_TYPES.keys():
+            if cert_type in dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys():
+                for inner_cert in dccQrCode.payload[constants.PAYLOAD_HCERT][1][cert_type]:
                     country_code = inner_cert['co']
                     assert len(country_code) == 2
                     assert country_code.isalpha()
@@ -365,13 +289,40 @@ def test_country_code_formats( dccQrCode ):
 def test_claim_dates( dccQrCode, pytestconfig ):
     'Performs some plausibility checks against date related claims'
 
-    assert dccQrCode.payload[PAYLOAD_ISSUE_DATE] < dccQrCode.payload[PAYLOAD_EXPIRY_DATE]
-    assert datetime.fromtimestamp(dccQrCode.payload[PAYLOAD_ISSUE_DATE]).year >= 2021
+    assert dccQrCode.payload[constants.PAYLOAD_ISSUE_DATE] < dccQrCode.payload[constants.PAYLOAD_EXPIRY_DATE]
+    assert datetime.fromtimestamp(dccQrCode.payload[constants.PAYLOAD_ISSUE_DATE]).year >= 2021
     
-    if 'r' in  dccQrCode.payload[PAYLOAD_HCERT][1].keys() and pytestconfig.getoption('warn_timedelta') : 
-        expiry_from_claim = datetime.fromtimestamp(dccQrCode.payload[PAYLOAD_EXPIRY_DATE])
-        expiry_from_payload = datetime.fromisoformat(dccQrCode.payload[PAYLOAD_HCERT][1]['r'][0]['du'])
+    if 'r' in  dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys() and pytestconfig.getoption('warn_timedelta') : 
+        expiry_from_claim = datetime.fromtimestamp(dccQrCode.payload[constants.PAYLOAD_EXPIRY_DATE])
+        expiry_from_payload = datetime.fromisoformat(dccQrCode.payload[constants.PAYLOAD_HCERT][1]['r'][0]['du'])
         if abs(expiry_from_claim - expiry_from_payload).days > 14:
             warnings.warn('Expiry dates in payload and envelope differ more than 14 days:\n'+
                         f'Claim key 4: {expiry_from_claim.isoformat()}\n'+
                         f'Payload: {expiry_from_payload.isoformat()}')
+
+def test_valuesets( dccQrCode ):
+    "Test if the only entries from valuesets are used for corresponding fields"
+
+    def test_field( data, field_name, valueset_name ):
+        valuesets = valuesets_from_environment()
+        if not data[field_name] in valuesets[valueset_name].keys():
+            pytest.fail(f'"{data[field_name]}" is not a valid value for {field_name} ({valueset_name})')
+
+    hCert = dccQrCode.payload[constants.PAYLOAD_HCERT][1]
+    
+    if 'v' in hCert.keys():
+        test_field( hCert['v'][0], 'vp','sct-vaccines-covid-19' )
+        test_field( hCert['v'][0], 'ma','vaccines-covid-19-auth-holders' )
+        test_field( hCert['v'][0], 'mp','vaccines-covid-19-names' )
+        test_field( hCert['v'][0], 'tg','disease-agent-targeted' )
+
+    elif 't' in dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys():
+        test_field( hCert['t'][0], 'tr','covid-19-lab-result' )
+        if 'ma' in hCert['t'][0].keys():  # Only rapid tests have these
+            test_field( hCert['t'][0], 'ma','covid-19-lab-test-manufacturer-and-name' )
+        test_field( hCert['t'][0], 'tt','covid-19-lab-test-type' )
+        test_field( hCert['t'][0], 'tg','disease-agent-targeted' )
+
+    elif 'r' in dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys():
+        test_field( hCert['r'][0], 'tg','disease-agent-targeted' )
+

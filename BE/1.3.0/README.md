@@ -3,7 +3,7 @@
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 02.07.2021
+* From: 
 * Until:
 
 ## Test files
@@ -16,12 +16,12 @@ Used for productive DCCs issuance
 
 ![TEST](TEST.png)
 
+
 ### Recovery
 
 ![REC](REC.png)
 
 ### Special cases and deviations
+VAC with incomplete date of birth
 
-Vaccination with incomplete date of birth
-
-![VAC with incomplete DOB](specialcases/VAC_DOB.png)
+![VAC_INCOMPLETE_DOB](specialcases/VAC_INCOMPLETE_DOB.png)
