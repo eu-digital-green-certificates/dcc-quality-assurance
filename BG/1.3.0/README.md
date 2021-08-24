@@ -15,12 +15,18 @@ Used for productive DCCs issuance
 
 ### Test
 
-![VAC](TEST.png)
 
 
 ### Recovery
 
 ![REC](REC.png)
 
-### Special cases and deviations
-None
+## Special cases and deviations
+### Additional "dr" field
+Additional "dr" field
+
+![TEST](specialcases/TEST.png)
+
+### DCC valid before DSC
+A number of DCCs are valid before their corresponding DSC. (Corresponding DSC validFrom lies in the past as of the time of writing.)
+![REC-VALID-BEFORE-DSC](specialcases/REC-VALID-BEFORE-DSC.png)

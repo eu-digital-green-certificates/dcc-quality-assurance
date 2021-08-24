@@ -3,7 +3,7 @@
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* from: 28.06.2021
+* from: 12.07.2021
 * until:
 
 ## Test files
@@ -13,11 +13,19 @@ Used for productive DCCs issuance
 ![VAC](VAC.png)
 
 
-### Test
 
-![TEST](TEST.png)
 
 
 ### Recovery
 
 ![REC](REC.png)
+
+## Special Cases
+
+### Test
+
+Field "ma" (manufacturer) exists but is empty.
+The field is optional, so it should be accepted by verifier apps.
+However, empty string is not part of the allowed value sets
+
+![TEST](specialcases/TEST_empty_ma_field.png)

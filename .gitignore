@@ -137,3 +137,13 @@ dmypy.json
 # Certificates
 *.pem
 *.p12
+
+# Excel files
+*.xlsx
+*.xlsm
+
+# Filecache
+tests/*.cache
+
+#MacOS
+.DS_Store

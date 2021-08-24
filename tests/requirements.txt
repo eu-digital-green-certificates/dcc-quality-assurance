@@ -14,3 +14,7 @@ requests
 
 ###### Requirements with Version Specifiers ######`
 cose == 0.9.dev7
+
+###### Optional: uncomment if required
+# coloredlogs  # Fancier log files
+# openpyxl     # for excel export

@@ -1,38 +1,61 @@
 import os 
-from glob import glob
-from pathlib import Path
+import json
 import logging
 import openpyxl
+from glob import glob
+from pathlib import Path
 from argparse import ArgumentParser
 
 config = {
-    'base_url' : 'https://github.com/eu-digital-green-certificates/dcc-quality-assurance/blob/main/',
-    'column_titles' : ['Issuing Country', 'Schema Version', 'Certificate Type', 'Validation Status', 'Code URL', 'Filename'],
-    'column_value_ids' : ['country', 'version', 'type', None, 'url', 'file' ],
-    'sheet' : 'Codes',
+    # Can be overridden by placing a config.json file in the directory
+    "base_url" : "https://github.com/eu-digital-green-certificates/dcc-quality-assurance/blob/main/",
+    "column_titles" : ["Issuing Country", "Schema Version", "Certificate Type", "Validation Status", "Code URL", "Filename"],
+    "column_value_ids" : ["country", "version", "type", None, "url", "file" ],
+    "sheet" : "Codes",
+
+    "__countryfile-doc__" : "Following section can be omitted when not using country files feature",
+    "countryfile-participants" : ["AT", "BE", "BG", "CH", "CY", "CZ", "DE", "DK", "EE", "EL", "ES", "FI", "FR", "HR", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MT", "NL", "NO", "PL", "PT", "RO", "SE", "SI", "SK", "SM", "VA"],
+    "countryfile-sheet" : "Validation Results", "countryfile-startrow" : 4,
+    "countryfile-ccc" : "G2",
+    "countryfile-constants" : {
+        "H2" : "Validation Cycle #", 
+        "J2" : "Validation Period Text"
+    }
 }
 
 def main(args):
     workbook = _get_or_create_xlsx(args.filename, config['sheet'])
     workbook[config['sheet']].delete_rows(2, amount=1000)
 
-    if args.country_template is not None: 
+    file_entry_handlers = [] # List of objects that handle matching files 
+    file_entry_handlers.append(lambda entry : _append_row( workbook[config['sheet']], entry ) )
+
+    if args.country_template is not None:
         try: 
-            country_template = openpyxl.load_workbook(args.country_template)
+            countryFileGenerator = CountryFileGenerator(args.country_template)
+            file_entry_handlers.append( lambda entry: countryFileGenerator.addEntry(entry) )
         except: 
-            print('Country file template was given but could not be loaded')
+            logging.error('Country file template was given but could not be loaded')
+            raise
             return -1
-    else:
-        country_template = None
 
-
+    # Main loop: Find all matches and pass them to all handlers
     for directory in _get_country_directories():
         for match in _matching_files(directory):
-            values = [ match.get(value_id) for value_id in config['column_value_ids']]
-            values = [ value if value is not None else '' for value in values ]
-            workbook[config['sheet']].append(values)
+            for handle in file_entry_handlers:
+                handle(match)
 
+
+    logging.info(f"Saving {args.filename}")
     workbook.save(args.filename)
+    if args.country_template is not None:
+        countryFileGenerator.finalize()
+
+def _append_row(sheet, value_dict):
+    values = [ value_dict.get(value_id) for value_id in config['column_value_ids']]
+    values = [ value if value is not None else '' for value in values ]
+    sheet.append(values)
+
 
 def _get_or_create_xlsx(filename, sheet_to_use='Codes'):
     try: 
@@ -74,6 +97,41 @@ def _get_country_directories():
     # A country directory is any directory that has a name of exactly 2 letters
     return [ dirname for dirname in glob('??') if dirname.isalpha() ]
 
+class CountryFileGenerator: 
+    '''Generates country files from a template. In order to do so, must first collect 
+       reference data from source'''
+
+    def __init__(self, template_file_name):        
+        self.countries = set(config["countryfile-participants"])
+        self.template_file_name = template_file_name
+        self.wb = openpyxl.load_workbook(template_file_name)
+        self.current_row = config["countryfile-startrow"]
+        #self.wb[config['countryfile-sheet']].delete_rows(config['countryfile-startrow'], amount=1000)
+
+    def addEntry(self, entry):
+        #self.countries |= set([entry['country']])
+        sheet = self.wb[config["countryfile-sheet"]] 
+
+        sheet[f"D{self.current_row}"] = entry["url"]
+        sheet[f"E{self.current_row}"] = entry["file"]
+        sheet[f"F{self.current_row}"] = "y" if entry["type"].endswith("SpecialCase") else "n"
+        sheet[f"G{self.current_row}"] = entry["country"]
+        sheet[f"H{self.current_row}"] = entry["version"]
+        sheet[f"I{self.current_row}"] = entry["type"]
+        
+        self.current_row += 1
+
+
+    def finalize(self):
+        base_file_name = self.template_file_name.replace('.xlsx','').replace('_Template','')
+
+        for country in self.countries:
+            logging.info(f"Saving country file for {country}")
+            sheet = self.wb[config["countryfile-sheet"]]
+            sheet[config["countryfile-ccc"]] = country
+            for cell,value in config["countryfile-constants"].items(): 
+                sheet[cell] = value
+            self.wb.save(f"{base_file_name}_{country}.xlsx")
 
 if __name__ == '__main__':
     try: 
@@ -83,6 +141,12 @@ if __name__ == '__main__':
         pass # If we don't have colored logs, it's not important
 
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+
+    try: 
+        config = json.load(open('config.json'))
+        logging.info('Loaded config.json')
+    except:
+        logging.info('Using default configuration. Create a config.json if you want to override.')
 
     parser = ArgumentParser(description='Excel export ')
     parser.add_argument('filename', default='report.xlsx', help='Output file')
