@@ -25,3 +25,7 @@ Used for productive DCCs issuance
 VAC with incomplete date of birth
 
 ![VAC_INCOMPLETE_DOB](specialcases/VAC_INCOMPLETE_DOB.png)
+
+VAC older than 365 days
+
+![VACC_OLDER_THAN_365_DAYS](specialcases/VACC_OLDER_THAN_365_DAYS.png)
