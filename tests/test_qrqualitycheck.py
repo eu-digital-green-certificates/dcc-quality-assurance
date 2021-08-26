@@ -144,7 +144,7 @@ def test_payload_version_matches_path_version( dccQrCode ):
 
 
 @filecache(DAY)
-def get_json_schema(version):
+def get_json_schema(version, extra_eu):
     ''' Get the json schema depending on the version of the DCC data. 
         Schema code is obtained from https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/
     '''
@@ -174,17 +174,26 @@ def get_json_schema(version):
     rewritingLoader = RewritingLoader({'https://id.uvci.eu/' : versioned_path,
                                        "\"properties\"":  "\"additionalProperties\": false, \"properties\""} )
     
+    rewritingLoaderExtraEU = RewritingLoader({'https://id.uvci.eu/' : versioned_path,
+                                       "\"properties\"":  "\"additionalProperties\": true, \"properties\""} )
+    
     print(f'Loading HCERT schema {version} ...')
     try: 
         schema = jsonref.load_uri(f'{versioned_path}{main_file}', loader=rewritingLoader )
+        schemaExtraEU = jsonref.load_uri(f'{versioned_path}{main_file}', loader=rewritingLoaderExtraEU )
     except: 
         raise LookupError(f'Could not load schema definition for {version}')
+    
+    if extra_eu:
+        return schemaExtraEU
     return schema
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_json_schema( dccQrCode ):
     "Performs a schema validation against the ehn-dcc-development/ehn-dcc-schema definition"
-    schema = get_json_schema( dccQrCode.payload[constants.PAYLOAD_HCERT][1]['ver'] )
+    extra_eu = dccQrCode.get_path_country() not in constants.EU_COUNTRIES
+    schema = get_json_schema( dccQrCode.payload[constants.PAYLOAD_HCERT][1]['ver'], extra_eu)
+
     jsonschema.validate( dccQrCode.payload[constants.PAYLOAD_HCERT][1], schema )
 
 
