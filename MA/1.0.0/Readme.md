@@ -1,3 +1,4 @@
+* **JSON schema version**: 1.3.0
 # Morocco - Test files
 
 ---
