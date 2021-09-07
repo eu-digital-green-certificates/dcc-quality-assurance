@@ -24,5 +24,6 @@ Basic DCC with one test entry. Negative Result. Uploaded in the ACC environment.
 
 ### 5. Recovery certificate
 Basic DCC with one recovery entry. Uploaded in the ACC environment.
+
 ![5.Recovery.png](https://github.com/odelpozo-saas/dcc-quality-assurance/blob/patch-2/AD/1.3.0/5.Recovery.png)
 
