@@ -4,7 +4,7 @@
 
 
 
-## Test files
+## Test files - Recovery and Vaccination certificates
 
 1.png - Recovery certificate sample <br />
 2.png - Recovery certificate sample <br />
