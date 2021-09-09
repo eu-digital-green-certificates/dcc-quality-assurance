@@ -9,8 +9,9 @@ EU_COUNTRIES = ['BE', 'EL', 'GR', 'LT', 'PT', 'BG', 'ES', 'LU', 'RO', 'CZ', 'FR'
 ACC_KID_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.com/signercertificateStatus'
 ACC_CERT_LIST = 'https://dgca-verifier-service-eu-acc.cfapps.eu10.hana.ondemand.com/signercertificateUpdate'
 VALUESET_LIST = 'https://dgca-businessrule-service-eu-acc.cfapps.eu10.hana.ondemand.com/valuesets'
+VALUESET_LIST_ALTERNATIVE = 'https://distribution-cff4f7147260.dcc-rules.de/valuesets'
 SCHEMA_BASE_URI = 'https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/release/'
 
-# Headers 
+# Headers
 X_RESUME_TOKEN = 'x-resume-token'
 X_KID = 'X-KID'
