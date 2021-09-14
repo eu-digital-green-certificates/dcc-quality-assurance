@@ -15,12 +15,12 @@ Basic DCC with one vaccination entry, partial immunisation (1/2). Uploaded in th
 ### 3. Test certificate: Valid Negative Result
 Basic DCC with one test entry. Negative Result. Uploaded in the ACC environment.
 
-![TEST-3-Test_Negatiu_Valid.png](TEST-3-Test_Negativo_Valido.png)
+![TEST-3-Test_Negatiu_Valid.png](TEST-3-Test_Negatiu_Valid.png)
 
 ### 4. Test certificate: Invalid Negative Result
 Basic DCC with one test entry. Negative Result. Uploaded in the ACC environment.
 
-![TEST-4-Test_Negatiu_Invalid.png](TEST-4-Test_Negativo_Invalido.png)
+![TEST-4-Test_Negatiu_Invalid.png](TEST-4-Test_Negatiu_Invalid.png)
 
 ### 5. Recovery certificate
 Basic DCC with one recovery entry. Uploaded in the ACC environment.
