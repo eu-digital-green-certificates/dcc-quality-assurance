@@ -21,11 +21,3 @@ Used for Acceptance DCCs issuance
 ### Recovery
 
 ![RECOVERY](RECOVERY.png)
-
-
-### TEST
-
-Has Wrong CO - Schema should not verify
-
-![specialcases/TEST_NAAT_INVALID_CO](specialcases/TEST_NAAT_INVALID_CO.png)  
-
