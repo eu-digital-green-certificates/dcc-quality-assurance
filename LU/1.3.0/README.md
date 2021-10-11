@@ -1,46 +1,50 @@
 # LU - Luxembourg
 
-* **JSON schema version**: 1.3.0
+- **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 22.06.2021
-* Until:
+
+- From: 22.06.2021
+- Until:
 
 ## Test files
 
 ### Vaccination
 
-Vaccination certificate with full date of birth
+![Vaccination certificate](VAC_standard.png)
 
-![VAC](VAC.png)
+### Test NAAT
 
-Vaccination certificate with date of birth without the day
+![NAAT certificate](NAAT_standard.png)
 
-![specialcases/VAC_no_day](specialcases/VAC_no_day.png)
+### Test RAT
 
-Vaccination certificate with date of birth without the day and the month
-
-![specialcases/VAC_no_day_no_month](specialcases/VAC_no_day_no_month.png)
-
-Vaccination certificate with empty date of birth
-
-![specialcases/VAC_no_day_no_month_no_year](specialcases/VAC_no_day_no_month_no_year.png)
-
-### Test
-
-NAAT certificate with full date of birth
-
-![TEST](TEST.png)
-
-RAT certificate with empty date of birth
-
-![specialcases/TEST_RAT](specialcases/TEST_RAT.png)
+![RAT certificate](RAT_standard.png)
 
 ### Recovery
 
-Recovery certificate with date of birth without the day and the month
+![Recovery certificate](REC_standard.png)
 
-![REC](REC.png)
+## Special cases and deviations
 
-### Special cases and deviations
-None
+Date of birth can be provided partially or be empty.
+
+### Vaccination certificate - date of birth without the day
+
+![specialcases/VAC_noday](specialcases/VAC_noday.png)
+
+### Vaccination certificate - date of birth without the day and the month
+
+![specialcases/VAC_nonomonth](specialcases/VAC_nomonth.png)
+
+### Vaccination certificate - empty date of birth
+
+![specialcases/VAC_noyear](specialcases/VAC_noyear.png)
+
+### RAT certificate - empty date of birth
+
+![specialcases/RAT_noyear](specialcases/RAT_noyear.png)
+
+### Recovery certificate - date of birth without the day and the month
+
+![specialcases/REC_nomonth](specialcases/REC_nomonth.png)

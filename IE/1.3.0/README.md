@@ -18,4 +18,10 @@ All tests should be successful.
 
 ### 4 - Recovery certificate
 
-![VAC.png](VAC.png)
+![recovery.png](recovery.png)
+
+### Special cases and deviations
+
+Vaccine certs contain floats for sd and dn instead of int values
+
+![vaccine.png](specialcases/vaccine.png)

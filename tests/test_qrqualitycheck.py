@@ -27,7 +27,7 @@ import jsonref
 import requests
 import warnings
 import constants
-import jsonschema 
+import jsonschema
 
 from glob import glob
 from io import BytesIO
@@ -56,14 +56,19 @@ from cryptography.hazmat.backends.openssl.backend import backend as OpenSSLBacke
 def valuesets_from_environment():
     "Downloads and caches valuesets from acceptance environment"
     valuesets = {}
-    hashes = requests.get(constants.VALUESET_LIST).json()
-    for vs in hashes: 
+    if requests.get(constants.VALUESET_LIST).ok:
+         source_url = constants.VALUESET_LIST
+    else:
+        source_url = constants.VALUESET_LIST_ALTERNATIVE
+
+    hashes = requests.get(source_url).json()
+    for vs in hashes:
         try:
-            valuesets[vs['id']] = requests.get(f'{constants.VALUESET_LIST}/{vs["hash"]}').json()['valueSetValues']
-        except KeyError: 
+            valuesets[vs['id']] = requests.get(f'{source_url}/{vs["hash"]}').json()['valueSetValues']
+        except KeyError:
             warnings.warn('Could not download value-sets. Skipping tests.')
             pytest.skip('Could not download value-sets.')
-        
+
     return valuesets
 
 @filecache(HOUR)
@@ -83,7 +88,7 @@ def certificates_from_environment():
             response = requests.get(constants.ACC_CERT_LIST, headers={
                             constants.X_RESUME_TOKEN: response.headers[constants.X_RESUME_TOKEN]})
         return kid_dict
-    
+
     return download_certificates(get_key_id_dict())
 
 def test_if_dsc_exists( dccQrCode, pytestconfig ):
@@ -119,7 +124,7 @@ def test_algorithm( dccQrCode ):
         pytest.fail("Algorithm must be in Protected header")
 
 
-def test_dcc_type_in_payload( dccQrCode, pytestconfig ): 
+def test_dcc_type_in_payload( dccQrCode, pytestconfig ):
     """Checks whether the payload has exactly one of v, r or t content
        (vaccination, recovery, test certificate)"""
     dcc_types_in_payload = [ key for key in dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys() if key in ['v', 'r', 't'] ]
@@ -129,10 +134,10 @@ def test_dcc_type_in_payload( dccQrCode, pytestconfig ):
 
     if not pytestconfig.getoption('allow_multi_dcc') and len(dcc_types_in_payload) > 1:
         pytest.fail('DCC contains multiple certificates')
-    
-    if len(dcc_types_in_payload) < 1: 
+
+    if len(dcc_types_in_payload) < 1:
         pytest.fail('No DCC content (v, r, t) found')
-    
+
     for dcc_type in dcc_types_in_payload:
         if not dccQrCode.get_file_name().lower().startswith( constants.DCC_TYPES[dcc_type].lower()):
             pytest.fail(f'File name "{dccQrCode.get_file_name()}" indicates other DCC type. (DCC contains {constants.DCC_TYPES[dcc_type]})')
@@ -144,26 +149,26 @@ def test_payload_version_matches_path_version( dccQrCode ):
 
 
 @filecache(DAY)
-def get_json_schema(version):
-    ''' Get the json schema depending on the version of the DCC data. 
+def get_json_schema(version, extra_eu):
+    ''' Get the json schema depending on the version of the DCC data.
         Schema code is obtained from https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/
     '''
     class RewritingLoader:
-        '''Json schema in ehn-dcc-development has absolute references which don't match with the 
+        '''Json schema in ehn-dcc-development has absolute references which don't match with the
             base uri of their repo. The RewritingLoader is supposed to search and replace these uris with
             working links'''
         def __init__(self, rewrites ):
             self.rewrites = rewrites
-    
+
         def __call__(self, uri, **kwargs):
             response = requests.get(uri, **kwargs)
             raw = response.text
             for rw_from, rw_to in self.rewrites.items():
                 raw = raw.replace( rw_from, rw_to )
             return json.loads(raw)
-    
-    # Check if version is three numbers separated by dots 
-    if re.match("^\\d\\.\\d\\.\\d$", version) is None: 
+
+    # Check if version is three numbers separated by dots
+    if re.match("^\\d\\.\\d\\.\\d$", version) is None:
         raise ValueError(f'{version} is not a valid version string')
 
     # Before v1.2.1, the datatype was called DGC, now DCC
@@ -173,18 +178,27 @@ def get_json_schema(version):
     # Rewrite to not allow additional properties
     rewritingLoader = RewritingLoader({'https://id.uvci.eu/' : versioned_path,
                                        "\"properties\"":  "\"additionalProperties\": false, \"properties\""} )
-    
+
+    rewritingLoaderExtraEU = RewritingLoader({'https://id.uvci.eu/' : versioned_path,
+                                       "\"properties\"":  "\"additionalProperties\": true, \"properties\""} )
+
     print(f'Loading HCERT schema {version} ...')
-    try: 
+    try:
         schema = jsonref.load_uri(f'{versioned_path}{main_file}', loader=rewritingLoader )
-    except: 
+        schemaExtraEU = jsonref.load_uri(f'{versioned_path}{main_file}', loader=rewritingLoaderExtraEU )
+    except:
         raise LookupError(f'Could not load schema definition for {version}')
+
+    if extra_eu:
+        return schemaExtraEU
     return schema
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_json_schema( dccQrCode ):
     "Performs a schema validation against the ehn-dcc-development/ehn-dcc-schema definition"
-    schema = get_json_schema( dccQrCode.payload[constants.PAYLOAD_HCERT][1]['ver'] )
+    extra_eu = dccQrCode.get_path_country() not in constants.EU_COUNTRIES
+    schema = get_json_schema( dccQrCode.payload[constants.PAYLOAD_HCERT][1]['ver'], extra_eu)
+
     jsonschema.validate( dccQrCode.payload[constants.PAYLOAD_HCERT][1], schema )
 
 
@@ -201,7 +215,7 @@ def test_verify_signature( dccQrCode, pytestconfig ):
                 {
                     KpKeyOps: [VerifyOp],
                     KpKty: KtyEC2,
-                    EC2KpCurve: P256,  
+                    EC2KpCurve: P256,
                     KpAlg: Es256,      # ECDSA using P-256 and SHA-256
                     EC2KpX: int_to_bytes(cert.public_key().public_numbers().x),
                     EC2KpY: int_to_bytes(cert.public_key().public_numbers().y),
@@ -221,7 +235,7 @@ def test_verify_signature( dccQrCode, pytestconfig ):
             raise ValueError(f'Unsupported certificate agorithm: {cert.signature_algorithm_oid} for verification.')
 
     certs = certificates_from_environment()
-    
+
     cert_base64 = certs[dccQrCode.get_key_id_base64()]
     cert = x509.load_pem_x509_certificate(
         f'-----BEGIN CERTIFICATE-----\n{cert_base64}\n-----END CERTIFICATE-----'.encode(), OpenSSLBackend)
@@ -229,14 +243,14 @@ def test_verify_signature( dccQrCode, pytestconfig ):
 
     if pytestconfig.getoption('verbose'):
         if 'extendedKeyUsage' in extensions.keys():
-            allowed_usages = [oid.dotted_string for oid in extensions['extendedKeyUsage'].value._usages] 
+            allowed_usages = [oid.dotted_string for oid in extensions['extendedKeyUsage'].value._usages]
         else:
             allowed_usages = 'ANY'
         print(f'\nCert: {cert_base64}\nAllowed Cert Usages: {allowed_usages}\nKeyID: {dccQrCode.get_key_id_base64()}')
 
 
     key = key_from_cert( cert )
-    fingerprint = cert.fingerprint(SHA256())        
+    fingerprint = cert.fingerprint(SHA256())
     assert dccQrCode.get_key_id_base64() == base64.b64encode(fingerprint[0:8]).decode("ascii")
 
     dccQrCode.sign1Message.key = key_from_cert(cert)
@@ -244,18 +258,18 @@ def test_verify_signature( dccQrCode, pytestconfig ):
         pytest.fail(f"Signature could not be verified with signing certificate {cert_base64}")
 
     if 'extendedKeyUsage' in extensions.keys():
-        allowed_usages = [oid.dotted_string for oid in extensions['extendedKeyUsage'].value._usages] 
+        allowed_usages = [oid.dotted_string for oid in extensions['extendedKeyUsage'].value._usages]
         if len( set(constants.EXTENDED_KEY_USAGE_OIDs.values()) & set(allowed_usages) ) > 0: # Only check if at least one known OID is used in DSC
             for cert_type in constants.DCC_TYPES.keys():
                 if cert_type in dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys():
-                    # There are 2 versions of extended key usage OIDs in circulation. We simply logged them as upper and lower case 
+                    # There are 2 versions of extended key usage OIDs in circulation. We simply logged them as upper and lower case
                     # types, but they actually mean the same. So we treat t == T, v == V and r == R
                     if constants.EXTENDED_KEY_USAGE_OIDs[cert_type] not in allowed_usages \
-                    and constants.EXTENDED_KEY_USAGE_OIDs[cert_type.upper()] not in allowed_usages: 
+                    and constants.EXTENDED_KEY_USAGE_OIDs[cert_type.upper()] not in allowed_usages:
                         pytest.fail(f"DCC is of type {constants.DCC_TYPES[cert_type]}, DSC allows {allowed_usages} "+\
                                     f"but not {constants.EXTENDED_KEY_USAGE_OIDs[cert_type]} or {constants.EXTENDED_KEY_USAGE_OIDs[cert_type.upper()]}")
 
-  
+
 
 
 
@@ -270,7 +284,7 @@ def test_country_code_formats( dccQrCode ):
     'Checks that country codes are 2 upper case alphabetical characters'
 
     try:
-        country_code = dccQrCode.payload[constants.PAYLOAD_ISSUER] 
+        country_code = dccQrCode.payload[constants.PAYLOAD_ISSUER]
         assert len(country_code) == 2
         assert country_code.isalpha()
         assert country_code == country_code.upper()
@@ -291,8 +305,8 @@ def test_claim_dates( dccQrCode, pytestconfig ):
 
     assert dccQrCode.payload[constants.PAYLOAD_ISSUE_DATE] < dccQrCode.payload[constants.PAYLOAD_EXPIRY_DATE]
     assert datetime.fromtimestamp(dccQrCode.payload[constants.PAYLOAD_ISSUE_DATE]).year >= 2021
-    
-    if 'r' in  dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys() and pytestconfig.getoption('warn_timedelta') : 
+
+    if 'r' in  dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys() and pytestconfig.getoption('warn_timedelta') :
         expiry_from_claim = datetime.fromtimestamp(dccQrCode.payload[constants.PAYLOAD_EXPIRY_DATE])
         expiry_from_payload = datetime.fromisoformat(dccQrCode.payload[constants.PAYLOAD_HCERT][1]['r'][0]['du'])
         if abs(expiry_from_claim - expiry_from_payload).days > 14:
@@ -309,7 +323,7 @@ def test_valuesets( dccQrCode ):
             pytest.fail(f'"{data[field_name]}" is not a valid value for {field_name} ({valueset_name})')
 
     hCert = dccQrCode.payload[constants.PAYLOAD_HCERT][1]
-    
+
     if 'v' in hCert.keys():
         test_field( hCert['v'][0], 'vp','sct-vaccines-covid-19' )
         test_field( hCert['v'][0], 'ma','vaccines-covid-19-auth-holders' )

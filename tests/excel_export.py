@@ -1,4 +1,4 @@
-import os 
+import os
 import json
 import logging
 import openpyxl
@@ -18,7 +18,7 @@ config = {
     "countryfile-sheet" : "Validation Results", "countryfile-startrow" : 4,
     "countryfile-ccc" : "G2",
     "countryfile-constants" : {
-        "H2" : "Validation Cycle #", 
+        "H2" : "Validation Cycle #",
         "J2" : "Validation Period Text"
     }
 }
@@ -27,14 +27,14 @@ def main(args):
     workbook = _get_or_create_xlsx(args.filename, config['sheet'])
     workbook[config['sheet']].delete_rows(2, amount=1000)
 
-    file_entry_handlers = [] # List of objects that handle matching files 
+    file_entry_handlers = [] # List of objects that handle matching files
     file_entry_handlers.append(lambda entry : _append_row( workbook[config['sheet']], entry ) )
 
     if args.country_template is not None:
-        try: 
+        try:
             countryFileGenerator = CountryFileGenerator(args.country_template)
             file_entry_handlers.append( lambda entry: countryFileGenerator.addEntry(entry) )
-        except: 
+        except:
             logging.error('Country file template was given but could not be loaded')
             raise
             return -1
@@ -58,9 +58,9 @@ def _append_row(sheet, value_dict):
 
 
 def _get_or_create_xlsx(filename, sheet_to_use='Codes'):
-    try: 
+    try:
         wb = openpyxl.load_workbook(filename)
-    except: 
+    except:
         wb = openpyxl.Workbook()
         wb.active.title = sheet_to_use
         wb.active.append(config['column_titles'])
@@ -72,36 +72,38 @@ def _get_or_create_xlsx(filename, sheet_to_use='Codes'):
     return wb
 
 def _matching_files(directory):
-    certificate_types = ['TEST','VAC','REC']
-    
+    certificate_types = ['TEST','VAC','REC','MULTI']
+
     for ctype in certificate_types:
         for match in glob(str(Path(directory,'*' , f'{ctype}*.png'))):
             version = match.split(os.sep)[-2]
-            yield { 'type':ctype, 
-                    'country':directory, 
-                    'version':version, 
+            yield { 'type':ctype,
+                    'country':directory,
+                    'version':version,
                     'url' : config['base_url']+match.replace(os.sep,'/'),
                     'file' : Path(match).name }
 
     for ctype in certificate_types:
         for match in glob(str(Path(directory, '*' ,'specialcases' , f'{ctype}*.png'))):
             version = match.split(os.sep)[-3]
-            yield { 'type':f'{ctype} SpecialCase', 
-                    'country':directory, 
-                    'version':version, 
+            yield { 'type':f'{ctype} SpecialCase',
+                    'country':directory,
+                    'version':version,
                     'url' : config['base_url']+match.replace(os.sep,'/'),
                     'file' : Path(match).name }
 
 
 def _get_country_directories():
-    # A country directory is any directory that has a name of exactly 2 letters
-    return [ dirname for dirname in glob('??') if dirname.isalpha() ]
+    # A country directory is any directory that has a name of exactly 2 or 3 letters
+    twoLetters = [dirname for dirname in glob('??') if dirname.isalpha()]
+    threeLetters = [dirname for dirname in glob('???') if dirname.isalpha()]
+    return twoLetters+threeLetters
 
-class CountryFileGenerator: 
-    '''Generates country files from a template. In order to do so, must first collect 
+class CountryFileGenerator:
+    '''Generates country files from a template. In order to do so, must first collect
        reference data from source'''
 
-    def __init__(self, template_file_name):        
+    def __init__(self, template_file_name):
         self.countries = set(config["countryfile-participants"])
         self.template_file_name = template_file_name
         self.wb = openpyxl.load_workbook(template_file_name)
@@ -110,7 +112,7 @@ class CountryFileGenerator:
 
     def addEntry(self, entry):
         #self.countries |= set([entry['country']])
-        sheet = self.wb[config["countryfile-sheet"]] 
+        sheet = self.wb[config["countryfile-sheet"]]
 
         sheet[f"D{self.current_row}"] = entry["url"]
         sheet[f"E{self.current_row}"] = entry["file"]
@@ -118,7 +120,7 @@ class CountryFileGenerator:
         sheet[f"G{self.current_row}"] = entry["country"]
         sheet[f"H{self.current_row}"] = entry["version"]
         sheet[f"I{self.current_row}"] = entry["type"]
-        
+
         self.current_row += 1
 
 
@@ -129,12 +131,12 @@ class CountryFileGenerator:
             logging.info(f"Saving country file for {country}")
             sheet = self.wb[config["countryfile-sheet"]]
             sheet[config["countryfile-ccc"]] = country
-            for cell,value in config["countryfile-constants"].items(): 
+            for cell,value in config["countryfile-constants"].items():
                 sheet[cell] = value
             self.wb.save(f"{base_file_name}_{country}.xlsx")
 
 if __name__ == '__main__':
-    try: 
+    try:
         import coloredlogs
         coloredlogs.install()
     except:
@@ -142,7 +144,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
 
-    try: 
+    try:
         config = json.load(open('config.json'))
         logging.info('Loaded config.json')
     except:

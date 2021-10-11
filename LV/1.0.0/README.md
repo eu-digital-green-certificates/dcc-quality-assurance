@@ -37,14 +37,6 @@ Used for productive DCCs issuance
 
 
 
-### A number of Test DCCs have been issued with NULL values in nm,ma
-
-### Test
-
-![TEST](specialcases/TEST_NULL_values_in_nm_ma.png)
-
-
-
 ### A number of Recovery DCCs have been issued before df and df-fr=9 
 
 ### Recovery
