@@ -12,6 +12,6 @@ Used for Acceptance DCCs issuance
 
 ![VAC](VAC.png)
 
-### Test (RAT)
+### Test
 
 ![TEST](TEST.png)
