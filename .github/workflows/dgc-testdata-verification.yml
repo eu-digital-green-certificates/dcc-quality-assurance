@@ -30,7 +30,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        sudo apt-get install libzbar0        
+        sudo apt-get install libzbar0
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
         if [ -f tests/requirements.txt ]; then pip install -r tests/requirements.txt; fi
@@ -40,26 +40,27 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Validate DGC Test Data Pull Request
+    - name: Validate DCC QA Pull Request
       if: ${{ github.event_name != 'workflow_dispatch' }}
+      env:
+        DCC_KID_LIST: ${{ secrets.DCC_KID_LIST }}
+        DCC_CERT_LIST: ${{ secrets.DCC_CERT_LIST }}
+        DCC_VALUESET_LIST_ALT: ${{ secrets.DCC_VALUESET_LIST_ALT }}
+        # Not official reference, just used for quick check of pull requests
+        DCC_VALUESET_LIST: https://distribution-cff4f7147260.dcc-rules.de/valuesets
+        DCC_SCHEMA_BASE_URI: https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/release/
       run: |
-        pytest --tb=short -rfEx --md-report --md-report-verbose=1 --md-report-zeros=number --html=dgc_testdata_report.html --self-contained-html --junit-xml=pytest.xml
-    - name: Validate DGC Test Data Workflow Dispatch
+        pytest --tb=short --no-signature-check -rfEx --md-report --md-report-verbose=1 --md-report-zeros=number --html=dgc_testdata_report.html --self-contained-html --junit-xml=pytest.xml
+    - name: Validate DCC QA Workflow Dispatch
       if: ${{ github.event_name == 'workflow_dispatch' }}
+      env:
+        DCC_KID_LIST: ${{ secrets.DCC_KID_LIST }}
+        DCC_CERT_LIST: ${{ secrets.DCC_CERT_LIST }}
+        DCC_VALUESET_LIST: ${{ secrets.DCC_VALUESET_LIST }}
+        DCC_VALUESET_LIST_ALT: ${{ secrets.DCC_VALUESET_LIST_ALT }}
+        DCC_SCHEMA_BASE_URI: ${{ secrets.DCC_SCHEMA_BASE_URI }}
       run: |
         pytest -vs -C=${{ github.event.inputs.country_code }} ${{ github.event.inputs.additional_params }} --tb=short -rfEx --md-report --md-report-verbose=1 --md-report-zeros=number --html=dgc_testdata_report.html --self-contained-html --junit-xml=pytest.xml
-    - name: Upload DGC Test Data Validation Results
-      uses: actions/upload-artifact@v2
-      with:
-        name: dgc-testdata-report
-        path: |
-          dgc_testdata_report.html
-      if: ${{ always() }}
-    - name: Publish DGC Test Data Validation Results
-      uses: eu-digital-green-certificates/publish-unit-test-result-action@v1
-      if: always()
-      with:
-        files: pytest.xml
-    
+
 
 
