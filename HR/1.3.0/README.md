@@ -1,9 +1,9 @@
-# CY - Cyprus
+# HR - Croatia
 
-* **JSON schema version**: 1.3.0
+* **JSON schema version**: 1.0.0
 
 Used for productive DCCs issuance
-* From: 7.07.2021
+* From: 07.06.2021
 * Until:
 
 ## Test files

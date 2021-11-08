@@ -91,6 +91,21 @@ def certificates_from_environment():
 
     return download_certificates(get_key_id_dict())
 
+
+def test_plausibility_checks( dccQrCode ):
+    '''Perform various plausibility checks:
+        - RAT tests should not have "nm" field
+        - NAA/PCR tests should not have "ma" field
+    '''
+    hcert = dccQrCode.payload[constants.PAYLOAD_HCERT][1]
+
+    if 't' in hcert.keys():
+        assert 'tt' in hcert['t'][0].keys(), 'Test type is not present in TEST-DCC'
+        if hcert['t'][0]['tt'] == 'LP6464-4': 
+            assert 'ma' not in hcert['t'][0].keys() or hcert['t'][0]['ma'] == '', "PCR/NAA tests should not have a ma-field"
+        if hcert['t'][0]['tt'] == 'LP217198-3': 
+            assert 'nm' not in hcert['t'][0].keys() or hcert['t'][0]['nm'] == '', "Rapid tests should not have a nm-field"
+
 def test_if_dsc_exists( dccQrCode, pytestconfig ):
     "Checks whether the DCC's key is listed on the national backend of the acceptance environment"
     if pytestconfig.getoption('no_signature_check'):

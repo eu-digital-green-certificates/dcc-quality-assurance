@@ -14,11 +14,12 @@ Used for productive DCCs issuance
 
 ### Test
 
-![TEST](TEST.png)
-
 ### Recovery
 
 ![REC](REC.png)
+
+
+## Special cases and deviations
 
 ### Vaccination - dob, partial date
 
@@ -28,7 +29,14 @@ Used for productive DCCs issuance
 
 ![specialcases/VAC](specialcases/VAC-12.png)
 
-### Special cases and deviations
+
+### Test
+
+DCC is for PCR/NAA test but has rapid test manufacturer in content:
+
+![TEST](specialcases/TEST.png)
+
+
 
 Validity for QR-codes.
  - expiration:
