@@ -1,6 +1,6 @@
 # LB - Lebanon
 
-* **JSON schema version**: 1.3.0
+* **JSON schema version**: 1.0.0
 
 Used for productive DCCs issuance
 * From: ?
@@ -18,9 +18,6 @@ Used for productive DCCs issuance
 
 ### Test
 
-![TEST-PCR-01.png](TEST-PCR-01.png)
-
-![TEST-PCR-02.png](TEST-PCR-02.png)
 
 ### Recovery
 
