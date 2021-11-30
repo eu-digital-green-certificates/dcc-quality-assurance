@@ -290,8 +290,10 @@ def test_verify_signature( dccQrCode, pytestconfig ):
 
 def test_country_in_path_matches_issuer( dccQrCode ):
     'Checks whether the country code in the path matches the issuer country'
-    if dccQrCode.get_path_country() in ['EL', 'GR'] and dccQrCode.payload[constants.PAYLOAD_ISSUER] in ['EL','GR']:
-        pass # EL and GR are interchangeable
+    if dccQrCode.get_path_country() in ['EL', 'GR']:
+        assert dccQrCode.payload[constants.PAYLOAD_ISSUER] in ['EL','GR'] # EL and GR are interchangeable
+    elif dccQrCode.get_path_country() == 'GB':
+        assert dccQrCode.payload[constants.PAYLOAD_ISSUER] in 'GB,GG,GI,JE'.split(',')
     else:
         assert dccQrCode.get_path_country() == dccQrCode.payload[constants.PAYLOAD_ISSUER]
 
