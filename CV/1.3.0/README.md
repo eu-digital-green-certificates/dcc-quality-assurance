@@ -16,7 +16,6 @@ Used for productive DCCs issuance
 
 ![TEST](TEST.png)
 
-
 ### Recovery
 
 ![REC](REC.png)
