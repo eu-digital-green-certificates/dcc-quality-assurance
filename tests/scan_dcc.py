@@ -9,12 +9,15 @@ from PIL import Image
 from pyzbar.pyzbar import decode as qr_decode
 from base45 import b45decode
 from cose.messages import Sign1Message
+from datetime import datetime
 
 def main(args):
     if args.algorithm:
         with_all_dccs( print_algorithm, error_handler=_throw, exclude='venv*' )
+    if not args.validity_at is None:
+        validation_clock = datetime.fromisoformat(args.validity_at)
+        with_all_dccs( lambda f: validity_at(validation_clock, f), error_handler=_throw, exclude='venv*' )
 
-        
 def with_all_dccs( function, error_handler=None, exclude="" ):
     ''' Walks through the current directory and all subdirectories and calls
         "function" for every png file that does not match the exclude filter. 
@@ -33,9 +36,16 @@ def with_all_dccs( function, error_handler=None, exclude="" ):
 
 
 
-def load_dcc( file ):
+def load_dcc( file ):    
     '''Load QR code from image file and return Sign1Message and Payload
        Usage: s1msg, payload = load_dcc('my_dcc.png')
+    '''
+    s1msg, payload, rawdata = load_dcc_with_rawdata(file)
+    return s1msg, payload
+
+def load_dcc_with_rawdata( file ):
+    '''Load QR code from image file and return Sign1Message, Payload and Raw Data
+       Usage: s1msg, payload, raw_data = load_dcc('my_dcc.png')
     '''
     image = Image.open(file)
     qr_code = qr_decode(image)[0]
@@ -49,7 +59,7 @@ def load_dcc( file ):
     #    print(f'Protected Header: {cose_data.phdr}')
     #    print(f'KID = {get_kid_b64(cose_data)}')
     payload = cbor2.loads(s1msg.payload)
-    return s1msg, payload
+    return s1msg, payload, qr_code_data
 
 def print_only( file ):
     print(file)
@@ -58,6 +68,15 @@ def _throw( file, error ):
     'Minimalistic error handler: Simply raise the exeption again'
     print('Error reading', file)
     raise error
+
+def validity_at( validation_clock, file ):
+    s1msg, payload = load_dcc(file)
+    dcc_from = datetime.fromtimestamp(payload[6])
+    dcc_until = datetime.fromtimestamp(payload[4])
+    validity = 'VALID' if validation_clock >= dcc_from and validation_clock <= dcc_until else 'INVALID'
+        
+    print( '\t'.join([file, validity, validation_clock.isoformat()]))  
+
 
 def print_algorithm( file ):
     '''Print the algorithm of a DCC 
@@ -76,6 +95,7 @@ def print_algorithm( file ):
 if __name__ == '__main__':
     parser = ArgumentParser(description='Scan all DCCs for something')
     parser.add_argument('--algorithm', action='store_true', help='Print algorithm')
+    parser.add_argument('--validity-at', action='store', default=None, help='Check validity at ISO date')
     args = parser.parse_args()
     main(args)
 
