@@ -1,6 +1,6 @@
 # ME - Montenegro
 
-* **JSON schema version**: 1.3.0
+* **JSON schema version**: 1.0.
 
 Used for productive DCCs issuance
 * from: 10.12.2021.
