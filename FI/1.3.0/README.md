@@ -25,3 +25,17 @@ Used for productive DCCs issuance
 
 ### Recovery, positive test taken 20.5.2021
 ![REC](REC.png)
+
+## Test files for 31.1.2022 testing
+
+### VAC_FI.png
+
+![VAC_FI.png](VAC_FI.png)
+
+### REC_FI.png
+
+[REC_FI.png](REC_FI.png)
+
+### TEST_FI.png
+
+[TEST_FI.png](TEST_FI.png)
