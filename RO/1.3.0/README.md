@@ -12,7 +12,13 @@ Used for productive DCCs issuance
 
 ![VAC](VAC.png)
 
+### Vaccination - booster
+
+![VAC_BOOSTER](VAC_BOOSTER.png)
+
 ### Test
+
+![TEST](TEST.png)
 
 ### Recovery
 
