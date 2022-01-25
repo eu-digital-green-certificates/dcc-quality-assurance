@@ -34,8 +34,8 @@ Used for productive DCCs issuance
 
 ### REC_FI.png
 
-[REC_FI.png](REC_FI.png)
+![REC_FI.png](REC_FI.png)
 
 ### TEST_FI.png
 
-[TEST_FI.png](TEST_FI.png)
+![TEST_FI.png](TEST_FI.png)
