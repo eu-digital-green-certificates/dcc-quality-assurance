@@ -36,12 +36,6 @@ Used for productive DCCs issuance
 ![specialcases/VAC](specialcases/VAC-12.png)
 
 
-### Test
-
-DCC is for PCR/NAA test but has rapid test manufacturer in content:
-
-![TEST](specialcases/TEST.png)
-
 
 
 Validity for QR-codes.
