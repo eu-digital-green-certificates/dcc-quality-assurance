@@ -8,6 +8,14 @@ Used for Acceptance DCCs issuance
 
 ## Test files
 
+### Booster Vaccination Certificate valid from [17.01.22]
+
+![VAC](VAC_BOOSTER.png)
+
+### Test certificate valid from [31.01.22, 06:00am CET]
+
+![TEST](TEST_20220131.png)
+
 ### Vaccination
 
 ![VAC](VAC.png)
@@ -15,3 +23,7 @@ Used for Acceptance DCCs issuance
 ### Test
 
 ![TEST](TEST.png)
+
+### Recovery
+
+AE does not issue recovery certificate currently.
