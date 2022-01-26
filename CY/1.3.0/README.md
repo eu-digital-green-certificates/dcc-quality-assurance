@@ -2,24 +2,22 @@
 
 * **JSON schema version**: 1.3.0
 
-Used for productive DCCs issuance
-* From: 7.07.2021
+Acceptance DCCs issuance
+* From: 17.01.2022
 * Until:
 
 ## Test files
 
 ### Vaccination
 
-![VAC](VAC.png)
-
-### Test
+![VAC_01](VAC_01.png)
 
 ### Recovery
 
-![REC](REC.png)
+![REC_01](REC_01.PNG)
 
-### Special cases and deviations
+### Laboratory Test
 
-DCC is for rapid test but has NAA test manufacturer in content:
+DCC is for rapid test:
 
-![TEST](specialcases/TEST.png)
+![TEST_01](TEST_01.PNG)
