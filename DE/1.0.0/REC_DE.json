@@ -1,0 +1,21 @@
+{
+  "nam": {
+    "gn"  : "Karl-Theodor Maria Nikolaus Johann Jacob Philipp Franz Joseph Sylvester",
+    "fn"  : "Guttenberg",
+    "gnt" : "KARL<THEODOR<MARIA<NIKOLAUS<JOHANN<JACOB<PHILIPP<FRANZ<JOSEPH<SYLVESTER",
+    "fnt" : "GUTTENBERG"
+  },
+  "dob": "1971-12-05",
+  "r": [
+    {
+      "tg": "840539006",
+      "fr": "2021-12-31",
+      "df": "2022-01-17T05:00:00Z",
+      "du": "2022-04-16T05:00:00Z",
+      "co": "DE",
+      "is": "Bundesministerium für Gesundheit",
+      "ci": "URN:UVCI:01DE/A23234242/50CUH2UMZUJW382VP58G2Q#F"
+    }
+  ],
+  "ver": "1.0.0"
+}

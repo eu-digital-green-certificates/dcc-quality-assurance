@@ -1,0 +1,24 @@
+{
+  "nam": {
+    "gn": "Юрий",
+    "fn": "Гагаринß",
+    "gnt": "JURI",
+    "fnt": "GAGARIN"
+  },
+  "dob": "1934-03-09",
+  "v": [
+    {
+      "tg": "840539006",
+      "vp": "1119349007",
+      "ma": "ORG-100001417",
+      "mp": "EU/1/20/1525",
+      "dn": 1,
+      "sd": 1,
+      "dt": "2022-01-01",
+      "co": "DE",
+      "is": "Bundesministerium für Gesundheit",
+      "ci": "URN:UVCI:01DE/A80013335/50CUH2UMZUJW382VP58G2Q#F"
+    }
+  ],
+  "ver": "1.0.0"
+}
