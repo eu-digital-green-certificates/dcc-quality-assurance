@@ -29,11 +29,6 @@ import warnings
 import constants
 import jsonschema
 
-from glob import glob
-from io import BytesIO
-from pathlib import Path
-from DccQrCode import DccQrCode
-from traceback import format_exc
 from datetime import date, datetime, timezone
 from filecache import HOUR, MINUTE, DAY, filecache
 
@@ -121,7 +116,7 @@ def test_tags( dccQrCode ):
     if firstByte == 132:
         msgType = "List"
     elif firstByte == 216:
-        msgType == "CWT"
+        msgType = "CWT"
     elif firstByte == 210:
         msgType = "Sign1"
     else:
@@ -164,7 +159,7 @@ def test_payload_version_matches_path_version( dccQrCode ):
 
 
 @filecache(DAY)
-def get_json_schema(version, extra_eu):
+def get_json_schema(version, allow_extra_fields):
     ''' Get the json schema depending on the version of the DCC data.
         Schema code is obtained from https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/
     '''
@@ -191,28 +186,27 @@ def get_json_schema(version, extra_eu):
     versioned_path = f'{constants.SCHEMA_BASE_URI}{version}/'
     # Rewrite the references to id.uvci.eu to the repository above
     # Rewrite to not allow additional properties
-    rewritingLoader = RewritingLoader({'https://id.uvci.eu/' : versioned_path,
+    if not allow_extra_fields:
+        loader = RewritingLoader({'https://id.uvci.eu/' : versioned_path,
                                        "\"properties\"":  "\"additionalProperties\": false, \"properties\""} )
-
-    rewritingLoaderExtraEU = RewritingLoader({'https://id.uvci.eu/' : versioned_path,
-                                       "\"properties\"":  "\"additionalProperties\": true, \"properties\""} )
+    else:
+        loader = RewritingLoader({'https://id.uvci.eu/' : versioned_path })
 
     print(f'Loading HCERT schema {version} ...')
     try:
-        schema = jsonref.load_uri(f'{versioned_path}{main_file}', loader=rewritingLoader )
-        schemaExtraEU = jsonref.load_uri(f'{versioned_path}{main_file}', loader=rewritingLoaderExtraEU )
+        schema = jsonref.load_uri(f'{versioned_path}{main_file}', loader=loader )
     except:
         raise LookupError(f'Could not load schema definition for {version}')
 
-    if extra_eu:
-        return schemaExtraEU
     return schema
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
-def test_json_schema( dccQrCode ):
+def test_json_schema( dccQrCode, pytestconfig ):
     "Performs a schema validation against the ehn-dcc-development/ehn-dcc-schema definition"
-    extra_eu = dccQrCode.get_path_country() not in constants.EU_COUNTRIES
-    schema = get_json_schema( dccQrCode.payload[constants.PAYLOAD_HCERT][1]['ver'], extra_eu)
+    # Extra fields are allowed by default for non-EU countries. But forbidden flag overrides the
+    allow_extra_fields = dccQrCode.get_path_country() not in constants.EU_COUNTRIES \
+                         and not pytestconfig.getoption('forbid_extra_fields')
+    schema = get_json_schema( dccQrCode.payload[constants.PAYLOAD_HCERT][1]['ver'], allow_extra_fields)
 
     jsonschema.validate( dccQrCode.payload[constants.PAYLOAD_HCERT][1], schema )
 
@@ -290,8 +284,10 @@ def test_verify_signature( dccQrCode, pytestconfig ):
 
 def test_country_in_path_matches_issuer( dccQrCode ):
     'Checks whether the country code in the path matches the issuer country'
-    if dccQrCode.get_path_country() in ['EL', 'GR'] and dccQrCode.payload[constants.PAYLOAD_ISSUER] in ['EL','GR']:
-        pass # EL and GR are interchangeable
+    if dccQrCode.get_path_country() in ['EL', 'GR']:
+        assert dccQrCode.payload[constants.PAYLOAD_ISSUER] in ['EL','GR'] # EL and GR are interchangeable
+    elif dccQrCode.get_path_country() == 'GB':
+        assert dccQrCode.payload[constants.PAYLOAD_ISSUER] in 'GB,GG,GI,JE'.split(',')
     else:
         assert dccQrCode.get_path_country() == dccQrCode.payload[constants.PAYLOAD_ISSUER]
 

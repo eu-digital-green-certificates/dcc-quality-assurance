@@ -11,6 +11,7 @@ Used for productive DCCs issuance
 ### Vaccination
 
 ![VAC](VAC.png)
+![VAC_BOOSTER](VAC_BOOSTER.png)
 
 ### Test
 
