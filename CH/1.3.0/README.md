@@ -10,7 +10,7 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC](VAC.png)
+![VAC](VAC_CH_3of3.png)
 
 
 
@@ -18,7 +18,7 @@ Used for productive DCCs issuance
 
 ### Recovery
 
-![REC](REC.png)
+![REC](REC_CH.png)
 
 ## Special Cases
 
