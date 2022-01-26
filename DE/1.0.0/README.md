@@ -18,7 +18,7 @@ Used for productive DCCs issuance
 
 ### Recovery
 
-![REC](REC.png)
+![REC](QR Codes/REC_DE.png)
 
 ### Special cases and deviations
 None
