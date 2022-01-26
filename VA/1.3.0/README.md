@@ -16,7 +16,7 @@ QRCodes for 6th validation cycle starting on 31 January 2022
 
 ### Recovery
 
-![REC](REC_th.png)
+![REC](REC_6th.png)
 
 ### Special cases and deviations
 None
