@@ -20,6 +20,11 @@ Used for productive DCCs issuance
 
 ![REC](REC_CH.png)
 
+### Test
+
+![REC](TEST_PCR_CH.png)
+
+
 ## Special Cases
 
 ### Test
@@ -28,4 +33,4 @@ Field "ma" (manufacturer) exists but is empty.
 The field is optional, so it should be accepted by verifier apps.
 However, empty string is not part of the allowed value sets
 
-![TEST](specialcases/TEST_empty_ma_field.png)
+![TEST_SPECIAL](specialcases/TEST_empty_ma_field.png)
