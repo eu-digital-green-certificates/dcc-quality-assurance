@@ -10,25 +10,25 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![1](1.png)
+![VAC-1](VAC-1.png)
 
-![2](2.png)
+![VAC-2](VAC-2.png)
 
-![3](3.png)
+![VAC-3](VAC-3.png)
 
 ### Test
 
 #### NAAT:
 
-![4](4.png)
+![TEST-NAAT](TEST-NAAT.png)
 
 #### RAT:
 
-![5](5.png)
+![TEST-RAT](TEST-RAT.png)
 
 ### Recovery
 
-![6](6.png)
+![REC](REC.png)
 
 ### Special cases and deviations
 
