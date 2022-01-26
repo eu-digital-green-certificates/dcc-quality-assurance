@@ -21,7 +21,6 @@ Used for productive DCCs issuance
 
 ![REC](QR%20Codes/REC_DE.png)
 
-### Special cases and deviations
 
 ### Vaccination certificate from an invalidated issuer
 
