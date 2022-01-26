@@ -12,9 +12,6 @@ Used for productive DCCs issuance
 
 ![VAC](QR%20Codes/VAC_DE.png)
 
-### Invalidated Issuer Vaccination
-
-![VAC_Inv](QR%20Codes/VAC_DE_invalidated.png)
 
 ### Test
 
@@ -25,4 +22,7 @@ Used for productive DCCs issuance
 ![REC](QR%20Codes/REC_DE.png)
 
 ### Special cases and deviations
-None
+
+### Vaccination certificate from an invalidated issuer
+
+![VAC_Inv](QR%20Codes/VAC_DE_invalidated.png)
