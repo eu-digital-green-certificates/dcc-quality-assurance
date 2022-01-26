@@ -1,0 +1,20 @@
+
+###### Requirements without Version Specifiers ######`
+wheel
+base45
+jsonschema
+jsonref
+filecache
+pyzbar
+Pillow
+python-dateutil
+pytest-md-report
+pytest-html
+requests
+
+###### Requirements with Version Specifiers ######`
+cose == 0.9.dev7
+
+###### Optional: uncomment if required
+# coloredlogs  # Fancier log files
+# openpyxl     # for excel export
