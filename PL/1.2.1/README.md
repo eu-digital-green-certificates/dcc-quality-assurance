@@ -30,4 +30,4 @@ Used for productive DCCs issuance
 
 ### Recovery
 
-![REC](REC.png)
+![REC](REC.PNG)
