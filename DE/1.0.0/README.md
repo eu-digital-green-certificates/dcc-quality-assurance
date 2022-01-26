@@ -10,19 +10,19 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC](QR Codes/VAC_DE.png)
+![VAC](QR%20Codes/VAC_DE.png)
 
 ### Invalidated Issuer Vaccination
 
-![VAC_Inv](QR Codes/VAC_DE_invalidated.png)
+![VAC_Inv](QR%20Codes/VAC_DE_invalidated.png)
 
 ### Test
 
-![TEST](QR Codes/TEST_DE.png)
+![TEST](QR%20Codes/TEST_DE.png)
 
 ### Recovery
 
-![REC](QR Codes/REC_DE.png)
+![REC](QR%20Codes/REC_DE.png)
 
 ### Special cases and deviations
 None
