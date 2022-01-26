@@ -20,6 +20,22 @@ Used for productive DCCs issuance
 
 ![VAC-3](VAC_4_4_Pfizer.PNG)
 
+### Vaccination 1/1 JJ LT 270 days
+
+![VAC-4](VAC_1_1_JJ_LT_270.PNG)
+
+### Vaccination 1/1 JJ GT 270 days
+
+![VAC-5](VAC_1_1_JJ_GT_270.PNG)
+
+### Vaccination 2/2 Vaxzevria LT 270 days
+
+![VAC-6](VAC_2_2_Vaxzevria_LT_270.PNG)
+
+### Vaccination 2/2 Vaxzevria GT 270 days
+
+![VAC-7](VAC_2_2_Vaxzevria_GT_270.PNG)
+
 ### Test PCR
 
 ![TEST-1](TEST_PCR.PNG)
