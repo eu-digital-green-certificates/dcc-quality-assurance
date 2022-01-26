@@ -12,7 +12,13 @@ Used for productive DCCs issuance
 
 ![VAC](VAC.png)
 
+### Vaccination - booster
+
+![VAC_BOOSTER](VAC_BOOSTER.png)
+
 ### Test
+
+![TEST](TEST.png)
 
 ### Recovery
 
@@ -29,12 +35,6 @@ Used for productive DCCs issuance
 
 ![specialcases/VAC](specialcases/VAC-12.png)
 
-
-### Test
-
-DCC is for PCR/NAA test but has rapid test manufacturer in content:
-
-![TEST](specialcases/TEST.png)
 
 
 

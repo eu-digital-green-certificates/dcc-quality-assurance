@@ -1,9 +1,9 @@
-# MC - Monaco
+# TW - Taiwan
 
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 01.09.2021
+* From: 09.12.2021
 * Until:
 
 ## Test files
@@ -14,11 +14,12 @@ Used for productive DCCs issuance
 
 ### Test
 
-![TEST](TEST_MC_Valid_202201310600.png)
+![TEST](TEST.png)
 
 ### Recovery
 
-![REC](REC_MC_Valid_202201170600.png)
+None
 
 ### Special cases and deviations
+
 None

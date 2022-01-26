@@ -10,14 +10,3 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC](VAC_MEv2.png)
-
-### Test
-
-![TEST](TEST_MEv2.png)
-
-### Recovery
-
-![REC](REC_MEv2.png)
-
-
