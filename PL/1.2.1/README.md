@@ -1,6 +1,6 @@
 # PL - Poland
 
-* **JSON schema version**: 1.0.0
+* **JSON schema version**: 1.2.1
 
 Used for productive DCCs issuance
 * From: 01.06.2021
