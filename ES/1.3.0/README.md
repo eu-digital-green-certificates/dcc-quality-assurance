@@ -3,43 +3,40 @@
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 01.07.2021
+* From: 01.01.2022
 * Until:
 
 ## Test files
 
 ### Vaccination
 
-![VAC](VAC.png)
+![VAC](VAC_ESPF01.png)
 
 ### Recovery
 
-![REC](REC.png)
+![REC](REC_ES01.png)
 
 Used for productive DCCs issuance
-* From: 01.07.2021 00:00:01 +02:00
-* Until: 04.07.2021 00:00:00 +02:00 
+* From: 31.01.2022 06:00:01 +02:00
+* Until: 02.02.2022 06:00:00 +02:00 
 
 ### Test
 
 * Test NAAT
 
-![TEST_NAAT](TEST_NAAT.png) 
+![TEST_NAAT](TEST_ESNAAT01.png) 
 * Test RAT
 
-![TEST_RAT](TEST_RAT.png) 
+![TEST_RAT](TEST_ESRAT01.png) 
 
 ### Special cases and deviations
 
 Used for productive DCCs issuance
-* From: 04.07.2021 00:00:01 +02:00 
-* Until: 07.07.2021 00:00:00 +02:00 
+* From: 01.01.2021 00:00:01 +02:00 
+* Until: 
 
-### Test
+### Vaccination
 
-* Test NAAT
+* Vac Invalid 
 
-![TEST_NAAT_2](specialcases/TEST_NAAT_2.png) 
-* Test RAT
-
-![TEST_RAT_2](specialcases/TEST_RAT_2.png) 
+![VAC_ES01_invalidated](specialcases/VAC_ES01_invalidated.png) 
