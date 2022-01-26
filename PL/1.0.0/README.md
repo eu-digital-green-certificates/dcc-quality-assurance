@@ -26,3 +26,6 @@ Due to a mismatch in the configuration attributes' date formats while deploying 
 ![VAC-11](specialcases/VAC-11.png)
 ![VAC-12](specialcases/VAC-12.png)
 ![VAC-13](specialcases/VAC-13.png)
+
+### Special cases and deviations
+Test ...
