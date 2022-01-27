@@ -6,19 +6,15 @@
 
 All tests should be successful.
 
-![VAC.png](VAC.png)
+![VAC_IE.png](VAC_IE.png)
 
-### 2 - Test certificate: RAT
+### 2 - Test certificate
 
-![TEST_RAT.png](TEST_RAT.png)
+![TEST_IE.png](TEST_IE.png)
 
-### 3 - Test certificate: NAT
+### 3 - Recovery certificate
 
-![TEST_NAT.png](TEST_NAT.png)
-
-### 4 - Recovery certificate
-
-![recovery.png](recovery.png)
+![REC_IE.png](REC_IE.png)
 
 ### Special cases and deviations
 
