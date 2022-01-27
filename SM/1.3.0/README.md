@@ -10,7 +10,7 @@
 
 ### Test
 
-![REC](REC.png)
+![TEST](specialcases/TEST.png)
 
 ### Recovery
 
