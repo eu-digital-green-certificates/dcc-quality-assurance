@@ -54,10 +54,6 @@ Date of birth can be provided partially or be empty.
 
 ![specialcases/VAC_noyear](specialcases/VAC_noyear.png)
 
-### RAT certificate - empty date of birth
-
-![specialcases/RAT_noyear](specialcases/RAT_noyear.png)
-
 ### Recovery certificate - date of birth without the day and the month
 
 ![specialcases/REC_nomonth](specialcases/REC_nomonth.png)
