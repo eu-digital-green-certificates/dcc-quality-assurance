@@ -20,4 +20,4 @@ Acceptance DCCs issuance
 
 DCC is for rapid test:
 
-![TEST_01](TEST_01.PNG)
+![TEST_01](TEST_01.png)
