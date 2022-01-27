@@ -2,8 +2,8 @@
 
 * **JSON schema version**: 1.3.0
 
-Used for productive DCCs issuance
-* From:
+Used for ACC DCCs issuance
+* From: 27.01.2022
 * Until:
 
 ## Test files
@@ -19,3 +19,6 @@ Used for productive DCCs issuance
 ### Recovery
 
 ![REC](REC.png)
+
+### Special cases and deviations
+None
