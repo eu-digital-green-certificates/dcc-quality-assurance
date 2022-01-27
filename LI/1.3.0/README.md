@@ -10,19 +10,19 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC](VAC_*.png)
+![VAC](VAC_new.png)
 
 ### Test
 
-![TEST](TEST_*.png)
+![TEST](TEST_new.png)
 
 ### Recovery 1 and 2 (with different Start dates)
 
-![REC](REC_*(1).png)
+![REC](REC_new(1).png)
 
 ### Recovery
 
-![REC](REC_*(2).png)
+![REC](REC_new(2).png)
 
 
 ### Special cases and deviations
