@@ -9,7 +9,7 @@ import zlib
 from base45 import b45decode
 from cbor2 import loads
 from cose.messages import Sign1Message
-
+from datetime import datetime
 
 # Files starting with these prefixes will be skipped
 EXCLUDED_PREFIXES = ('.', '_', '@')
@@ -63,6 +63,13 @@ def relative_path_unc(root_dir: str, full_path: str) -> str:
         return full_path[:](root_dir, "").replace("\\", "/")[1:]
 
 
+def date_time_serializer(obj):
+    # It's sad that this is needed, but hey!
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    return None
+    
+
 def process(source_dir: str) -> str:
     """
     Creates a JSON containing all of the QRs in the repository in b64 form and as hcert string form.
@@ -83,7 +90,7 @@ def process(source_dir: str) -> str:
                     "hcert": hcert,
                     "dcc": read_dcc_payload(hcert)
                 })
-    return json.dumps(result)
+    return json.dumps(result, default=date_time_serializer)
 
 
 print(process("."))
