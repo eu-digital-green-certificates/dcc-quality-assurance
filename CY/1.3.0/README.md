@@ -20,4 +20,6 @@ Acceptance DCCs issuance
 
 DCC is for rapid test:
 
-![TEST_01](TEST_01.png)
+(contains PCR test's "nm" field, but empty)
+
+![TEST_01](specialcases/TEST_01.png)
