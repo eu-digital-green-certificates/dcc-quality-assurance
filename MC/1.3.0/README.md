@@ -14,11 +14,11 @@ Used for productive DCCs issuance
 
 ### Test
 
-![TEST](TEST.png)
+![TEST](TEST_MC_Valid_202201310600.png)
 
 ### Recovery
 
-![REC](REC.png)
+![REC](REC_MC_Valid_202201170600.png)
 
 ### Special cases and deviations
 None
