@@ -8,13 +8,25 @@ Used for productive DCCs issuance
 
 ## Test files
 
-### Vaccination
+### Vaccination 2/1 Pfizer
 
-![VAC](VAC.png)
+![VAC-1](VAC_2_1_Pfizer.PNG)
 
-### Test
+### Vaccination 3/3 Spikevax
 
-![TEST](TEST.png)
+![VAC-2](VAC_3_3_Spikevax.PNG)
+
+### Vaccination 4/4 Pfizer
+
+![VAC-3](VAC_4_4_Pfizer.PNG)
+
+### Test PCR
+
+![TEST-1](TEST_PCR.PNG)
+
+### Test RAT
+
+![TEST-2](TEST_RAT.PNG)
 
 ### Recovery
 
