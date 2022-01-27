@@ -24,6 +24,3 @@ Used for productive DCCs issuance
 
 #### Recovery
 ![REC](REC_032535551.png)
-
-#### Recovery invalidated
-![REC-invalidated](REC_032535551_invalidated.png)
