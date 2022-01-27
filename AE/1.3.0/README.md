@@ -20,10 +20,6 @@ Used for Acceptance DCCs issuance
 
 ![VAC](VAC.png)
 
-### Test
-
-![TEST](TEST.png)
-
 ### Recovery
 
 AE does not issue recovery certificate currently.
