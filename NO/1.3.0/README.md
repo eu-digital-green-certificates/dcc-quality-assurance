@@ -5,36 +5,19 @@
 ## Test files
 
 ### Vaccination
-* From: 07.06.2021
-* Until: 07.06.2023
+* From: 17.01.2022
+* Until: 25.04.2022
 
-![VAC](VAC.png)
-
+![VAC](VAC.jpg)
 
 ### Recovery
-* From: 22.06.2021
-* Until: 25.10.2021
+* From: 26.01.2022
+* Until: 26.04.2022
 
 ![REC](REC.png)
 
 ### Test
-* Until: 03.07.2021
+* From: 26.01.2022
+* Until: 29.01.2022
 
 ![Test](TEST.png)
-
-
-## Special cases and deviations
-
-Some Recovery and Vaccination DCCs are centrally generated, physically printed and sent to non-digital citizens by mail.
-
-### Recovery
-* From: 24.06.2021 (GMT+02:00)
-* Until: 22.09.2021 (GMT+02:00)
-
-![REC](specialcases/REC_NONDIGITALCITIZEN.png)
-
-### Vaccination
-* From: 24.06.2021 (GMT+02:00)
-* Until: 22.09.2021 (GMT+02:00)
-
-![VAC](specialcases/VAC_NONDIGITALCITIZEN.png)

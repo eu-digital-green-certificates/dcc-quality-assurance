@@ -10,13 +10,17 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC](VAC.png)
+![VAC](VAC_032535551.png)
 
 ### Test
 
-![test-AG](test-AG.png)
-![test-PCR](test-PCR.png)
+#### Test AG
+![test-AG](TEST_032535551_ag.png)
+
+#### Test PCR
+![test-PCR](TEST_032535551_pcr.png)
 
 ### Recovery
 
-![REC](REC.png)
+#### Recovery
+![REC](REC_032535551.png)
