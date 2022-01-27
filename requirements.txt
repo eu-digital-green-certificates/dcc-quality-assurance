@@ -1,0 +1,7 @@
+pyzbar~=0.1.8
+Pillow~=8.2.0
+qrtools~=0.0.2
+opencv-python~=4.5.2.54
+zxing~=0.12
+pyzbar~=0.1.8
+base45==0.1.1
