@@ -5,25 +5,38 @@
 Used for productive DCCs issuance
 
 - From: 22.06.2021
-- Until:
+- Until: -
 
 ## Test files
 
-### Vaccination
+### Vaccinations
 
-![Vaccination certificate](VAC_standard.png)
+#### Cycle with 1 mandatory dose
 
-### Test NAAT
+| 1/1 | 2/1 | 3/1 |
+|-----|-----|-----|
+| ![Vaccination 1/1](VAC_11Standard.png)| ![Vaccination 2/1](VAC_21Booster.png)| ![Vaccination 3/1](VAC_31Booster.png) |
+| valid from: **17 Jan 2022** | valid from: **17 Jan 2022** | valid from: **17 Jan 2022** |
 
-![NAAT certificate](NAAT_standard.png)
+#### Cycle with 2 mandatory doses
 
-### Test RAT
+| 2/2 | 3/3 | 4/4 |
+|-----|-----|-----|
+| ![Vaccination 2/2](VAC_22Standard.png)| ![Vaccination 3/3](VAC_33Booster.png)| ![Vaccination 4/4](VAC_44Booster.png) |
+| valid from: **17 Jan 2022** | valid from: **17 Jan 2022** | valid from: **17 Jan 2022** |
 
-![RAT certificate](RAT_standard.png)
+### Tests
+
+| NAAT | RAT |
+|------|-----|
+| ![NAAT certificate](TEST_NAAT.png) | ![RAT certificate](TEST_RAT.png) |
+| valid from: **31 Jan 2022** | valid from: **31 Jan 2022** |
 
 ### Recovery
 
 ![Recovery certificate](REC_standard.png)
+
+valid from: **17 Jan 2022**
 
 ## Special cases and deviations
 
@@ -40,10 +53,6 @@ Date of birth can be provided partially or be empty.
 ### Vaccination certificate - empty date of birth
 
 ![specialcases/VAC_noyear](specialcases/VAC_noyear.png)
-
-### RAT certificate - empty date of birth
-
-![specialcases/RAT_noyear](specialcases/RAT_noyear.png)
 
 ### Recovery certificate - date of birth without the day and the month
 
