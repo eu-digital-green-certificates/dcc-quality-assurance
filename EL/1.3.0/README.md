@@ -25,7 +25,7 @@ PCR Test
 
 ![PCR TEST](TEST_PCR_20220131.png)
 
-RAT Tets
+RAT Test
 
 ![RAT TEST](TEST_RAT_20220131.png)
 
