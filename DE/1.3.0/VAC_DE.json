@@ -1,0 +1,24 @@
+{
+  "nam": {
+    "gn" : "Karl Wilhelm",
+    "fn" : "Lauterbach",
+    "gnt": "KARL<WILHELM",
+    "fnt": "LAUTERBACH"
+  },
+  "dob": "1963-02-21",
+  "v": [
+    {
+      "tg": "840539006",
+      "vp": "1119349007",
+      "ma": "ORG-100030215",
+      "mp": "EU/1/20/1528",
+      "dn": 3,
+      "sd": 1,
+      "dt": "2022-01-17T05:00:00Z",
+      "co": "DE",
+      "is": "Bundesministerium für Gesundheit",
+      "ci": "URN:UVCI:01DE/A42234539/43CUH2UMZUJW382VP58G2Q#F"
+    }
+  ],
+  "ver": "1.0.0"
+}
