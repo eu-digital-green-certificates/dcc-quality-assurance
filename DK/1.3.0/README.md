@@ -3,18 +3,14 @@
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 23.08.2021
-* Until: 01.01.2022
+* From: 2022-01-26
+* Until: 2022-07-28
 
 ## Test files
 
 ### Vaccination
 
 ![VAC](VAC.png)
-
-### Test AG
-
-![TEST](TEST-AG.png)
 
 ### Test PCR
 
