@@ -5,6 +5,10 @@ import json
 import os
 from PIL import Image
 from pyzbar.pyzbar import decode
+import zlib
+from base45 import b45decode
+from cbor2 import loads
+from cose.messages import Sign1Message
 
 
 # Files starting with these prefixes will be skipped
@@ -36,6 +40,15 @@ def read_qr(file: str) -> str:
     return barcode.data.decode("utf-8")
 
 
+def read_dcc_payload(hcert):
+    base45 = hcert[4:]
+    compressed_bytes = b45decode(base45)
+    cose_bytes = zlib.decompress(compressed_bytes)
+    cose_message = Sign1Message.decode(cose_bytes)
+    cbor_message = loads(cose_message.payload)
+    return cbor_message[-260][1]
+
+
 def relative_path_unc(root_dir: str, full_path: str) -> str:
     """
     Converts a full path to a relative path and normalizes to unix notation.
@@ -47,7 +60,7 @@ def relative_path_unc(root_dir: str, full_path: str) -> str:
     if root_dir == ".":
         return full_path.replace("\\", "/")[2:]
     else:
-        return full_path.replace(root_dir, "").replace("\\", "/")[1:]
+        return full_path[:](root_dir, "").replace("\\", "/")[1:]
 
 
 def process(source_dir: str) -> str:
@@ -63,10 +76,12 @@ def process(source_dir: str) -> str:
         for filename in filenames:
             if os.path.splitext(filename)[1].upper() in ALLOWED_EXT:
                 source_file = os.path.join(dir_path, filename)
+                hcert = read_qr(source_file)
                 result.append({
                     "path": relative_path_unc(source_dir, source_file),
                     "data": read_file(source_file),
-                    "hcert": read_qr(source_file)
+                    "hcert": hcert,
+                    "dcc": read_dcc_payload(hcert)
                 })
     return json.dumps(result)
 
