@@ -10,22 +10,24 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC](VAC.png)
+![VAC](VAC_3_1_JNJ_RECENT_BE.png)
+![VAC](VAC_3_1_JNJ_OLD_BE.png)
+![VAC](VAC_3_3_NONJNJ_OLD_BE.png)
+![VAC](VAC_4_4_NONJNJ_OLD_BE.png)
+![VAC](VAC_4_4_NONJNJ_RECENT_BE.png)
+![VAC](VAC_3_3_NONJNJ_RECENT_BE.png)
+![VAC](VAC_2_1_JNJ_RECENT_BE.png)
+![VAC](VAC_2_1_JNJ_OLD_BE.png)
+![VAC](VAC_3_1_NONJNJ_OLD_BE.png)
+![VAC](VAC_2_1_NONJNJ_OLD_BE.png)
+![VAC](VAC_2_1_NONJNJ_RECENT_BE.png)
 
 ### Test
 
-![TEST](TEST.png)
-
+![TEST](TEST_BE.png)
 
 ### Recovery
 
-![REC](REC.png)
+![REC](REC_BE.png)
 
 ### Special cases and deviations
-VAC with incomplete date of birth
-
-![VAC_INCOMPLETE_DOB](specialcases/VAC_INCOMPLETE_DOB.png)
-
-VAC older than 365 days
-
-![VACC_OLDER_THAN_365_DAYS](specialcases/VACC_OLDER_THAN_365_DAYS.png)
