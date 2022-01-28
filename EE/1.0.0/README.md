@@ -12,10 +12,6 @@ Used for productive DCCs issuance
 
 ![VAC](VAC.png)
 
-### Test
-
-![TEST](TEST.png)
-
 ### Recovery
 
 ![REC](REC.png)

@@ -10,7 +10,10 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC](VAC.png)
+![VAC_2of1](VAC_2of1.png)
+
+![VAC_3of3](VAC_3of3.png)
+
 
 ### Test
 
