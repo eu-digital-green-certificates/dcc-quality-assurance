@@ -17,3 +17,11 @@
 ![](VAC_009.png)
 ![](VAC_010.png)
 ![](VAC_011.png)
+
+### Recovery
+
+![](REC_001.png)
+
+### Negative test
+
+![](TEST_001.png)
