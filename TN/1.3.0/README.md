@@ -10,7 +10,7 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC1](VAC_TN01.png)
+![VAC2](VAC_TN02.png)
 
 
 ### Test
