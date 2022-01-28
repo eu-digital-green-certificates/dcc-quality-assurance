@@ -10,7 +10,7 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC](VAC.png)
+![VAC](VAC_CH_3of3.png)
 
 
 
@@ -18,14 +18,8 @@ Used for productive DCCs issuance
 
 ### Recovery
 
-![REC](REC.png)
-
-## Special Cases
+![REC](REC_CH.png)
 
 ### Test
 
-Field "ma" (manufacturer) exists but is empty.
-The field is optional, so it should be accepted by verifier apps.
-However, empty string is not part of the allowed value sets
-
-![TEST](specialcases/TEST_empty_ma_field.png)
+![TEST](TEST_CH_PCR.png)
