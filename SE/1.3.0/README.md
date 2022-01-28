@@ -3,21 +3,22 @@
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 07.09.2021
-* Until:
 
 ## Test files
 
 ### Vaccination
+* Until: 2022-04-26
 
-![VAC](VAC.png)
+![VAC](VAC_20220126.png)
 
 ### Test
+* Until: 2022-02-02T05:00:00Z
 
-![TEST](TEST.png)
+![TEST](TEST_20220126.png)
 
 ### Recovery
+* Until: 2022-07-16
 
-![REC](REC.png)
+![REC](REC_20220126.png)
 
 ### Special cases and deviations

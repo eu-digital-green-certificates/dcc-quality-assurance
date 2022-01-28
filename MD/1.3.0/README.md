@@ -2,9 +2,9 @@
 
 * **JSON schema version**: 1.3.0
 
-## Test files
+## Test files v2
 
-### Vaccination
+### Vaccination (Booster)
 
 ![VAC](VAC.png)
 

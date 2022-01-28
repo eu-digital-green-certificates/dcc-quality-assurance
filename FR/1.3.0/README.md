@@ -8,9 +8,9 @@ Used for productive DCCs issuance
 
 ## Test files
 
-### Test
+### Recovery DCC
 
-![TEST](TEST.png)  
+![REC](REC.png)  
 
 
 ### Special cases and deviations
@@ -18,5 +18,7 @@ Used for productive DCCs issuance
 ### Vaccination
 
 Has CNAM instead of FR for issueing country
-
 ![specialcases/VAC](specialcases/VAC.png)  
+
+Has invalid value for test manufacturer
+![specialcases/TEST](specialcases/TEST.png)  
