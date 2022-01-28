@@ -3,24 +3,21 @@
 * **JSON schema version**: 1.3.0
 
 Used for Acceptance DCCs issuance
-* From: 09.08.2021
+* From: 
 * Until:
-
-## Test files
-
-### Vaccination
-
-![VAC](VAC.png)
-
-
-### Test - NAAT
-
-![TEST_NAAT](TEST_NAAT.png)
 
 
 ### Recovery
-
 ![REC](REC.png)
+
+
+### Vaccination
+![VAC](VAC.png)
+
+
+### Test
+![TEST](TEST.png)
+
 
 ### Special cases and deviations
 
