@@ -24,7 +24,7 @@ Used for productive DCCs issuance
 * 
 ![VAC](VAC_ES3105.png)
 
-* 
+
 ![VAC](VAC_ES4106.png)
 
 ### Recovery
