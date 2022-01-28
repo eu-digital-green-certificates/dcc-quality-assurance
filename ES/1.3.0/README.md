@@ -44,14 +44,4 @@ Used for productive DCCs issuance
 
 ![TEST_RAT](TEST_ESRAT01.png) 
 
-### Special cases and deviations
 
-Used for productive DCCs issuance
-* From: 01.01.2021 00:00:01 +02:00 
-* Until: 
-
-### Vaccination
-
-* Vac Invalid 
-
-![VAC_ES01_invalidated](specialcases/VAC_ES01_invalidated.png) 

@@ -2,15 +2,21 @@
 
 * **JSON schema version**: 1.3.0
 
-Used for productive DCCs issuance
-* From: ?
-* Until:
+QRCodes for 6th validation cycle starting on 31 January 2022
 
 ## Test files
 
+### Vaccination
+
+![VAC](VAC_SK_Valid_202201162300.png)
+
 ### Test
 
-![TEST](TEST.png)
+![TEST](TEST_SK_Valid_202201260500.png)
+
+### Recovery
+
+![REC](REC_SK_Valid_202201162300.png)
 
 ### Special cases and deviations
 None
