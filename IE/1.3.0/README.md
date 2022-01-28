@@ -10,7 +10,7 @@ All tests should be successful.
 
 ### 2 - Test certificate
 
-![TEST_IE.png](TEST_IE.png)
+![TEST_IE.png](specialcases/TEST_IE.png)
 
 ### 3 - Recovery certificate
 
