@@ -1,0 +1,37 @@
+{
+  "firstNameHE":"ישראל",
+  "lastNameHE":"ישראילוב",
+  "firstNameENG":"Israel",
+  "lastNameENG":"Israilov",
+  "idNum":"123456789",
+  "patientStatus":"vaccinated",
+  "passportNum":"12345678",
+  "dateOfBirth":"1948-05-14",
+  "effectiveDate":"2022-01-17",
+  "expirationDate":"2022-06-30",
+  "epidEvents":[
+    {
+      "date":"2021-12-01",
+      "epidType":"Covid19",
+      "vaccineVendor":"Pfizer",
+      "vaccineBatchNumber":"ER6166",
+      "vaccineCode":"BNT162b2",
+      "vaccinatingCountry":"ISR",
+      "hmoCode":"104",
+      "hmohe":"מאוחדת",
+      "hmoeng":"Meuhedet"
+    },
+    {
+      "date":"2022-01-01",
+      "epidType":"Covid19",
+      "vaccineVendor":"Pfizer",
+      "vaccineBatchNumber":"ET2838",
+      "vaccineCode":"BNT162b2",
+      "vaccinatingCountry":"ISR",
+      "hmoCode":"104",
+      "hmohe":"מאוחדת",
+      "hmoeng":"Meuhedet"
+    }
+  ],
+  "signatureType":3
+}

@@ -1,0 +1,26 @@
+{
+  "firstNameHE":"ישראל",
+  "lastNameHE":"ישראילוב",
+  "firstNameENG":"Israel",
+  "lastNameENG":"Israilov",
+  "idNum":"123456789",
+  "patientStatus":"recovery",
+  "passportNum":"12345678",
+  "dateOfBirth":"1948-05-14",
+  "effectiveDate":"2022-01-17",
+  "expirationDate":"2022-06-30",
+  "epidEvents":[
+    {
+      "date":"2022-01-17",
+      "epidType":"Covid Recovery",
+      "vaccineVendor":null,
+      "vaccineBatchNumber":null,
+      "vaccineCode":null,
+      "vaccinatingCountry":null,
+      "hmoCode":"104",
+      "hmohe":"מאוחדת",
+      "hmoeng":"Meuhedet"
+    }
+  ],
+  "signatureType":3
+}
