@@ -5,12 +5,12 @@
 
 ## Test files
 
-### Test
 
-![TEST](TEST.png)  
+### Test certificate valid from [31.01.22, 06:00am CET]
 
+![TEST](TEST_20220131.png) 
+ 
 
-### Vaccination
+### Booster Vaccination Certificate valid from [17.01.22]
 
-
-![VAC](VAC.png)  
+![VAC](VAC_BOOSTER.png) 
