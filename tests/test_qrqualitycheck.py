@@ -29,7 +29,7 @@ import warnings
 import constants
 import jsonschema
 
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from filecache import HOUR, MINUTE, DAY, filecache
 
 # COSE / CBOR related
@@ -313,17 +313,19 @@ def test_country_code_formats( dccQrCode ):
 
 def test_claim_dates( dccQrCode, pytestconfig ):
     'Performs some plausibility checks against date related claims'
+    def _isoformat_ignore_trailing_z(date_str):
+        if date_str[-1].upper() == 'Z':
+            date_str = date_str[:-1]
+        return datetime.fromisoformat(date_str)
 
-    assert dccQrCode.payload[constants.PAYLOAD_ISSUE_DATE] < dccQrCode.payload[constants.PAYLOAD_EXPIRY_DATE]
-    assert datetime.fromtimestamp(dccQrCode.payload[constants.PAYLOAD_ISSUE_DATE]).year >= 2021
+    assert dccQrCode.payload[constants.PAYLOAD_ISSUE_DATE] < dccQrCode.payload[constants.PAYLOAD_EXPIRY_DATE], "DCC is expired before it was issued"
+    assert datetime.fromtimestamp(dccQrCode.payload[constants.PAYLOAD_ISSUE_DATE]).year >= 2021, "DCC cannot be issued before 2021"
 
-    if 'r' in  dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys() and pytestconfig.getoption('warn_timedelta') :
+    if 'r' in  dccQrCode.payload[constants.PAYLOAD_HCERT][1].keys():
         expiry_from_claim = datetime.fromtimestamp(dccQrCode.payload[constants.PAYLOAD_EXPIRY_DATE])
-        expiry_from_payload = datetime.fromisoformat(dccQrCode.payload[constants.PAYLOAD_HCERT][1]['r'][0]['du'])
-        if abs(expiry_from_claim - expiry_from_payload).days > 14:
-            warnings.warn('Expiry dates in payload and envelope differ more than 14 days:\n'+
-                        f'Claim key 4: {expiry_from_claim.isoformat()}\n'+
-                        f'Payload: {expiry_from_payload.isoformat()}')
+        expiry_from_payload = _isoformat_ignore_trailing_z(dccQrCode.payload[constants.PAYLOAD_HCERT][1]['r'][0]['du'])
+        assert expiry_from_claim + timedelta(hours=12) > expiry_from_payload , 'Expiry date in payload is after expiry of DCC'
+
 
 def test_valuesets( dccQrCode ):
     "Test if the only entries from valuesets are used for corresponding fields"

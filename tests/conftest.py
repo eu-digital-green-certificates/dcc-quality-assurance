@@ -10,7 +10,6 @@ def pytest_addoption(parser):
     parser.addoption("--forbid-extra-fields", action="store_true", default=False, help="Only allow fields defined in schema")
     parser.addoption("--include-special", action="store_true", default=False, help="Include special cases")
     parser.addoption("--allow-multi-dcc", action="store_true", default=False, help="Allow multiple DCC in one QR code")
-    parser.addoption("--warn-timedelta", action="store_true", default=False, help="Warn about time deltas")
 
 def pytest_generate_tests(metafunc):
     def glob_files(country_code='*', include_special=False):
