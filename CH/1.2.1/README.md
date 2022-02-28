@@ -13,11 +13,7 @@ Used for productive DCCs issuance
 ![VAC](VAC.png)
 
 
-### Test
-
-![VAC](TEST.png)
-
-
+ 
 ### Recovery
 
 ![REC](REC.png)
@@ -42,11 +38,6 @@ Snipped from decoded specialcases/REC_CH_BAG.png:
 ### Vaccination
 
 ![VAC](specialcases/VAC_CH_BAG.png)
-
-
-### Test
-
-![VAC](specialcases/TEST_CH_BAG.png)
 
 
 ### Recovery

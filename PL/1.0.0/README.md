@@ -8,13 +8,25 @@ Used for productive DCCs issuance
 
 ## Test files
 
-### Vaccination
+### Vaccination 2/1 Pfizer
 
-![VAC](VAC.png)
+![VAC-1](VAC_2_1_Pfizer.png)
 
-### Test
+### Vaccination 3/3 Spikevax
 
-![TEST](TEST.png)
+![VAC-2](VAC_3_3_Spikevax.png)
+
+### Vaccination 4/4 Pfizer
+
+![VAC-3](VAC_4_4_Pfizer.png)
+
+### Test PCR
+
+![TEST-1](TEST_PCR.png)
+
+### Test RAT
+
+![TEST-2](TEST_RAT.png)
 
 ### Recovery
 
@@ -23,6 +35,6 @@ Used for productive DCCs issuance
 ### Special cases and deviations
 Due to a mismatch in the configuration attributes' date formats while deploying services in production, a number of 1.0.0 DCCs were issued in date-time format instead in date format. 
 
-![VAC-11](specialcases/VAC-11.png)
-![VAC-12](specialcases/VAC-12.png)
-![VAC-13](specialcases/VAC-13.png)
+![VAC-11](VAC-11.png)
+![VAC-12](VAC-12.png)
+![VAC-13](VAC-13.png)
