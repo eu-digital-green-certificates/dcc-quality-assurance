@@ -14,7 +14,7 @@ Used for productive DCCs issuance
 
 ### Test
 
-![TEST](TEST_new.png)
+![TEST](TEST_new_2022-01-31.png)
 
 ### Recovery 1 and 2 (with different Start dates)
 

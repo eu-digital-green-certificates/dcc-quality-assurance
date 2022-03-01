@@ -12,10 +12,23 @@ Used for productive DCCs issuance
 
 ![VAC](VAC.png)
 
+Booster dose
+
+![VAC Booster](VAC_BOOSTER.png)
+
+Booster dose after one dose of Jansen
+
+![VAC Booster over Jansen](VAC_BOOSTER_OVER_JANSEN.png)
 
 ### Test
 
+Rapid Antigen Test
 
+![RAT](TEST_RAT.png)
+
+Nucleic acid amplification with probe detection (PCR) Test
+
+![PCR](TEST_PCR.png)
 
 ### Recovery
 
@@ -23,10 +36,6 @@ Used for productive DCCs issuance
 
 ## Special cases and deviations
 ### Additional "dr" field
-Additional "dr" field
+Additional "dr" field in Test DCC
 
 ![TEST](specialcases/TEST.png)
-
-### DCC valid before DSC
-A number of DCCs are valid before their corresponding DSC. (Corresponding DSC validFrom lies in the past as of the time of writing.)
-![REC-VALID-BEFORE-DSC](specialcases/REC-VALID-BEFORE-DSC.png)

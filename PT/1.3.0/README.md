@@ -3,18 +3,38 @@
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 30.06.2021
+* From: 02.02.2022
 * Until:
 
 ## Test files
 
 ### Vaccination
 
-![VAC](VAC.png)
+### 2 out of 2 vaccine
+
+![Vaccine 2/2](VAC_22.png)
+
+### 3 out of 3 vaccine (Booster)
+
+![Vaccine 3/3](VAC_33.png)
+
+### 1 out of 1 vaccine
+
+![Vaccine 1/1](VAC_11.png)
+
+### 2 out of 1 vaccine (Booster)
+
+![Vaccine 2/1](VAC_21.png)
 
 ### Test
 
-![TEST](TEST.png)
+### NAA Test
+
+![TEST NAA](TEST_NAA.png)
+
+### RAT Test
+
+![TEST RAT](TEST_RAT.png)
 
 ### Recovery
 
