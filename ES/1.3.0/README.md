@@ -6,6 +6,17 @@ Used for productive DCCs issuance
 * From: 01.01.2022
 * Until:
 
+## Test files Revocation
+
+### Vaccination
+
+![VAC](Vac.png)
+
+### Recovery
+
+![REC](Rec.png)
+
+
 ## Test files
 
 ### Vaccination
