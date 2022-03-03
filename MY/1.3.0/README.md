@@ -11,16 +11,16 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC_DOSE 1](VAC_D1.png)
-![VAC DOSE 2](VAC_D2.png)
-![VAC BOOSTER](VAC_BOOSTER.png)
+<img src="VAC_D1.png" alt="VAC DOSE 1" width="300"/>
+<img src="VAC_D2.png" alt="VAC DOSE 2" width="300"/>
+<img src="VAC_BOOSTER.png" alt="VAC BOOSTER" width="300"/>
 
 ### Test
 
 * NAAT
 
-![TEST NAA](TEST_NAA.png)
+<img src="TEST_NAA.png" alt="TEST NAA" width="300"/>
 
 * RAT
 
-![TEST_RAT](TEST_RAT.png)
+<img src="TEST_RAT.png" alt="TEST RAT" width="300"/>
