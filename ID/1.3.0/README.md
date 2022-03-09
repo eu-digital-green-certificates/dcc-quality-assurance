@@ -8,4 +8,4 @@
 
 ![TEST_ID QR Code](./TEST_ID.png)
 
-[Payload](./TEST_ID.json)
+[Payload](./TEST_ID.payload.txt)
