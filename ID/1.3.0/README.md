@@ -6,6 +6,6 @@
 
 ### TEST_ID
 
-![TEST_ID QR Code](./TEST_ID.png)
+![VAC_ID QR Code](./VAC_ID.png)
 
-[Payload](./TEST_ID.payload.txt)
+[Payload](./VAC_ID.payload.txt)
