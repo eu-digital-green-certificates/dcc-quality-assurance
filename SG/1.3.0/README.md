@@ -3,7 +3,7 @@
 * **JSON schema version**: 1.3.0
 
 Used for productive DCCs issuance
-* From: 08.03.2022
+* From: 15.03.2022
 * Until:
 
 ## Test files
