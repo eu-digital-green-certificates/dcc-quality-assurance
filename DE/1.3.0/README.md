@@ -18,6 +18,13 @@ Used for TEST DCCs issuance
 
 ![REC_DE](REC_DE.png)
 
-### Special cases and deviations
+### Vaccination invalidated
 
 ![VAC_DE_invalidated](VAC_DE_invalidated.png)
+
+### Recovery revoked
+![REC_DE] REC_revoked01.png
+
+### Vaccination revoked
+![VAC_DE](VAC_revoked01.png)
+![VAC_DE](VAC_revoked02.png)
