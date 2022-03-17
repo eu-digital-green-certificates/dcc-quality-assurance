@@ -24,6 +24,16 @@ Used for productive DCCs issuance
 
 ![REC](REC.png)
 
+## Revoked
+
+### Vaccination
+
+![VAC_revoked](VAC_revoked.png)
+
+### Recovery
+
+![REC_revoked](REC_revoked.png)
+
 
 ## Special cases and deviations
 
