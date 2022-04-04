@@ -4,14 +4,9 @@
 
 ## Files for Verification
 
-### TEST files
-
-![VAC_ID QR Code](./VAC_ID.png)
-
-[Payload](./VAC_ID.payload.txt)
-
 ### ACC files
 
-![VAC_ID_ACC QR Code](./VAC_ID_ACC.png)
+![VAC_ID_01 QR Code](./VAC_ID_01.jpeg)
 
-[Payload](./VAC_ID_ACC.json)
+[Payload](./VAC_ID_01.json)
+
