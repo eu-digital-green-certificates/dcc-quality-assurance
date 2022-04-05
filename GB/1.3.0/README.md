@@ -24,24 +24,6 @@ Expires 2022-07-28
 
 <img src="VAC_NI_17012022.png" width="300">
 
-#### Jersey - Booster dose - Pfizer 3/3
-
-Expires 2022-02-27
-
-<img src="VAC_JE.png" width="300">
-
-#### Guernsey - Booster dose - Pfizer 3/3
-
-Expires 2022-02-27
-
-<img src="VAC_GG.png" width="300">
-
-#### Gibraltar - Booster Dose - Pfizer 3/3
-
-Expires 2022-03-30
-
-<img src="VAC_GI.png" width="300>
-
 ### Test
 
 #### Scotland - Nucleic acid amplification with probe detection
@@ -49,24 +31,6 @@ Expires 2022-03-30
 Expires 2022-02-04T16:58:31
 
 <img src="TEST_SCT.png" width="300">
-
-#### Jersey - Rapid Immunoassay
-
-Expires 2022-03-02T12:35:45
-
-<img src="TEST_JE.png" width="300">
-
-#### Guernsey - Rapid Immunoassay
-
-Expires 2022-03-02T12:34:34
-
-<img src="TEST_GG.png" width="300">
-
-#### Gibraltar - Rapid Immunoassay
-
-Expires 2022-03-02T12:16:05
-
-<img src="TEST_GI.png" width="300">
 
 ### Recovery
 
@@ -87,21 +51,3 @@ Expires 2022-01-31
 Expires 2022-07-06
 
 <img src="REC_NI_17012022.png" width="300">
-
-#### Jersey
-
-Expires 2022-02-27
-
-<img src="REC_JE.png" width="300">
-
-#### Guernsey
-
-Expires 2022-02-27
-
-<img src="REC_GG.png" width="300">
-
-#### Gibraltar
-
-Expires 2022-03-30
-
-<img src="REC_GI.png" width="300">
