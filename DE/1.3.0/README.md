@@ -31,7 +31,7 @@ Used for TEST DCCs issuance
 
 # Revocations (CovPass)
 
-Revoked, until 2022-06-30
+Revoked, expires 2022-04-30
 
 ![01_dcc_rec-2000-01-01-Rec-Cert.png](revocations/01_dcc_rec-2000-01-01-Rec-Cert.png)
 ![02_dcc_vac-2000-01-01-JandJ-JandJ11.png](revocations/02_dcc_vac-2000-01-01-JandJ-JandJ11.png)
