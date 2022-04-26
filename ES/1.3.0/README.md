@@ -10,11 +10,11 @@ Used for productive DCCs issuance
 
 ### Vaccination
 
-![VAC](VAC.png)
+![VAC_revoked](VAC_revoked.png)
 
 ### Recovery
 
-![REC](REC.png)
+![REC_revoked](REC_revoked.png)
 
 
 ## Test files
