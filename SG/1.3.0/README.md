@@ -8,12 +8,12 @@ Used for productive DCCs issuance
 
 ## Test files
 
-### Vaccination
+### Vaccination Certificates
 
 ![VAC](VAC.png)
 ![VAC_BOOSTER](VAC_BOOSTER.png)
 
-### Test
+### Test Certificates
 
 * Test NAAT
 
@@ -22,3 +22,7 @@ Used for productive DCCs issuance
 * Test RAT
 
 ![TEST_RAT](TEST_RAT.png)
+
+### Recovery Certificates
+
+![REC](REC.png)
