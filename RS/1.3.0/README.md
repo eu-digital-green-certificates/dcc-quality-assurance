@@ -2,7 +2,7 @@
 
 ---
 
-From: 18.11.2021
+From: 17.05.2022.
 
 ### 1 - Vaccination certificate: Partial immunisation
 
