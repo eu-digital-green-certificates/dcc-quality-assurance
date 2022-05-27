@@ -1,1 +1,13 @@
+# MG - Madagscar
+
+* **JSON schema version**: 1.0.0
+
+Used for acceptance environment DCCs issuance
+
+## Test files
+
+### Vaccination
+
+![VAC](ugd_acc_qr_code.jpg)
+
 
