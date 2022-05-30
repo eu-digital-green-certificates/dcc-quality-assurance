@@ -1,6 +1,6 @@
 # MG - Madagscar
 
-* **JSON schema version**: 1.0.0
+* **JSON schema version**: 1.3.0
 
 Used for acceptance environment DCCs issuance
 
@@ -8,6 +8,6 @@ Used for acceptance environment DCCs issuance
 
 ### Vaccination
 
-![VAC](ugd_acc_qr_code.jpg)
+![VAC](VAC_acc_qr_code.png)
 
 
