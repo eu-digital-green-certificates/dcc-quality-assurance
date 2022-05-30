@@ -43,20 +43,22 @@ jobs:
     - name: Validate DCC QA Pull Request
       if: ${{ github.event_name != 'workflow_dispatch' }}
       env:
-        DCC_KID_LIST: ${{ secrets.DCC_KID_LIST }}
-        DCC_CERT_LIST: ${{ secrets.DCC_CERT_LIST }}
+        #DCC_KID_LIST: ${{ secrets.DCC_KID_LIST }}
+        #DCC_CERT_LIST: ${{ secrets.DCC_CERT_LIST }}
         DCC_VALUESET_LIST_ALT: ${{ secrets.DCC_VALUESET_LIST_ALT }}
+        DSC_LIST: https://de.test.dscg.ubirch.com/trustList/DSC/
         # Not official reference, just used for quick check of pull requests
         DCC_VALUESET_LIST: https://distribution-cff4f7147260.dcc-rules.de/valuesets
         DCC_SCHEMA_BASE_URI: https://raw.githubusercontent.com/ehn-dcc-development/ehn-dcc-schema/release/
       run: |
-        pytest --tb=short --no-signature-check -rfEx --md-report --md-report-verbose=1 --md-report-zeros=number --html=dgc_testdata_report.html --self-contained-html --junit-xml=pytest.xml
+        pytest --tb=short -rfEx --md-report --md-report-verbose=1 --md-report-zeros=number --html=dgc_testdata_report.html --self-contained-html --junit-xml=pytest.xml
     - name: Validate DCC QA Workflow Dispatch
       if: ${{ github.event_name == 'workflow_dispatch' }}
       env:
-        DCC_KID_LIST: ${{ secrets.DCC_KID_LIST }}
-        DCC_CERT_LIST: ${{ secrets.DCC_CERT_LIST }}
+        #DCC_KID_LIST: ${{ secrets.DCC_KID_LIST }}
+        #DCC_CERT_LIST: ${{ secrets.DCC_CERT_LIST }}
         DCC_VALUESET_LIST: ${{ secrets.DCC_VALUESET_LIST }}
+        DSC_LIST: https://de.test.dscg.ubirch.com/trustList/DSC/
         DCC_VALUESET_LIST_ALT: ${{ secrets.DCC_VALUESET_LIST_ALT }}
         DCC_SCHEMA_BASE_URI: ${{ secrets.DCC_SCHEMA_BASE_URI }}
       run: |

@@ -11,8 +11,9 @@ EU_COUNTRIES = ['BE', 'EL', 'GR', 'LT', 'PT', 'BG', 'ES', 'LU', 'RO', 'CZ', 'FR'
 # URLs
 
 # Former hard coded URLs are now deprecated and may be taken out of order in the future
-ACC_KID_LIST = os.environ['DCC_KID_LIST']
-ACC_CERT_LIST = os.environ['DCC_CERT_LIST']
+#ACC_KID_LIST = os.environ['DCC_KID_LIST']
+#ACC_CERT_LIST = os.environ['DCC_CERT_LIST']
+DSC_LIST = os.environ['DSC_LIST']
 VALUESET_LIST = os.environ['DCC_VALUESET_LIST']
 VALUESET_LIST_ALTERNATIVE = os.environ['DCC_VALUESET_LIST_ALT']
 SCHEMA_BASE_URI = os.environ['DCC_SCHEMA_BASE_URI']
