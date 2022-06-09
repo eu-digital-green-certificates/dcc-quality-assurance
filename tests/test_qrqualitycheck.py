@@ -262,7 +262,10 @@ def test_verify_signature( dccQrCode, pytestconfig ):
     cert_base64 = certs[dccQrCode.get_key_id_base64()]
     cert = x509.load_pem_x509_certificate(
         f'-----BEGIN CERTIFICATE-----\n{cert_base64}\n-----END CERTIFICATE-----'.encode(), OpenSSLBackend)
-    extensions = { extension.oid._name:extension for extension in cert.extensions}
+    try:
+        extensions = { extension.oid._name:extension for extension in cert.extensions}
+    except ValueError as e:
+        pytest.skip(f'Error during DSC extension check: {"".join(e.args)}')
 
     if pytestconfig.getoption('verbose'):
         if 'extendedKeyUsage' in extensions.keys():
