@@ -1,0 +1,241 @@
+{
+	"info": {
+		"_postman_id": "d972393f-c691-4527-85c8-76570e0fbef4",
+		"name": "DIVOC-PH",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Download certificate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJNcFlxZ0VHbVF5a0ZlZURKYnFnTkY5d1dKd2l4b2ozVkNzNmRwUEdqNEhRIn0.eyJleHAiOjE2NjA5MTI2NDksImlhdCI6MTY0MzYzMjY0OSwianRpIjoiOGMxMTJhZDctYzk5Zi00NmJhLTg1YTctOTYyZTgyOGI5NzNjIiwiaXNzIjoiaHR0cDovLzMuMTExLjY0LjE3L2F1dGgvcmVhbG1zL2Rpdm9jIiwiYXVkIjpbInJlYWxtLW1hbmFnZW1lbnQiLCJhY2NvdW50IiwiZmFjaWxpdHktYWRtaW4tcG9ydGFsIl0sInN1YiI6ImQ5ZTY4YmU0LTIwNWEtNGI0NC04MzAxLTFmZWEyNTU3ZjFjZiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFkbWluLWFwaSIsInNlc3Npb25fc3RhdGUiOiI2NWY4ZTY3Yi1jNzllLTQwOGUtYmE3OS1lMDc1MjdiNjFkYjYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vZGl2b2MueGl2LmluIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJtYW5hZ2UtdXNlcnMiXX0sImFkbWluLWFwaSI6eyJyb2xlcyI6WyJhcGkiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiZmFjaWxpdHktYWRtaW4tcG9ydGFsIjp7InJvbGVzIjpbImZhY2lsaXR5LXN0YWZmIiwiYWRtaW4iLCJtb25pdG9yaW5nIiwiZmFjaWxpdHktYWRtaW4iXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJjbGllbnRJZCI6ImFkbWluLWFwaSIsImNsaWVudEhvc3QiOiIxNzIuMTkuMC4yMCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWFkbWluLWFwaSIsImNsaWVudEFkZHJlc3MiOiIxNzIuMTkuMC4yMCJ9.BTGAi-1X3n6dYb4z5mZPeg_6vkE769r6Sj90e3_UOzDhhYYVwg-m_dAB7Hr42FVmFOLRptFXsq1G3jWUDzTVGE1ZM0tUcdYVaAVfdt_Z1VJOCPnIBuhHuMVjtrVm_EsXSwLRChO6gu7t9G1a7hGm98NHgdtXdGwhCeDQNPgcYZDK5WNGup9vkeUjYAWdx2sDmomzsMrYF5F1ZOfsrVjM8ABYSj0wVp3CZAh1tPnGvGHvceFG5XBKcuUBlPPtkcVbgV85a218A0E7ZN4_wrvgfvUSpMhITvlwWO4EwKAYKXxKLdQWGjeAwZ1NOhD0ZNdz9a30dSR-yO3vYAvh26K2Mg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/certificate/api/certificatePDF/eu-002",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"certificate",
+						"api",
+						"certificatePDF",
+						"eu-002"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create certificate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJNcFlxZ0VHbVF5a0ZlZURKYnFnTkY5d1dKd2l4b2ozVkNzNmRwUEdqNEhRIn0.eyJleHAiOjE2NjA5MTI2NDksImlhdCI6MTY0MzYzMjY0OSwianRpIjoiOGMxMTJhZDctYzk5Zi00NmJhLTg1YTctOTYyZTgyOGI5NzNjIiwiaXNzIjoiaHR0cDovLzMuMTExLjY0LjE3L2F1dGgvcmVhbG1zL2Rpdm9jIiwiYXVkIjpbInJlYWxtLW1hbmFnZW1lbnQiLCJhY2NvdW50IiwiZmFjaWxpdHktYWRtaW4tcG9ydGFsIl0sInN1YiI6ImQ5ZTY4YmU0LTIwNWEtNGI0NC04MzAxLTFmZWEyNTU3ZjFjZiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFkbWluLWFwaSIsInNlc3Npb25fc3RhdGUiOiI2NWY4ZTY3Yi1jNzllLTQwOGUtYmE3OS1lMDc1MjdiNjFkYjYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vZGl2b2MueGl2LmluIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJtYW5hZ2UtdXNlcnMiXX0sImFkbWluLWFwaSI6eyJyb2xlcyI6WyJhcGkiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiZmFjaWxpdHktYWRtaW4tcG9ydGFsIjp7InJvbGVzIjpbImZhY2lsaXR5LXN0YWZmIiwiYWRtaW4iLCJtb25pdG9yaW5nIiwiZmFjaWxpdHktYWRtaW4iXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJjbGllbnRJZCI6ImFkbWluLWFwaSIsImNsaWVudEhvc3QiOiIxNzIuMTkuMC4yMCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWFkbWluLWFwaSIsImNsaWVudEFkZHJlc3MiOiIxNzIuMTkuMC4yMCJ9.BTGAi-1X3n6dYb4z5mZPeg_6vkE769r6Sj90e3_UOzDhhYYVwg-m_dAB7Hr42FVmFOLRptFXsq1G3jWUDzTVGE1ZM0tUcdYVaAVfdt_Z1VJOCPnIBuhHuMVjtrVm_EsXSwLRChO6gu7t9G1a7hGm98NHgdtXdGwhCeDQNPgcYZDK5WNGup9vkeUjYAWdx2sDmomzsMrYF5F1ZOfsrVjM8ABYSj0wVp3CZAh1tPnGvGHvceFG5XBKcuUBlPPtkcVbgV85a218A0E7ZN4_wrvgfvUSpMhITvlwWO4EwKAYKXxKLdQWGjeAwZ1NOhD0ZNdz9a30dSR-yO3vYAvh26K2Mg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"preEnrollmentCode\": \"eu-002\",\r\n        \"enrollmentType\": \"vaccination\",\r\n        \"programId\": \"VCC001\",\r\n        \"comorbidities\": [],\r\n        \"recipient\": {\r\n            \"name\": \"NESTHY CARLOS YULO Jr.\",\r\n            \"dob\": \"1998-01-01\",\r\n            \"gender\": \"FEMALE\",\r\n            \"nationality\": \"PH\",\r\n            \"identity\": \"NA\",\r\n            \"contact\": [\r\n                \"tel:9477886425\"\r\n            ],\r\n            \"address\": {\r\n                \"addressLine1\": \"Kaligayahan\",\r\n                \"addressLine2\": \"137404000Quezon City\",\r\n                \"district\": \"137400000NCR, Second District (Not a Province)\",\r\n                \"state\": \"NATIONAL CAPITAL REGION (NCR)\",\r\n                \"pincode\": \"000000\"\r\n            }\r\n        },\r\n        \"vaccinator\": {\r\n            \"name\": \"Dir. Ferdinand S. Salcedo, MD, MPH, CESO III\"\r\n        },\r\n        \"vaccination\": {\r\n            \"name\": \"Covishield\",\r\n            \"batch\": \"FWS2021\",\r\n            \"manufacturer\": \"AstraZeneca\",\r\n            \"date\": \"2021-05-30T01:21:21.111Z\",\r\n            \"effectiveStart\": \"2021-05-30\",\r\n            \"effectiveUntil\": \"2021-05-30\",\r\n            \"dose\": 1,\r\n            \"totalDoses\": 1\r\n        },\r\n        \"facility\": {\r\n            \"name\": \"CALAANAN / GREGORIA DE JESUS ELEMENTARY SCHOOL\",\r\n            \"address\": {\r\n                \"addressLine1\": \"CALAANAN / GREGORIA DE JESUS ELEMENTARY SCHOOL\",\r\n                \"addressLine2\": \"137404022\",\r\n                \"district\": \"137400000\",\r\n                \"state\": \"137000000\",\r\n                \"pincode\": \"000000\"\r\n            }\r\n        },\r\n        \"meta\": {\r\n            \"vaccinetype\": \"COVID-19 vaccine, non-replicating viral vector \",\r\n            \"birthdate\": \"1-Jan-1998\",\r\n            \"municity1\": \"137404000Quezon City\",\r\n            \"name\": \"Covishield\",\r\n            \"batch\": \"FWS2021\",\r\n            \"manufacturer\": \"AstraZeneca\",\r\n            \"date\": \"2021-12-09\",\r\n            \"totalDoses\": 1,\r\n            \"cit\": \"CALAANAN / GREGORIA DE JESUS ELEMENTARY SCHOOL\",\r\n            \"dob\": \"1998-01-01\",\r\n            \"vaccinatedBy2\": \"Dir. Ferdinand S. Salcedo, MD, MPH, CESO III\",\r\n            \"vaccine2\": \"Covishield\",\r\n            \"vaccineman2\": \"AstraZeneca\",\r\n            \"is1dose\": true,\r\n            \"is2dose\": false,\r\n            \"forpartial\": true,\r\n            \"booster1avl\" : false,\r\n            \"booster1date\" :\"\",\r\n            \"booster1type\":\"\",\r\n            \"booster1vaccine\":\"\",\r\n            \"booster1manf\":\"\",\r\n            \"booster1batch\":\"\",\r\n            \"vaccine2Date\" : \"2021-05-30\",\r\n            \"vaccine2Batch\" : \"\",\r\n            \"vaccine2Type\" : \"\",\r\n            \"dose1avl\" :false,\r\n            \"dose2avl\" :true\r\n\r\n        }\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/divoc/api/v1/certify",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"divoc",
+						"api",
+						"v1",
+						"certify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Certificate Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJSMmppRWJHU1dXT191MVNEUDlSbWYteTNsTkpXNmRZZER3Z3BQRGZNN2VrIn0.eyJleHAiOjE2NDE3MTkwNDUsImlhdCI6MTYyNDQzOTA0NSwianRpIjoiZmFiMzIzYzYtOGM1Yi00MTZkLWIxOWEtM2Y5Y2Y0YWQ3YjJiIiwiaXNzIjoiaHR0cDovLzEzLjIxMi44My4yNDIvYXV0aC9yZWFsbXMvZGl2b2MiLCJhdWQiOlsicmVhbG0tbWFuYWdlbWVudCIsImFjY291bnQiLCJmYWNpbGl0eS1hZG1pbi1wb3J0YWwiXSwic3ViIjoiZDllNjhiZTQtMjA1YS00YjQ0LTgzMDEtMWZlYTI1NTdmMWNmIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYWRtaW4tYXBpIiwic2Vzc2lvbl9zdGF0ZSI6ImY5NjJiN2IxLTJjMGQtNGRhNS04MDVjLTViODI2MjI4MjQ2YyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cHM6Ly9kaXZvYy54aXYuaW4iXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbIm1hbmFnZS11c2VycyJdfSwiYWRtaW4tYXBpIjp7InJvbGVzIjpbImFwaSJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19LCJmYWNpbGl0eS1hZG1pbi1wb3J0YWwiOnsicm9sZXMiOlsiZmFjaWxpdHktc3RhZmYiLCJhZG1pbiIsIm1vbml0b3JpbmciLCJmYWNpbGl0eS1hZG1pbiJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImNsaWVudElkIjoiYWRtaW4tYXBpIiwiY2xpZW50SG9zdCI6IjE3Mi4xOC4wLjE2IiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtYWRtaW4tYXBpIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xOC4wLjE2In0.EM1QMkXOQYPTEPEksV7aY5nXak6eT8eiCamqKDEZOCI_q5EMrDw4XTe3s9I9l1Dodg7TwG2n9SbdAf1yZuMhYxJUL63OF5tXfK23A-OGfifYwtccFjNQgB9BmjivaPsPUu8pkYfdu5xnsuOXoB0QGxYcFLZTcjbenQN6midkNA5lZULnpfxbVwcRIckEdScUJ6KxvfGLchhXvUbbupz-TxmWUD_-dFZ7SQw8Fwv0Zf4zUFG10Oa76NFjO6RyVNku5HyUUfgRXytP03bXr7MJVT7tmJVn75elfEOjiOJt4Q5Ifba76DBDAIvv4vSKhqy7n69UXR7vExQd46F3hWSo6A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n\t\"preEnrollmentCode\": \"77889951\",\r\n\t\"enrollmentType\": \"vaccination\",\r\n\t\"programId\": \"VCC001\",\r\n\t\"comorbidities\": [],\r\n\t\"recipient\": {\r\n\t\t\"name\": \"Juan Dela Cruz \",\r\n\t\t\"dob\": \"1988-10-11\",\r\n\t\t\"age\": \"33\",\r\n\t\t\"gender\": \"Female\",\r\n\t\t\"nationality\": \"India\",\r\n\t\t\"identity\": \"19882120590\",\r\n\t\t\"contact\": [\r\n\t\t\t\"tel:8788622512\"\r\n\t\t],\r\n\t\t\"address\": {\r\n\t\t\t\"addressLine1\": \"#10, Sunflower St., Quezon City\",\r\n\t\t\t\"addressLine2\": \"\",\r\n\t\t\t\"district\": \"colombo\",\r\n\t\t\t\"state\": \"Western\",\r\n\t\t\t\"pincode\": \"121212\"\r\n\t\t}\r\n\t},\r\n\t\"vaccination\": {\r\n\t\t\"name\": \"Pfizer\",\r\n\t\t\"batch\": \"batch-01\",\r\n\t\t\"manufacturer\": \"US\",\r\n\t\t\"date\": \"2021-06-28T05:30:28.187Z\",\r\n\t\t\"effectiveStart\": \"2021-04-21\",\r\n\t\t\"effectiveUntil\": \"2022-04-21\",\r\n\t\t\"dose\": 1,\r\n\t\t\"totalDoses\": 2\r\n\t},\r\n\t\"vaccinator\": {\r\n\t\t\"name\": \"ss\"\r\n\t},\r\n\t\"facility\": {\r\n\t\t\"name\": \"Quezon City Health Center\",\r\n\t\t\"address\": {\r\n\t\t\t\"addressLine1\": \"df\",\r\n\t\t\t\"addressLine2\": \"\",\r\n\t\t\t\"district\": \"wew\",\r\n\t\t\t\"state\": \"w\",\r\n\t\t\t\"pincode\": \"121212\"\r\n\t\t}\r\n\t},\r\n\t\"meta\": {\r\n\t\t\"name\": \"Pfizer\",\r\n\t\t\"batch\": \"batch-02\",\r\n\t\t\"manufacturer\": \"india\",\r\n\t\t\"date\": \"2021-06-21T05:30:28.187Z\",\r\n\t\t\"totalDoses\": 2,\r\n\t\t\"cit\": \"00000011\",\r\n        \"is2dose\" : \"true\"\r\n\r\n\t}\r\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://13.213.227.180/divoc/api/v1/certificate",
+					"protocol": "http",
+					"host": [
+						"13",
+						"213",
+						"227",
+						"180"
+					],
+					"path": [
+						"divoc",
+						"api",
+						"v1",
+						"certificate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate Token Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "admin-api",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "4b45d0f7-e708-4d99-b871-3436c3e55674",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/auth/realms/divoc/protocol/openid-connect/token",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"realms",
+						"divoc",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EU-Certificate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJpWGtVQnJqYUxBRjhoUURKa1dmNUlOQUZrVzYzX2lWcWJSZFMxZm04YktBIn0.eyJleHAiOjE2NTUyMDg4OTMsImlhdCI6MTYzNzkyODg5MywianRpIjoiN2Y4MTg1NGUtYjU4My00ZDQzLTgwZDEtNGQxZDQ4NGYwODljIiwiaXNzIjoiaHR0cDovLzEzLjIxMy4yMjcuMTgwL2F1dGgvcmVhbG1zL2Rpdm9jIiwiYXVkIjpbInJlYWxtLW1hbmFnZW1lbnQiLCJhY2NvdW50IiwiZmFjaWxpdHktYWRtaW4tcG9ydGFsIl0sInN1YiI6ImQ5ZTY4YmU0LTIwNWEtNGI0NC04MzAxLTFmZWEyNTU3ZjFjZiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFkbWluLWFwaSIsInNlc3Npb25fc3RhdGUiOiIyYjA0YWIxOS0xOWZhLTRmMTEtODBhYS00MzI2MmY3OTAxYmIiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vZGl2b2MueGl2LmluIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJtYW5hZ2UtdXNlcnMiXX0sImFkbWluLWFwaSI6eyJyb2xlcyI6WyJhcGkiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiZmFjaWxpdHktYWRtaW4tcG9ydGFsIjp7InJvbGVzIjpbImZhY2lsaXR5LXN0YWZmIiwiYWRtaW4iLCJtb25pdG9yaW5nIiwiZmFjaWxpdHktYWRtaW4iXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJjbGllbnRJZCI6ImFkbWluLWFwaSIsImNsaWVudEhvc3QiOiIxNzIuMTguMC40IiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtYWRtaW4tYXBpIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xOC4wLjQifQ.hnQQoKMV8XJGRu0Yfhf1xyaYSFFNjfUzHveI13nny2ikwha-USqX6s8HIG-Qxt5r2G_x_dF0pCBm1nuBdLx-WTP39PgcniGGYWshezvXkSMGEmPSvhePuA_daGhHBMCsd3d6_9GxBxugH7EQcZ_NlzzzVJ_S-47Ug3oFBUtNzQ1pUPk8hHuIgy2I_FZTDlhJlFpl11_9UBGdeeUzqhJww0S0uK_gKZ0i8we95Jz0Unqry2AVFeOkz8lQHQNoh1ZnVV26IlCNXEfnJSFHc5BYHG--6WJbKvjuBgwnm8cdQIAVm0sVcnoIDEJSSnj3iWcVcayzK8xhIg_JyYfZHiqd6Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fn\": \"d'Arsøns - van Halen\",\r\n    \"fnt\": \"DARSONS<VAN<HALEN\",\r\n    \"gn\": \"François-Joan\",\r\n    \"gnt\": \"FRANCOIS<JOAN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://13.213.227.180/certificate/api/eu-certificate?refId=18523",
+					"protocol": "http",
+					"host": [
+						"13",
+						"213",
+						"227",
+						"180"
+					],
+					"path": [
+						"certificate",
+						"api",
+						"eu-certificate"
+					],
+					"query": [
+						{
+							"key": "refId",
+							"value": "18523"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "3.111.64.17"
+		},
+		{
+			"key": "bearer_token",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJNcFlxZ0VHbVF5a0ZlZURKYnFnTkY5d1dKd2l4b2ozVkNzNmRwUEdqNEhRIn0.eyJleHAiOjE2NjA5MTI2NDksImlhdCI6MTY0MzYzMjY0OSwianRpIjoiOGMxMTJhZDctYzk5Zi00NmJhLTg1YTctOTYyZTgyOGI5NzNjIiwiaXNzIjoiaHR0cDovLzMuMTExLjY0LjE3L2F1dGgvcmVhbG1zL2Rpdm9jIiwiYXVkIjpbInJlYWxtLW1hbmFnZW1lbnQiLCJhY2NvdW50IiwiZmFjaWxpdHktYWRtaW4tcG9ydGFsIl0sInN1YiI6ImQ5ZTY4YmU0LTIwNWEtNGI0NC04MzAxLTFmZWEyNTU3ZjFjZiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFkbWluLWFwaSIsInNlc3Npb25fc3RhdGUiOiI2NWY4ZTY3Yi1jNzllLTQwOGUtYmE3OS1lMDc1MjdiNjFkYjYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vZGl2b2MueGl2LmluIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJtYW5hZ2UtdXNlcnMiXX0sImFkbWluLWFwaSI6eyJyb2xlcyI6WyJhcGkiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiZmFjaWxpdHktYWRtaW4tcG9ydGFsIjp7InJvbGVzIjpbImZhY2lsaXR5LXN0YWZmIiwiYWRtaW4iLCJtb25pdG9yaW5nIiwiZmFjaWxpdHktYWRtaW4iXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJjbGllbnRJZCI6ImFkbWluLWFwaSIsImNsaWVudEhvc3QiOiIxNzIuMTkuMC4yMCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWFkbWluLWFwaSIsImNsaWVudEFkZHJlc3MiOiIxNzIuMTkuMC4yMCJ9.BTGAi-1X3n6dYb4z5mZPeg_6vkE769r6Sj90e3_UOzDhhYYVwg-m_dAB7Hr42FVmFOLRptFXsq1G3jWUDzTVGE1ZM0tUcdYVaAVfdt_Z1VJOCPnIBuhHuMVjtrVm_EsXSwLRChO6gu7t9G1a7hGm98NHgdtXdGwhCeDQNPgcYZDK5WNGup9vkeUjYAWdx2sDmomzsMrYF5F1ZOfsrVjM8ABYSj0wVp3CZAh1tPnGvGHvceFG5XBKcuUBlPPtkcVbgV85a218A0E7ZN4_wrvgfvUSpMhITvlwWO4EwKAYKXxKLdQWGjeAwZ1NOhD0ZNdz9a30dSR-yO3vYAvh26K2Mg"
+		}
+	]
+}
