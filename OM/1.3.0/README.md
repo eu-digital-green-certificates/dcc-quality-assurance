@@ -5,5 +5,5 @@
 
 ### Vaccination
 
-![VAC](VAC_OM.png)
+![VAC](VAC.png)
 
