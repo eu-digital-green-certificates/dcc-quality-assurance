@@ -6,7 +6,9 @@
 
 ### ACC files
 
-![VAC_ID_01 QR Code](./VAC_ID_01.jpeg)
+Specialcase: "ma" field value set violation
 
-[Payload](./VAC_ID_01.json)
+![VAC_ID_01 QR Code](./specialcases/VAC_ID_01.jpeg)
+
+[Payload](./specialcases/VAC_ID_01.json)
 
