@@ -53,6 +53,12 @@ Test - RAT
 
 ![REC](REC.png)
 
+### Revoked
+
+![REV_1](VAC_revoked_1.png)
+
+![REV_2](VAC_revoked_2.png)
+
 
 ### Special cases and deviations
 
