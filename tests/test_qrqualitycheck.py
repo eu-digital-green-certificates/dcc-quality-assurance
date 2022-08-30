@@ -67,8 +67,22 @@ def valuesets_from_environment():
     return valuesets
 
 @filecache(HOUR)
-def certificates_from_environment():
-    "Downloads and caches the certificates from the acceptance environment"
+def certificates_from_environment(): 
+    """Downloads and caches the certificates from the acceptance environment
+        using  API for CovPass Check app"""
+    response = requests.get(constants.DSC_LIST)
+    if not response.ok:
+        pytest.fail("DSC list not reachable")
+    
+    dsc_list = json.loads(response.text[response.text.find('\n'):])
+    kid_dict = { dsc['kid'] : dsc['rawData'] for dsc in dsc_list['certificates'] }
+    return kid_dict
+
+
+@filecache(HOUR)
+def _certificates_from_environment(): # Uses API of demo implementation for verifier app
+    """Downloads and caches the certificates from the acceptance environment
+        using  API for template verifier app"""
     def get_key_id_dict():
         response = requests.get(constants.ACC_KID_LIST)
         if not response.ok:
@@ -248,7 +262,10 @@ def test_verify_signature( dccQrCode, pytestconfig ):
     cert_base64 = certs[dccQrCode.get_key_id_base64()]
     cert = x509.load_pem_x509_certificate(
         f'-----BEGIN CERTIFICATE-----\n{cert_base64}\n-----END CERTIFICATE-----'.encode(), OpenSSLBackend)
-    extensions = { extension.oid._name:extension for extension in cert.extensions}
+    try:
+        extensions = { extension.oid._name:extension for extension in cert.extensions}
+    except ValueError as e:
+        pytest.skip(f'Error during DSC extension check: {"".join(e.args)}')
 
     if pytestconfig.getoption('verbose'):
         if 'extendedKeyUsage' in extensions.keys():

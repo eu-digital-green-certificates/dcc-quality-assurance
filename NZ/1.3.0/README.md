@@ -2,27 +2,40 @@
 
 - **JSON Schema version**: 1.3.0
 
-## 6th Validation Cycle Test files
-
-QRCodes for 6th validation cycle starting on 31 January 2022
+## Test files
 
 ### Vaccination
 
-![VAC](VAC.png)
+#### New Zealand - Booster dose - Pfizer 3/3
+
+Expires 2023-01-25
+
+<img src="VAC.png">
+
+#### Cook Islands - Booster dose - Pfizer 3/3
+
+Expires 2023-07-18
+
+<img src="VAC_CK.png">
+
+#### Niue - Booster dose - Pfizer 3/3
+
+Expires 2023-07-18
+
+<img src="VAC_NU.png">
+
+#### Tokelau - Booster dose - Pfizer 3/3
+
+Expires 2023-07-19
+
+<img src="VAC_TK.png">
 
 ### Test
 
-![TEST](TEST.png)
+#### New Zealand
 
-## 5th Validation Cycle Test files
+<img src="TEST.png">
 
-### Vaccination
-
-![VAC](archived/VAC.png)
-
-### Test
-
-![TEST](archived/TEST.png)
 
 ### Special cases and deviations
 None
